@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Super Mario AR: Dunia Seni Visual Interaktif (Edisi Pro 60FPS)</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -693,6 +693,127 @@
             font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: var(--dark);
             display: block; margin-top: 4px;
         }
+
+        /* =========================================================
+           MOD PERMAINAN AR BERSIH & RESPONSIF (IPAD, SMARTPHONE & DESKTOP)
+           ========================================================= */
+        body, html, #game-canvas {
+            touch-action: none;
+            -webkit-touch-callout: none;
+            height: 100dvh;
+        }
+        body.is-playing .top-utility-bar {
+            display: none !important;
+        }
+        body.is-playing #mascot-box {
+            display: none !important;
+        }
+        body.is-playing #game-hud {
+            top: max(10px, env(safe-area-inset-top, 10px));
+        }
+
+        /* Responsif untuk Tablet / iPad & Smartphone */
+        @media (max-width: 920px) {
+            .header-banner {
+                top: 48px; padding: 8px 18px; min-width: 260px;
+            }
+            .worlds-grid {
+                width: 94vw; gap: 12px; top: 53%;
+            }
+            .char-emblem-wrap {
+                width: 78px; height: 78px;
+            }
+            .world-scene {
+                top: 47%; width: 96vw; height: min(490px, 78dvh);
+            }
+            .mario-powerup-stage, .luigi-hologram-screen, .toad-star-card {
+                grid-template-columns: 1fr 0.78fr; padding: 14px 16px; gap: 12px;
+            }
+            .visual-demo-card {
+                min-height: 130px; padding: 10px;
+            }
+            .q-block-3d {
+                width: 92px; height: 70px;
+            }
+            .q-block-3d .q-mark { font-size: 1.25rem; }
+            #game-hud {
+                left: 10px; right: 10px; gap: 6px;
+            }
+            .hud-card {
+                padding: 6px 10px; border-width: 3px; font-size: 0.56rem; gap: 6px;
+            }
+            .progress-track { width: 78px; height: 11px; }
+        }
+
+        @media (max-width: 640px) {
+            .top-utility-bar {
+                top: 6px; left: 8px; right: 8px; gap: 4px;
+            }
+            .badge-arcade {
+                padding: 6px 9px; font-size: 0.48rem; border-width: 2px;
+            }
+            .header-banner {
+                top: 44px; padding: 7px 12px; border-width: 3px;
+            }
+            .header-banner h1 { font-size: 0.78rem; margin-bottom: 4px; }
+            .header-banner p { font-size: 0.68rem; padding: 3px 8px; }
+            .worlds-grid {
+                grid-template-columns: repeat(3, 1fr); gap: 8px; width: 96vw; top: 53%;
+            }
+            .btn-floating-character {
+                padding: 9px 6px; border-width: 3px; border-radius: 16px;
+            }
+            .world-tag-pill { font-size: 0.44rem; padding: 4px 6px; }
+            .char-emblem-wrap { width: 62px; height: 62px; margin: 2px 0 6px; }
+            .world-border-label { padding: 5px 4px; }
+            .world-border-label strong { font-size: 0.5rem; }
+            .world-border-label small { font-size: 0.68rem; }
+            .world-scene {
+                top: 48%; width: 96vw; height: 80dvh;
+            }
+            .mario-powerup-stage, .luigi-hologram-screen, .toad-star-card {
+                grid-template-columns: 1fr; overflow-y: auto; padding: 12px; gap: 10px;
+            }
+            .visual-demo-card { min-height: 105px; padding: 8px; }
+            .mario-blocks-row { gap: 8px; }
+            .q-block-3d { width: 74px; height: 58px; border-width: 3px; }
+            .q-block-3d .q-mark { font-size: 1.05rem; }
+            .q-block-3d .q-sub { font-size: 0.42rem; }
+            .pipe-rim { padding: 6px 8px; gap: 6px; min-height: 54px; }
+            .btn-pipe-valve { min-height: 40px; padding: 8px 6px; font-size: 0.52rem; }
+            .pipe-neck { height: 24px; }
+            .toad-mushroom-dome { height: 46px; }
+            .toad-dome-title { font-size: 0.46rem; padding: 4px 10px; }
+            .toad-chests-row { gap: 6px; flex-wrap: wrap; }
+            .btn-toad-chest { font-size: 0.44rem; padding: 6px 6px; }
+            .bottom-Control-bar { gap: 6px; margin-top: 6px; justify-content: center; }
+            .btn-mario { padding: 8px 12px; font-size: 0.54rem; border-width: 3px; }
+            .drag-guide-inline { padding: 5px 10px; font-size: 0.72rem; }
+            #mascot-box { bottom: 6px; padding: 5px 12px; border-width: 3px; }
+            #mascot-avatar { font-size: 1.35rem; margin-right: 6px; }
+            #mascot-speech { font-size: 0.72rem; }
+            #game-hud {
+                left: 6px; right: 6px; gap: 4px; justify-content: space-between;
+            }
+            .hud-card {
+                padding: 5px 8px; border-radius: 12px; font-size: 0.5rem; gap: 5px;
+            }
+            .heart-slot { font-size: 0.92rem; }
+            .score-value-box { min-width: 68px; padding: 3px 7px; font-size: 0.62rem; }
+            .mission-step-pill, .combo-pill { font-size: 0.46rem; padding: 3px 6px; }
+            .progress-track { display: none; }
+            #btn-hud-home { padding: 7px 10px !important; font-size: 0.5rem !important; }
+        }
+
+        @media (max-height: 540px) {
+            .header-banner { top: 38px; padding: 5px 14px; }
+            .header-banner h1 { font-size: 0.76rem; }
+            .worlds-grid { top: 55%; gap: 10px; }
+            .char-emblem-wrap { width: 58px; height: 58px; margin: 2px 0 4px; }
+            .world-scene { top: 48%; height: 82dvh; }
+            .q-block-3d { height: 52px; width: 80px; }
+            #mascot-box { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -715,7 +836,7 @@
     </div>
 
     <!-- 1. VIDEO WEBCAM PENUH SKRIN (UNTUK AR) -->
-    <video id="webcam" autoplay playsinline></video>
+    <video id="webcam" autoplay playsinline muted></video>
 
     <!-- 2. LATAR BELAKANG MENU (DISEMBUNYIKAN 100% SEMASA GAME SUPAYA FULL SCREEN AR TANPA BACKGROUND) -->
     <div id="home-bg-wrap">
@@ -779,7 +900,7 @@
             </span>
         </div>
 
-        <div class="hud-card" style="flex-direction: column; gap: 4px; text-align: center;">
+        <div id="hud-mission-center-card" class="hud-card" style="display: none; flex-direction: column; gap: 4px; text-align: center;">
             <div style="font-size: 0.58rem; color: var(--brick-brown);" id="hud-module-title">DUNIA 1-1 • TAHAP 1</div>
             <span id="target-mission" style="color: var(--mario-blue); font-size: 0.72rem;">PADANKAN WARNA PANAS &amp; SEJUK</span>
         </div>
@@ -1361,11 +1482,11 @@
                             </ul>
                         `,
                         visual: `
-                            <strong>Warna Tertier</strong>
-                            <div class="art-diagram-box" style="padding:12px 18px;">
-                                <div><div class="shape-2d" style="margin:0 auto 4px;"></div><small>2D</small></div>
-                                <span style="font-size:1.4rem;">⚡</span>
-                                <div><div class="shape-3d" style="margin:0 auto 4px;"></div><small>3D</small></div>
+                            <strong>Warna Tertier (Primer + Sekunder)</strong>
+                            <div class="art-diagram-box">
+                                <span class="color-dot" style="background:#FBD000; color:#000;">K</span><b>+</b>
+                                <span class="color-dot" style="background:#FF6D00;">J</span><b>=</b>
+                                <span class="color-dot" style="background:#FF9E00; color:#000; width:42px; border-radius:12px;">K-J</span>
                             </div>
                         `
                     },
@@ -1547,6 +1668,9 @@
                 { x: window.innerWidth / 2, y: window.innerHeight / 2, vx: 0, vy: 0, targetX: window.innerWidth / 2, targetY: window.innerHeight / 2, active: false, isShooting: false, pinchFrames: 0, releaseFrames: 0, isFist: false, pinchStartX: 0, hasTurned: false, el: document.getElementById('cursor-right') }
             ];
 
+            static touchActive = false;
+            static mouseDown = false;
+
             static async init() {
                 this.video = document.getElementById('webcam');
                 this.canvas = document.getElementById('game-canvas');
@@ -1558,33 +1682,63 @@
 
                 try {
                     const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm");
-                    this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
-                        baseOptions: {
-                            modelAssetPath: "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
-                            delegate: "GPU"
-                        },
-                        runningMode: "VIDEO",
-                        numHands: 2,
-                        minHandDetectionConfidence: 0.65,
-                        minHandPresenceConfidence: 0.65,
-                        minTrackingConfidence: 0.65
-                    });
+                    const modelUrl = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task";
+                    try {
+                        this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
+                            baseOptions: { modelAssetPath: modelUrl, delegate: "GPU" },
+                            runningMode: "VIDEO",
+                            numHands: 2,
+                            minHandDetectionConfidence: 0.62,
+                            minHandPresenceConfidence: 0.62,
+                            minTrackingConfidence: 0.62
+                        });
+                    } catch (gpuErr) {
+                        this.handLandmarker = await HandLandmarker.createFromOptions(vision, {
+                            baseOptions: { modelAssetPath: modelUrl, delegate: "CPU" },
+                            runningMode: "VIDEO",
+                            numHands: 2,
+                            minHandDetectionConfidence: 0.6,
+                            minHandPresenceConfidence: 0.6,
+                            minTrackingConfidence: 0.6
+                        });
+                    }
 
-                    const stream = await navigator.mediaDevices.getUserMedia({
-                        video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } }
-                    });
+                    let stream = null;
+                    try {
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } },
+                            audio: false
+                        });
+                    } catch (camErr1) {
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: true,
+                            audio: false
+                        });
+                    }
+
                     this.video.srcObject = stream;
-                    this.video.addEventListener("loadeddata", () => {
+                    this.video.setAttribute("playsinline", "");
+                    this.video.muted = true;
+                    await this.video.play().catch(() => {});
+
+                    const startAppLoop = () => {
+                        if (this.gameState !== 'INIT') return;
                         document.getElementById('loading').style.display = 'none';
                         SoundFX.init();
                         this.resizeCanvas();
                         this.showMenu();
                         this.lastFrameTime = performance.now();
                         window.requestAnimationFrame((t) => this.renderLoop(t));
-                    });
+                    };
+
+                    if (this.video.readyState >= 2) {
+                        startAppLoop();
+                    } else {
+                        this.video.addEventListener("loadeddata", startAppLoop, { once: true });
+                    }
                 } catch (err) {
                     console.warn("Kamera AR tidak dapat diakses secara langsung:", err);
-                    document.getElementById('loading-msg').innerHTML = "Akses kamera tidak ditemui pada pelayar ini. Klik butang di bawah untuk masuk dengan <b>Skeleton Tangan AR Simulasi + Lagu Super Mario</b>!";
+                    document.getElementById('loading-msg').innerHTML = "Mod Sentuh / Tetikus Sedia! Klik butang di bawah untuk bermain terus pada <b>iPad, Smartphone atau Komputer</b>:";
                     document.getElementById('btn-fallback-start').style.display = 'inline-flex';
                 }
             }
@@ -1658,12 +1812,15 @@
 
             static setupPointerBackup() {
                 let dragStartX = null;
+
+                // 1. SOKONGAN TETIKUS / TRACKPAD (KOMPUTER RIBA & DESKTOP)
                 window.addEventListener('mousemove', (e) => {
                     if (this.simulatedHand) {
                         this.simulatedHand.x = e.clientX;
                         this.simulatedHand.y = e.clientY;
                     }
-                    if (!this.video || !this.video.srcObject) {
+                    const noCam = (!this.video || !this.video.srcObject);
+                    if (noCam || this.mouseDown) {
                         const c = this.cursors[0];
                         c.active = true;
                         c.targetX = e.clientX;
@@ -1671,20 +1828,21 @@
                         this.checkHover(e.clientX, e.clientY);
                         if (dragStartX !== null && this.gameState === 'NOTE' && !this.isFlipping) {
                             const dx = e.clientX - dragStartX;
-                            if (dx < -90) { this.triggerPageFlip('next'); dragStartX = null; }
-                            else if (dx > 90) { this.triggerPageFlip('prev'); dragStartX = null; }
+                            if (dx < -80) { this.triggerPageFlip('next'); dragStartX = null; }
+                            else if (dx > 80) { this.triggerPageFlip('prev'); dragStartX = null; }
                         }
                         if (this.gameState === 'PLAYING') {
                             GameEngine.handleHandUpdate(
                                 0,
                                 e.clientX,
                                 e.clientY,
-                                this.simulatedHand ? this.simulatedHand.pinching : false,
+                                this.mouseDown || (this.simulatedHand ? this.simulatedHand.pinching : false),
                                 this.simulatedHand ? this.simulatedHand.fist : false
                             );
                         }
                     }
                 });
+
                 window.addEventListener('mousedown', (e) => {
                     SoundFX.init();
                     if (e.button === 2) {
@@ -1692,35 +1850,111 @@
                         GameEngine.handFist[0] = true;
                         return;
                     }
-                    // Jika pengguna klik terus pada butang HTML (seperti 🏠 MENU UTAMA), biarkan onclick butang berjalan tanpa gangguan
                     if (e.target && e.target.closest('button')) {
                         return;
                     }
+                    this.mouseDown = true;
                     if (this.simulatedHand) this.simulatedHand.pinching = true;
-                    if (!this.video || !this.video.srcObject) {
-                        this.cursors[0].el.classList.add('shooting');
-                        dragStartX = e.clientX;
-                        SoundFX.playPinch();
-                        if (this.gameState === 'PLAYING') {
-                            GameEngine.handleHandPinchStart(0, e.clientX, e.clientY);
-                        }
+                    const c = this.cursors[0];
+                    c.active = true;
+                    c.x = c.targetX = e.clientX;
+                    c.y = c.targetY = e.clientY;
+                    c.el.classList.add('shooting');
+                    dragStartX = e.clientX;
+                    SoundFX.playPinch();
+                    if (this.gameState === 'PLAYING') {
+                        GameEngine.handleHandPinchStart(0, e.clientX, e.clientY);
                     }
                 });
+
                 window.addEventListener('mouseup', (e) => {
                     if (e.button === 2) {
                         if (this.simulatedHand) this.simulatedHand.fist = false;
                         GameEngine.handFist[0] = false;
                         return;
                     }
+                    if (this.mouseDown && this.gameState === 'PLAYING') {
+                        GameEngine.handleHandPinchEnd(0, e.clientX, e.clientY);
+                    }
+                    this.mouseDown = false;
                     if (this.simulatedHand) this.simulatedHand.pinching = false;
                     this.cursors[0].el.classList.remove('shooting');
                     dragStartX = null;
-                    if (!this.video || !this.video.srcObject) {
+                });
+
+                // 2. SOKONGAN SKRIN SENTUH PENUH (IPAD & SMARTPHONE — BERFUNGSI BERSAMA KAMERA AR ATAU TANPA KAMERA!)
+                window.addEventListener('touchstart', (e) => {
+                    SoundFX.init();
+                    if (e.target && e.target.closest('button')) {
+                        return;
+                    }
+                    if (e.touches.length === 2 && this.gameState === 'PLAYING' && this.activeModule === 3) {
+                        e.preventDefault();
+                        GameEngine.resetDunia3HologramDrawing(true);
+                        return;
+                    }
+                    if (e.touches.length > 0) {
+                        const t = e.touches[0];
+                        this.touchActive = true;
+                        if (this.simulatedHand) {
+                            this.simulatedHand.x = t.clientX;
+                            this.simulatedHand.y = t.clientY;
+                            this.simulatedHand.pinching = true;
+                        }
+                        const c = this.cursors[0];
+                        c.active = true;
+                        c.x = c.targetX = t.clientX;
+                        c.y = c.targetY = t.clientY;
+                        c.el.classList.add('shooting');
+                        dragStartX = t.clientX;
+                        SoundFX.playPinch();
+
                         if (this.gameState === 'PLAYING') {
-                            GameEngine.handleHandPinchEnd(0, e.clientX, e.clientY);
+                            e.preventDefault();
+                            GameEngine.d3PrevHandPos = { x: t.clientX, y: t.clientY };
+                            GameEngine.handleHandPinchStart(0, t.clientX, t.clientY);
                         }
                     }
-                });
+                }, { passive: false });
+
+                window.addEventListener('touchmove', (e) => {
+                    if (!this.touchActive || e.touches.length === 0) return;
+                    const t = e.touches[0];
+                    if (this.simulatedHand) {
+                        this.simulatedHand.x = t.clientX;
+                        this.simulatedHand.y = t.clientY;
+                    }
+                    const c = this.cursors[0];
+                    c.active = true;
+                    c.targetX = t.clientX;
+                    c.targetY = t.clientY;
+
+                    if (dragStartX !== null && this.gameState === 'NOTE' && !this.isFlipping) {
+                        const dx = t.clientX - dragStartX;
+                        if (dx < -65) { this.triggerPageFlip('next'); dragStartX = null; }
+                        else if (dx > 65) { this.triggerPageFlip('prev'); dragStartX = null; }
+                    }
+
+                    if (this.gameState === 'PLAYING') {
+                        e.preventDefault();
+                        GameEngine.handleHandUpdate(0, t.clientX, t.clientY, true, false);
+                    }
+                }, { passive: false });
+
+                const endTouchHandler = (e) => {
+                    if (!this.touchActive) return;
+                    const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : { clientX: this.cursors[0].x, clientY: this.cursors[0].y };
+                    if (this.gameState === 'PLAYING') {
+                        GameEngine.handleHandPinchEnd(0, t.clientX, t.clientY);
+                    }
+                    this.touchActive = false;
+                    if (this.simulatedHand) this.simulatedHand.pinching = false;
+                    this.cursors[0].el.classList.remove('shooting');
+                    dragStartX = null;
+                };
+                window.addEventListener('touchend', endTouchHandler, { passive: false });
+                window.addEventListener('touchcancel', endTouchHandler, { passive: false });
+
                 window.addEventListener('contextmenu', (e) => e.preventDefault());
                 window.addEventListener('keydown', (e) => {
                     if (e.code === 'Escape' && this.gameState !== 'MENU') {
@@ -1768,6 +2002,7 @@
                 SoundFX.playPinch();
                 this.uiClickCooldownUntil = performance.now() + 500;
                 this.gameState = 'MENU';
+                document.body.classList.remove('is-playing');
 
                 if (GameEngine.spawner) {
                     clearInterval(GameEngine.spawner);
@@ -1798,6 +2033,7 @@
                 this.activeModule = modId;
                 this.currentCardIndex = 0;
                 this.gameState = 'NOTE';
+                document.body.classList.remove('is-playing');
 
                 document.getElementById('main-menu').style.display = 'none';
                 document.getElementById('note-modal').style.display = 'block';
@@ -1910,6 +2146,7 @@
                 this.uiClickCooldownUntil = performance.now() + 500;
                 this.activeModule = modId || 1;
                 this.gameState = 'PLAYING';
+                document.body.classList.add('is-playing');
 
                 // Reset status cubitan supaya tidak terus melukis pada frame pertama
                 this.cursors.forEach(c => {
@@ -1942,6 +2179,7 @@
             static endGame(isVictory) {
                 if (this.gameState === 'RESULT') return;
                 this.gameState = 'RESULT';
+                document.body.classList.remove('is-playing');
                 this.uiClickCooldownUntil = performance.now() + 500;
                 if (GameEngine.spawner) clearInterval(GameEngine.spawner);
 
@@ -2188,9 +2426,9 @@
                             document.getElementById('hand-status').innerText = `🖐️ TANGAN: ${numDetected} / 2`;
                         }
                     }
-                    if (this.lastLandmarks && this.lastLandmarks.length > 0) {
+                    if (this.lastLandmarks && this.lastLandmarks.length > 0 && !this.touchActive && !this.mouseDown) {
                         this.processDualHands(this.lastLandmarks, dtNorm, timestamp);
-                    } else {
+                    } else if (!this.touchActive && !this.mouseDown) {
                         this.cursors.forEach(c => {
                             c.active = false;
                             c.pinchFrames = 0;
@@ -2819,8 +3057,14 @@
             }
 
             static recomputeDunia3Controls() {
-                this.d3ResetBtn = { x: 108, y: 268, w: 176, h: 56 };
-                this.d3SimFistBtn = { x: 108, y: 338, w: 176, h: 56 };
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                const isCompact = (w < 700 || h < 520);
+                const btnW = isCompact ? 118 : 142;
+                const btnH = isCompact ? 40 : 46;
+                const bx = isCompact ? 68 : 86;
+                this.d3ResetBtn = { x: bx, y: h - (isCompact ? 96 : 112), w: btnW, h: btnH };
+                this.d3SimFistBtn = { x: bx, y: h - (isCompact ? 48 : 56), w: btnW, h: btnH };
             }
 
             static spawnDunia3HoloHazards(qIdx) {
@@ -3288,11 +3532,13 @@
             static recomputeDunia2PathPoints() {
                 const w = window.innerWidth;
                 const h = window.innerHeight;
+                const isCompact = (w < 700 || h < 520);
                 const stage = LINE_STAGES_D2[this.d2StageIdx] || LINE_STAGES_D2[0];
 
-                const startX = Math.max(155, w * 0.17);
-                const endX = Math.min(w - 155, w * 0.83);
-                const centerY = h * 0.44;
+                const padX = isCompact ? Math.max(68, w * 0.14) : Math.max(145, w * 0.17);
+                const startX = padX;
+                const endX = w - padX;
+                const centerY = h * (isCompact ? 0.45 : 0.44);
                 const spanX = endX - startX;
                 const numNodes = 11;
 
@@ -3334,11 +3580,12 @@
             static spawnDunia2Cards(stageIdx) {
                 const w = window.innerWidth;
                 const h = window.innerHeight;
+                const isCompact = (w < 700 || h < 520);
                 this.d2Cards = [];
 
-                const cardY = h - 135;
+                const cardY = h - (isCompact ? 64 : 92);
                 const totalCards = LINE_STAGES_D2.length;
-                const spacing = Math.min(176, (w - 120) / totalCards);
+                const spacing = Math.min(168, (w - (isCompact ? 24 : 90)) / totalCards);
                 const startCardX = w / 2 - ((totalCards - 1) * spacing) / 2;
 
                 LINE_STAGES_D2.forEach((st, idx) => {
@@ -3352,8 +3599,8 @@
                         vy: 0,
                         homeX: hx,
                         homeY: cardY,
-                        width: Math.min(156, spacing - 12),
-                        height: 112,
+                        width: Math.max(62, Math.min(148, spacing - (isCompact ? 6 : 12))),
+                        height: isCompact ? 86 : 104,
                         scale: 0.3,
                         targetScale: 1.0,
                         tilt: 0,
@@ -3442,11 +3689,12 @@
 
                 this.boxBounce = 16;
 
+                const isCompact = (w < 700 || h < 520);
                 this.colorCards.push({
                     ...template,
                     id: Math.random(),
                     x: w / 2,
-                    y: 165,
+                    y: isCompact ? 110 : 135,
                     vx: (homeX - w / 2) * 0.08,
                     vy: 4,
                     homeX: homeX,
@@ -3454,8 +3702,8 @@
                     scale: 0.25,
                     targetScale: 1.0,
                     tilt: 0,
-                    width: 158,
-                    height: 124,
+                    width: isCompact ? 114 : 148,
+                    height: isCompact ? 94 : 116,
                     grabbedBy: null,
                     phase: Math.random() * Math.PI * 2,
                     trail: []
@@ -3716,6 +3964,7 @@
             // =========================================================
             static handleDunia3PinchStart(handIdx, x, y) {
                 if (this.d3HoloPhase !== 'FREEHAND_DRAW_AND_CONTROL') return;
+                this.recomputeDunia3Controls();
 
                 // 1. Semak jika pengguna menekan butang 🔄 LUKIS SEMULA di sebelah kiri
                 const rb = this.d3ResetBtn;
@@ -4043,104 +4292,59 @@
                 // Langkah 1: Lukis (🤏) | Langkah 2: Peace = Reset (✌️) / Semak | Langkah 3: Genggam Hantar (✊)
                 const activeStep = !this.d3HasHologram ? 1 : (isFistActive ? 3 : 2);
 
+                const isCompact = (w < 700 || h < 520);
+                this.recomputeDunia3Controls();
+
                 // ---------------------------------------------------------
-                // 1. PANEL SOALAN & 3-LANGKAH ARAHAN YANG BERSIH & KEMAS DI ATAS
+                // 1. KAPSUL SOALAN TUNGGAL YANG BERSIH & RINGKAS DI ATAS
                 // ---------------------------------------------------------
                 ctx.save();
-                ctx.translate(cx, 132);
+                ctx.translate(cx, isCompact ? 76 : 86);
 
-                // Kad Utama Soalan (Kompak, Moden & Tidak Menghalang Ruang Lukisan AR)
-                const cardW = Math.min(650, w * 0.88);
-                ctx.fillStyle = "rgba(10, 22, 36, 0.92)";
+                const cardW = Math.min(540, w * 0.92);
+                const cardH = isCompact ? 42 : 48;
+                ctx.fillStyle = "rgba(10, 22, 36, 0.88)";
                 ctx.strokeStyle = st.hex;
-                ctx.lineWidth = 3.5;
+                ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.roundRect(-cardW / 2, -24, cardW, 46, 23);
+                ctx.roundRect(-cardW / 2, -cardH / 2, cardW, cardH, 24);
                 ctx.fill();
                 ctx.stroke();
 
-                // Lencana Soalan di Sebelah Kiri Kad
-                ctx.fillStyle = st.hex;
-                ctx.beginPath();
-                ctx.roundRect(-cardW / 2 + 6, -18, 128, 34, 17);
-                ctx.fill();
-                ctx.fillStyle = "#0A1624";
-                ctx.font = "bold 9px 'Press Start 2P'";
-                ctx.textAlign = "center";
-                ctx.fillText(`SOALAN ${this.d3QuestionIdx + 1}/6`, -cardW / 2 + 70, 3);
-
-                // Tajuk Bentuk Sasaran di Tengah Kad
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 11px 'Press Start 2P'";
+                ctx.font = isCompact ? "bold 8.5px 'Press Start 2P'" : "bold 10.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText(`LUKIS: ${st.title}`, 8, -2);
+                ctx.fillText(`SOALAN ${this.d3QuestionIdx + 1}/6: ${st.title} (${st.marioIcon})`, 0, -4);
 
                 ctx.fillStyle = st.lightHex;
-                ctx.font = "bold 13px Fredoka";
-                ctx.fillText(`${st.marioIcon} Objek Mario: ${st.marioObj}  •  ✌️ Peace Sign = Reset Bentuk`, 8, 15);
-
-                // Bar Penunjuk 3-Langkah Visual (1. 🤏 Lukis -> 2. ✌️ Peace Reset / 👋 Putar -> 3. ✊ Genggam Hantar)
-                const steps = [
-                    { id: 1, label: "1. 🤏 CUBIT & LUKIS" },
-                    { id: 2, label: "2. ✌️ PEACE = RESET" },
-                    { id: 3, label: "3. ✊ GENGGAM HANTAR" }
-                ];
-                const pillW = Math.min(196, (cardW - 24) / 3);
-                const pillGap = 10;
-                const totalStepperW = pillW * 3 + pillGap * 2;
-                const startStepX = -totalStepperW / 2 + pillW / 2;
-
-                steps.forEach((s, idx) => {
-                    const sx = startStepX + idx * (pillW + pillGap);
-                    const sy = 44;
-                    const isCurrent = (activeStep === s.id) || (s.id === 2 && isPeaceActive);
-                    const isDone = (activeStep > s.id);
-
-                    ctx.fillStyle = (s.id === 2 && isPeaceActive)
-                        ? "#00E5FF"
-                        : (isCurrent ? st.hex : (isDone ? "rgba(80, 250, 123, 0.25)" : "rgba(12, 26, 42, 0.85)"));
-                    ctx.strokeStyle = isCurrent
-                        ? "#FFFFFF"
-                        : (isDone ? "#50FA7B" : "rgba(255, 255, 255, 0.3)");
-                    ctx.lineWidth = isCurrent ? 3 : 2;
-
-                    ctx.beginPath();
-                    ctx.roundRect(sx - pillW / 2, sy - 14, pillW, 28, 14);
-                    ctx.fill();
-                    ctx.stroke();
-
-                    ctx.fillStyle = isCurrent ? "#0A1624" : (isDone ? "#84FFFF" : "#CFD8DC");
-                    ctx.font = "bold 8.2px 'Press Start 2P'";
-                    ctx.textAlign = "center";
-                    ctx.fillText(isDone ? `✓ ${s.label}` : s.label, sx, sy + 4);
-                });
-
+                ctx.font = isCompact ? "bold 11.5px Fredoka" : "bold 13px Fredoka";
+                const statusHint = !this.d3HasHologram
+                    ? "🤏 Lukis bentuk di udara / skrin"
+                    : "👋 Putar 3D  •  ✌️ Reset  •  ✊ Genggam = Hantar";
+                ctx.fillText(statusHint, 0, 13);
                 ctx.restore();
 
                 // ---------------------------------------------------------
-                // 2. DOCK KAWALAN TEPI KIRI ([✌️ PEACE / 🔄 RESET] & STATUS [✊ GENGGAM])
+                // 2. BUTANG RINGKAS DI PENJURU BAWAH KIRI ([🔄 RESET] & [✊ HANTAR])
                 // ---------------------------------------------------------
                 const rb = this.d3ResetBtn;
                 ctx.save();
                 ctx.translate(rb.x, rb.y);
-                ctx.fillStyle = isPeaceActive ? "rgba(0, 229, 255, 0.35)" : "rgba(12, 26, 42, 0.9)";
+                ctx.fillStyle = isPeaceActive ? "rgba(0, 229, 255, 0.38)" : "rgba(12, 26, 42, 0.88)";
                 ctx.strokeStyle = "#00E5FF";
-                ctx.lineWidth = isPeaceActive ? 4 : 3;
+                ctx.lineWidth = 2.5;
                 ctx.beginPath();
-                ctx.roundRect(-rb.w / 2, -rb.h / 2, rb.w, rb.h, 14);
+                ctx.roundRect(-rb.w / 2, -rb.h / 2, rb.w, rb.h, 12);
                 ctx.fill();
                 ctx.stroke();
 
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 8.2px 'Press Start 2P'";
+                ctx.font = isCompact ? "bold 7.5px 'Press Start 2P'" : "bold 8.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText("✌️ PEACE / RESET", 0, -4);
-                ctx.fillStyle = "#84FFFF";
-                ctx.font = "bold 12px Fredoka";
-                ctx.fillText("Padam Tanpa Tolak ❤️", 0, 13);
+                ctx.textBaseline = "middle";
+                ctx.fillText("✌️ / 🔄 RESET", 0, 1);
                 ctx.restore();
 
-                // Paparkan Cincin Kemajuan Peace Sign (✌️) apabila pengguna sedang membuat isyarat Peace untuk memadam bentuk
                 if (this.d3PeaceResetProgress > 0.02) {
                     const pctPeace = Math.round(this.d3PeaceResetProgress * 100);
                     const ringX = this.d3HasHologram ? this.d3HoloPos.x : cx;
@@ -4148,8 +4352,8 @@
                     ctx.save();
                     ctx.translate(ringX, ringY);
                     ctx.beginPath();
-                    ctx.arc(0, 0, 106, -Math.PI / 2, -Math.PI / 2 + this.d3PeaceResetProgress * Math.PI * 2);
-                    ctx.lineWidth = 9;
+                    ctx.arc(0, 0, 96, -Math.PI / 2, -Math.PI / 2 + this.d3PeaceResetProgress * Math.PI * 2);
+                    ctx.lineWidth = 8;
                     ctx.lineCap = "round";
                     ctx.strokeStyle = "#00E5FF";
                     ctx.stroke();
@@ -4157,10 +4361,10 @@
                     ctx.fillStyle = "#00E5FF";
                     ctx.strokeStyle = "#1A1A1A";
                     ctx.lineWidth = 4;
-                    ctx.font = "bold 10px 'Press Start 2P'";
+                    ctx.font = "bold 9.5px 'Press Start 2P'";
                     ctx.textAlign = "center";
-                    ctx.strokeText(`✌️ RESET BENTUK: ${pctPeace}%`, 0, -118);
-                    ctx.fillText(`✌️ RESET BENTUK: ${pctPeace}%`, 0, -118);
+                    ctx.strokeText(`✌️ RESET: ${pctPeace}%`, 0, -108);
+                    ctx.fillText(`✌️ RESET: ${pctPeace}%`, 0, -108);
                     ctx.restore();
                 }
 
@@ -4168,21 +4372,19 @@
                     const fb = this.d3SimFistBtn;
                     ctx.save();
                     ctx.translate(fb.x, fb.y);
-                    ctx.fillStyle = isFistActive ? "rgba(80, 250, 123, 0.35)" : "rgba(12, 26, 42, 0.9)";
+                    ctx.fillStyle = isFistActive ? "rgba(80, 250, 123, 0.38)" : "rgba(12, 26, 42, 0.88)";
                     ctx.strokeStyle = isFistActive ? "#50FA7B" : "#FBD000";
-                    ctx.lineWidth = 3;
+                    ctx.lineWidth = 2.5;
                     ctx.beginPath();
-                    ctx.roundRect(-fb.w / 2, -fb.h / 2, fb.w, fb.h, 14);
+                    ctx.roundRect(-fb.w / 2, -fb.h / 2, fb.w, fb.h, 12);
                     ctx.fill();
                     ctx.stroke();
 
                     ctx.fillStyle = "#FFFFFF";
-                    ctx.font = "bold 8.5px 'Press Start 2P'";
+                    ctx.font = isCompact ? "bold 7.5px 'Press Start 2P'" : "bold 8.5px 'Press Start 2P'";
                     ctx.textAlign = "center";
-                    ctx.fillText("✊ GENGGAM TANGAN", 0, -4);
-                    ctx.fillStyle = "#FFE066";
-                    ctx.font = "bold 12px Fredoka";
-                    ctx.fillText("Hantar Jawapan", 0, 13);
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("✊ HANTAR", 0, 1);
                     ctx.restore();
                 }
 
@@ -4284,19 +4486,6 @@
                         st.lightHex
                     );
 
-                    // Kapsul Status Ringkas di Bawah Hologram
-                    ctx.fillStyle = "rgba(10, 22, 36, 0.9)";
-                    ctx.strokeStyle = st.hex;
-                    ctx.lineWidth = 2.5;
-                    ctx.beginPath();
-                    ctx.roundRect(-126, -106, 252, 24, 12);
-                    ctx.fill();
-                    ctx.stroke();
-
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.font = "bold 7.5px 'Press Start 2P'";
-                    ctx.textAlign = "center";
-                    ctx.fillText("✌️ PEACE=RESET • ✊ GENGGAM=HANTAR", 0, -90);
                     ctx.restore();
 
                     // LOGIK "SUBMIT JAWAPAN HANYA GENGGAM TANGAN (✊)":
@@ -4532,33 +4721,31 @@
                 const firstNode = this.d2PathNodes[0] || { x: 160, y: h * 0.44 };
                 const lastNode = this.d2PathNodes[this.d2PathNodes.length - 1] || { x: w - 160, y: h * 0.44 };
 
-                // 1. BANNER ARAHAN TAHAP GARISAN DI ATAS TENGAH
+                const isCompact = (w < 700 || h < 520);
+
+                // 1. KAPSUL ARAHAN TUNGGAL YANG BERSIH & RINGKAS DI ATAS
                 ctx.save();
-                ctx.translate(w / 2, 138);
-                ctx.fillStyle = "rgba(16, 38, 22, 0.92)";
+                ctx.translate(w / 2, isCompact ? 74 : 84);
+                const pillW = Math.min(520, w * 0.9);
+                const pillH = isCompact ? 34 : 38;
+                ctx.fillStyle = "rgba(16, 38, 22, 0.88)";
                 ctx.strokeStyle = stage.hex;
-                ctx.lineWidth = 4;
+                ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.roundRect(-Math.min(340, w * 0.42), -26, Math.min(680, w * 0.84), 52, 16);
+                ctx.roundRect(-pillW / 2, -pillH / 2, pillW, pillH, 19);
                 ctx.fill();
                 ctx.stroke();
 
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 12px 'Press Start 2P'";
+                ctx.font = isCompact ? "bold 8.5px 'Press Start 2P'" : "bold 10.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
                 const stepTitle = this.d2Phase === 'SELECT_CARD'
-                    ? `TAHAP ${this.d2StageIdx + 1}/5: TARIK KAD [${stage.name}] KE JAMBATAN!`
+                    ? `TAHAP ${this.d2StageIdx + 1}/5: TARIK KAD [${stage.name}]`
                     : (this.d2Phase === 'TRACE_PATH'
-                        ? `SURIH TITIK ${stage.name} (${this.d2TracedIdx}/${this.d2PathNodes.length})!`
-                        : `🎉 ${stage.name}: MARIO SEDANG MENYEBERANG!`);
-                ctx.fillText(stepTitle, 0, -3);
-
-                ctx.fillStyle = stage.lightHex;
-                ctx.font = "bold 14px Fredoka";
-                const subNote = stage.motionEffect
-                    ? "🌊 Garisan Beralun menghasilkan KESAN PERGERAKAN gelombang berirama!"
-                    : `Kenal pasti & sambung laluan watak Mario mengikut bentuk ${stage.name}!`;
-                ctx.fillText(subNote, 0, 17);
+                        ? `SURIH ${stage.name} (${this.d2TracedIdx}/${this.d2PathNodes.length})`
+                        : `🎉 ${stage.name} LENGKAP!`);
+                ctx.fillText(stepTitle, 0, 1);
                 ctx.restore();
 
                 // 2. PAIP WARP KIRI & KANAN
@@ -4635,14 +4822,7 @@
                         ctx.textBaseline = "middle";
                         ctx.fillText(isDone ? "★" : String(i + 1), 0, 1);
 
-                        if (isNext) {
-                            ctx.fillStyle = "#FBD000";
-                            ctx.strokeStyle = "#1A1A1A";
-                            ctx.lineWidth = 3;
-                            ctx.font = "bold 10px 'Press Start 2P'";
-                            ctx.strokeText("👇 SURIH SINI", 0, -32);
-                            ctx.fillText("👇 SURIH SINI", 0, -32);
-                        }
+
                         ctx.restore();
                     }
                 }
@@ -4745,19 +4925,20 @@
                 if (this.d2Phase === 'SELECT_CARD') {
                     ctx.save();
                     ctx.translate(w / 2, h * 0.44);
-                    ctx.fillStyle = "rgba(105, 255, 112, 0.18)";
+                    ctx.fillStyle = "rgba(16, 38, 22, 0.78)";
                     ctx.strokeStyle = "#69FF70";
-                    ctx.setLineDash([8, 6]);
-                    ctx.lineWidth = 3.5;
+                    ctx.setLineDash([6, 5]);
+                    ctx.lineWidth = 2.5;
                     ctx.beginPath();
-                    ctx.roundRect(-145, -36, 290, 72, 18);
+                    ctx.roundRect(-110, -18, 220, 36, 18);
                     ctx.fill();
                     ctx.stroke();
                     ctx.setLineDash([]);
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.font = "bold 11px 'Press Start 2P'";
+                    ctx.fillStyle = "#69FF70";
+                    ctx.font = isCompact ? "bold 8px 'Press Start 2P'" : "bold 9px 'Press Start 2P'";
                     ctx.textAlign = "center";
-                    ctx.fillText(`⬆ TARIK KAD [${stage.type}] KE SINI ⬆`, 0, 5);
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(`⬆ LETAK KAD [${stage.type}] ⬆`, 0, 1);
                     ctx.restore();
 
                     for (let i = 0; i < this.d2Cards.length; i++) {
@@ -4907,7 +5088,8 @@
             static updateAndDrawDunia1(ctx, canvas, dtNorm, timestamp) {
                 const w = canvas.width;
                 const h = canvas.height;
-                const zoneW = Math.min(255, w * 0.24);
+                const isCompact = (w < 700 || h < 520);
+                const zoneW = Math.min(215, Math.max(92, w * 0.22));
 
                 this.leftZonePulse *= Math.pow(0.86, dtNorm);
                 this.rightZonePulse *= Math.pow(0.86, dtNorm);
@@ -4915,21 +5097,21 @@
                 this.marioVisualProgress += (this.marioColoredParts - this.marioVisualProgress) * 0.12 * dtNorm;
                 this.luigiVisualProgress += (this.luigiColoredParts - this.luigiVisualProgress) * 0.12 * dtNorm;
 
-                const zoneTop = 122;
-                const zoneH = h - 196;
+                const zoneTop = isCompact ? 66 : 78;
+                const zoneH = h - zoneTop - (isCompact ? 16 : 26);
 
                 let draggingNearLeft = false;
                 let draggingNearRight = false;
                 this.colorCards.forEach(c => {
                     if (c.grabbedBy !== null || this.selectedCard === c) {
-                        if (c.x < zoneW + 120) draggingNearLeft = true;
-                        if (c.x > w - zoneW - 120) draggingNearRight = true;
+                        if (c.x < zoneW + 100) draggingNearLeft = true;
+                        if (c.x > w - zoneW - 100) draggingNearRight = true;
                     }
                 });
 
                 // 1. ZON KIRI: KATEGORI WARNA PANAS (🔥 MARIO)
                 ctx.save();
-                const lPad = 14 - this.leftZonePulse * 0.35;
+                const lPad = (isCompact ? 8 : 14) - this.leftZonePulse * 0.35;
                 const lGlow = draggingNearLeft ? 1.0 : 0.72;
 
                 const warmGrad = ctx.createLinearGradient(lPad, zoneTop, lPad, zoneTop + zoneH);
@@ -4939,45 +5121,47 @@
 
                 ctx.fillStyle = warmGrad;
                 ctx.strokeStyle = draggingNearLeft ? "#FFFFFF" : "#FBD000";
-                ctx.lineWidth = draggingNearLeft ? 7 : 5;
+                ctx.lineWidth = draggingNearLeft ? 6 : 4;
                 ctx.beginPath();
-                ctx.roundRect(lPad, zoneTop, zoneW, zoneH, 24);
+                ctx.roundRect(lPad, zoneTop, zoneW, zoneH, 20);
                 ctx.fill();
                 ctx.stroke();
 
                 ctx.fillStyle = "#E52521";
                 ctx.beginPath();
-                ctx.roundRect(lPad + 10, zoneTop + 10, zoneW - 20, 52, 14);
+                ctx.roundRect(lPad + 8, zoneTop + 8, zoneW - 16, isCompact ? 32 : 38, 12);
                 ctx.fill();
                 ctx.strokeStyle = "#1A1A1A";
-                ctx.lineWidth = 3.5;
+                ctx.lineWidth = 3;
                 ctx.stroke();
 
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 12px 'Press Start 2P'";
+                ctx.font = isCompact ? "bold 8px 'Press Start 2P'" : "bold 10.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText("🔥 WARNA PANAS", lPad + zoneW / 2, zoneTop + 31);
-                ctx.font = "bold 13px Fredoka";
-                ctx.fillStyle = "#FFE066";
-                ctx.fillText("Merah • Jingga • Kuning", lPad + zoneW / 2, zoneTop + 50);
+                ctx.textBaseline = "middle";
+                ctx.fillText("🔥 PANAS", lPad + zoneW / 2, zoneTop + (isCompact ? 24 : 27));
 
                 const warmBadges = ["#E52521", "#FF6D00", "#FBD000"];
+                const dotGap = isCompact ? 26 : 36;
                 warmBadges.forEach((hex, idx) => {
-                    const bx = lPad + zoneW / 2 + (idx - 1) * 44;
-                    const by = zoneTop + 82;
+                    const bx = lPad + zoneW / 2 + (idx - 1) * dotGap;
+                    const by = zoneTop + (isCompact ? 56 : 66);
                     ctx.beginPath();
-                    ctx.arc(bx, by, 14, 0, Math.PI * 2);
+                    ctx.arc(bx, by, isCompact ? 9 : 12, 0, Math.PI * 2);
                     ctx.fillStyle = hex;
                     ctx.fill();
-                    ctx.lineWidth = 3;
+                    ctx.lineWidth = 2.5;
                     ctx.strokeStyle = "#FFFFFF";
                     ctx.stroke();
                 });
 
+                ctx.save();
+                ctx.translate(lPad + zoneW / 2, zoneTop + zoneH * 0.54);
+                if (isCompact) ctx.scale(0.72, 0.72);
                 this.drawColorableCharacter(
                     ctx,
-                    lPad + zoneW / 2,
-                    zoneTop + zoneH * 0.54,
+                    0,
+                    0,
                     "M",
                     this.marioVisualProgress,
                     "#E52521",
@@ -4985,13 +5169,14 @@
                     "#FBD000",
                     timestamp
                 );
+                ctx.restore();
 
-                const mBarW = zoneW - 36;
-                const mBarX = lPad + 18;
-                const mBarY = zoneTop + zoneH - 46;
+                const mBarW = zoneW - (isCompact ? 16 : 28);
+                const mBarX = lPad + (isCompact ? 8 : 14);
+                const mBarY = zoneTop + zoneH - (isCompact ? 30 : 38);
                 ctx.fillStyle = "#1A1A1A";
                 ctx.beginPath();
-                ctx.roundRect(mBarX, mBarY, mBarW, 22, 11);
+                ctx.roundRect(mBarX, mBarY, mBarW, 20, 10);
                 ctx.fill();
 
                 const mPct = Math.min(1, this.marioVisualProgress / 3);
@@ -5002,17 +5187,18 @@
                     mFillGrad.addColorStop(1, "#FBD000");
                     ctx.fillStyle = mFillGrad;
                     ctx.beginPath();
-                    ctx.roundRect(mBarX + 3, mBarY + 3, (mBarW - 6) * mPct, 16, 8);
+                    ctx.roundRect(mBarX + 3, mBarY + 3, (mBarW - 6) * mPct, 14, 7);
                     ctx.fill();
                 }
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 10px 'Press Start 2P'";
-                ctx.fillText(`WARNA MARIO: ${Math.round(mPct * 100)}%`, lPad + zoneW / 2, mBarY + 15);
+                ctx.font = isCompact ? "bold 7.5px 'Press Start 2P'" : "bold 9px 'Press Start 2P'";
+                ctx.textBaseline = "middle";
+                ctx.fillText(`${Math.round(mPct * 100)}%`, lPad + zoneW / 2, mBarY + 10);
                 ctx.restore();
 
                 // 2. ZON KANAN: KATEGORI WARNA SEJUK (❄️ LUIGI)
                 ctx.save();
-                const rPad = w - zoneW - 14 + this.rightZonePulse * 0.35;
+                const rPad = w - zoneW - (isCompact ? 8 : 14) + this.rightZonePulse * 0.35;
                 const rGlow = draggingNearRight ? 1.0 : 0.72;
 
                 const coolGrad = ctx.createLinearGradient(rPad, zoneTop, rPad, zoneTop + zoneH);
@@ -5022,45 +5208,46 @@
 
                 ctx.fillStyle = coolGrad;
                 ctx.strokeStyle = draggingNearRight ? "#FFFFFF" : "#69FF70";
-                ctx.lineWidth = draggingNearRight ? 7 : 5;
+                ctx.lineWidth = draggingNearRight ? 6 : 4;
                 ctx.beginPath();
-                ctx.roundRect(rPad, zoneTop, zoneW, zoneH, 24);
+                ctx.roundRect(rPad, zoneTop, zoneW, zoneH, 20);
                 ctx.fill();
                 ctx.stroke();
 
                 ctx.fillStyle = "#43B047";
                 ctx.beginPath();
-                ctx.roundRect(rPad + 10, zoneTop + 10, zoneW - 20, 52, 14);
+                ctx.roundRect(rPad + 8, zoneTop + 8, zoneW - 16, isCompact ? 32 : 38, 12);
                 ctx.fill();
                 ctx.strokeStyle = "#1A1A1A";
-                ctx.lineWidth = 3.5;
+                ctx.lineWidth = 3;
                 ctx.stroke();
 
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 12px 'Press Start 2P'";
+                ctx.font = isCompact ? "bold 8px 'Press Start 2P'" : "bold 10.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText("❄️ WARNA SEJUK", rPad + zoneW / 2, zoneTop + 31);
-                ctx.font = "bold 13px Fredoka";
-                ctx.fillStyle = "#E0FFE2";
-                ctx.fillText("Hijau • Biru • Ungu", rPad + zoneW / 2, zoneTop + 50);
+                ctx.textBaseline = "middle";
+                ctx.fillText("❄️ SEJUK", rPad + zoneW / 2, zoneTop + (isCompact ? 24 : 27));
 
                 const coolBadges = ["#43B047", "#0066FF", "#8E24AA"];
                 coolBadges.forEach((hex, idx) => {
-                    const bx = rPad + zoneW / 2 + (idx - 1) * 44;
-                    const by = zoneTop + 82;
+                    const bx = rPad + zoneW / 2 + (idx - 1) * dotGap;
+                    const by = zoneTop + (isCompact ? 56 : 66);
                     ctx.beginPath();
-                    ctx.arc(bx, by, 14, 0, Math.PI * 2);
+                    ctx.arc(bx, by, isCompact ? 9 : 12, 0, Math.PI * 2);
                     ctx.fillStyle = hex;
                     ctx.fill();
-                    ctx.lineWidth = 3;
+                    ctx.lineWidth = 2.5;
                     ctx.strokeStyle = "#FFFFFF";
                     ctx.stroke();
                 });
 
+                ctx.save();
+                ctx.translate(rPad + zoneW / 2, zoneTop + zoneH * 0.54);
+                if (isCompact) ctx.scale(0.72, 0.72);
                 this.drawColorableCharacter(
                     ctx,
-                    rPad + zoneW / 2,
-                    zoneTop + zoneH * 0.54,
+                    0,
+                    0,
                     "L",
                     this.luigiVisualProgress,
                     "#43B047",
@@ -5068,13 +5255,14 @@
                     "#8E24AA",
                     timestamp
                 );
+                ctx.restore();
 
-                const lBarW = zoneW - 36;
-                const lBarX = rPad + 18;
-                const lBarY = zoneTop + zoneH - 46;
+                const lBarW = zoneW - (isCompact ? 16 : 28);
+                const lBarX = rPad + (isCompact ? 8 : 14);
+                const lBarY = zoneTop + zoneH - (isCompact ? 30 : 38);
                 ctx.fillStyle = "#1A1A1A";
                 ctx.beginPath();
-                ctx.roundRect(lBarX, lBarY, lBarW, 22, 11);
+                ctx.roundRect(lBarX, lBarY, lBarW, 20, 10);
                 ctx.fill();
 
                 const lPct = Math.min(1, this.luigiVisualProgress / 3);
@@ -5085,29 +5273,31 @@
                     lFillGrad.addColorStop(1, "#8E24AA");
                     ctx.fillStyle = lFillGrad;
                     ctx.beginPath();
-                    ctx.roundRect(lBarX + 3, lBarY + 3, (lBarW - 6) * lPct, 16, 8);
+                    ctx.roundRect(lBarX + 3, lBarY + 3, (lBarW - 6) * lPct, 14, 7);
                     ctx.fill();
                 }
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 10px 'Press Start 2P'";
-                ctx.fillText(`WARNA LUIGI: ${Math.round(lPct * 100)}%`, rPad + zoneW / 2, lBarY + 15);
+                ctx.font = isCompact ? "bold 7.5px 'Press Start 2P'" : "bold 9px 'Press Start 2P'";
+                ctx.textBaseline = "middle";
+                ctx.fillText(`${Math.round(lPct * 100)}%`, rPad + zoneW / 2, lBarY + 10);
                 ctx.restore();
 
-                // 3. BLOK SOALAN EMAS [?] PENGELUAR KAD WARNA DI TENGAH ATAS
+                // 3. KAPSUL RINGKAS DI TENGAH ATAS
                 this.boxBounce *= Math.pow(0.85, dtNorm);
                 ctx.save();
-                ctx.translate(w / 2, 152 - this.boxBounce);
-                ctx.fillStyle = "#FBD000";
-                ctx.strokeStyle = "#1A1A1A";
-                ctx.lineWidth = 4;
+                ctx.translate(w / 2, (isCompact ? 78 : 92) - this.boxBounce);
+                ctx.fillStyle = "rgba(26, 26, 26, 0.88)";
+                ctx.strokeStyle = "#FBD000";
+                ctx.lineWidth = 3;
                 ctx.beginPath();
-                ctx.roundRect(-115, -24, 230, 48, 14);
+                ctx.roundRect(isCompact ? -92 : -118, -16, isCompact ? 184 : 236, 32, 16);
                 ctx.fill();
                 ctx.stroke();
-                ctx.fillStyle = "#1A1A1A";
-                ctx.font = "bold 11px 'Press Start 2P'";
+                ctx.fillStyle = "#FBD000";
+                ctx.font = isCompact ? "bold 7.5px 'Press Start 2P'" : "bold 9.5px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText(" TARIK KAD KE ZON ", 0, 5);
+                ctx.textBaseline = "middle";
+                ctx.fillText("◀ PANAS | SEJUK ▶", 0, 1);
                 ctx.restore();
 
                 // 4. KEMAS KINI & LUKIS BEBOLA CAT YANG MELUNCUR KE WATAK
@@ -5245,14 +5435,7 @@
                     ctx.font = "bold 13px Fredoka";
                     ctx.fillText(`(${card.item})`, 0, card.height / 2 - 11);
 
-                    if (isSelected) {
-                        ctx.fillStyle = "#FBD000";
-                        ctx.strokeStyle = "#1A1A1A";
-                        ctx.lineWidth = 3.5;
-                        ctx.font = "bold 10px 'Press Start 2P'";
-                        ctx.strokeText("◀ PANAS | SEJUK ▶", 0, -card.height / 2 - 14);
-                        ctx.fillText("◀ PANAS | SEJUK ▶", 0, -card.height / 2 - 14);
-                    }
+
 
                     ctx.restore();
                 }
