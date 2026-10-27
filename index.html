@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>PAC-MAN AR: Dunia Seni Visual Interaktif (Edisi Pro 60FPS)</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -86,9 +89,10 @@
         }
         #damage-overlay.active-damage { opacity: 1; }
 
-        /* Skrin Memuatkan Kamera AR */
+        /* Skrin Memuatkan Kamera AR (Lutsinar supaya Animasi Pac-Man Attract Mode terus kelihatan di belakang) */
         #loading {
-            background: radial-gradient(circle, #10164A 0%, #040514 100%);
+            background: radial-gradient(circle, rgba(12, 18, 64, 0.72) 0%, rgba(3, 4, 18, 0.84) 100%);
+            backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
             z-index: 1000; color: white; text-align: center;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             pointer-events: auto; padding: 24px;
@@ -2313,6 +2317,14 @@
 
             static touchActive = false;
             static mouseDown = false;
+            static loopRunning = false;
+
+            static startRenderLoopOnce() {
+                if (this.loopRunning) return;
+                this.loopRunning = true;
+                this.lastFrameTime = performance.now();
+                window.requestAnimationFrame((t) => this.renderLoop(t));
+            }
 
             static async init() {
                 this.video = document.getElementById('webcam');
@@ -2323,6 +2335,8 @@
                 this.tryLoadLocalAssets();
                 this.resizeCanvas();
                 this.setupPointerBackup();
+                // Mulakan animasi Pac-Man Attract Mode 60FPS serta-merta walaupun kamera sedang dimuatkan!
+                this.startRenderLoopOnce();
 
                 try {
                     const vision = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm");
@@ -2371,8 +2385,7 @@
                         SoundFX.init();
                         this.resizeCanvas();
                         this.showMenu();
-                        this.lastFrameTime = performance.now();
-                        window.requestAnimationFrame((t) => this.renderLoop(t));
+                        this.startRenderLoopOnce();
                     };
 
                     if (this.video.readyState >= 2) {
@@ -2419,8 +2432,7 @@
                 this.simulatedHand = { x: window.innerWidth / 2, y: window.innerHeight / 2, pinching: false, fist: false };
                 this.resizeCanvas();
                 this.showMenu();
-                this.lastFrameTime = performance.now();
-                window.requestAnimationFrame((t) => this.renderLoop(t));
+                this.startRenderLoopOnce();
             }
 
             static tryLoadLocalAssets() {
