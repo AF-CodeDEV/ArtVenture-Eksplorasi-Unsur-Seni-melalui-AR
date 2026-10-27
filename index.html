@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Super Mario AR: Dunia Seni Visual Interaktif (Edisi Pro 60FPS)</title>
+    <title>PAC-MAN AR: Dunia Seni Visual Interaktif (Edisi Pro 60FPS)</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* =========================================================
-           CSS: SUPER MARIO ARCADE PRO (ULTRA-SMOOTH 60FPS NO-LAG)
+           CSS: PAC-MAN NEON ARCADE PRO (ULTRA-SMOOTH 60FPS NO-LAG)
            ========================================================= */
         :root {
-            --mario-red: #E52521;
-            --mario-red-dark: #9E0E0B;
-            --mario-blue: #0043B8;
-            --luigi-green: #43B047;
-            --luigi-dark: #1B5E20;
-            --pipe-neon: #69FF70;
-            --coin-yellow: #FBD000;
-            --coin-gold: #D99B00;
-            --brick-brown: #C84C0C;
-            --brick-dark: #6D2603;
-            --toad-pink: #FF2E63;
-            --bowser-lava: #FF5500;
-            --dark: #1A1A1A;
+            --mario-red: #FF1744;
+            --mario-red-dark: #99001B;
+            --mario-blue: #2121DE;
+            --luigi-green: #00E5FF;
+            --luigi-dark: #004D61;
+            --pipe-neon: #00FFFF;
+            --coin-yellow: #FFE600;
+            --coin-gold: #FFB300;
+            --brick-brown: #1919A6;
+            --brick-dark: #080838;
+            --toad-pink: #FF66CC;
+            --bowser-lava: #FF8800;
+            --dark: #070818;
+            --pac-yellow: #FFE600;
+            --maze-blue: #2121DE;
+            --maze-neon: #00E5FF;
+            --blinky-red: #FF1744;
+            --inky-cyan: #00FFFF;
+            --pinky-pink: #FF66CC;
+            --clyde-orange: #FF9100;
         }
 
         * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
@@ -30,7 +37,7 @@
         body, html {
             margin: 0; padding: 0; width: 100vw; height: 100vh;
             font-family: 'Fredoka', cursive, sans-serif;
-            overflow: hidden; background-color: #000;
+            overflow: hidden; background-color: #03040C;
         }
 
         /* 1. FULL SCREEN WEBCAM LAYER */
@@ -44,7 +51,7 @@
         #home-bg-wrap {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 2; pointer-events: none; overflow: hidden;
-            background: linear-gradient(180deg, rgba(79,134,247,0.82) 0%, rgba(118,180,255,0.82) 65%, rgba(166,216,255,0.85) 100%);
+            background: radial-gradient(circle at 50% 35%, rgba(16, 22, 74, 0.86) 0%, rgba(6, 8, 32, 0.90) 65%, rgba(2, 3, 14, 0.94) 100%);
         }
         #home-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -69,7 +76,7 @@
         /* Flash Amaran Bila Hilang Nyawa */
         #damage-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle, transparent 40%, rgba(229, 37, 33, 0.65) 100%);
+            background: radial-gradient(circle, transparent 40%, rgba(255, 23, 68, 0.68) 100%);
             z-index: 58; pointer-events: none; opacity: 0;
             transition: opacity 0.18s ease;
         }
@@ -77,16 +84,16 @@
 
         /* Skrin Memuatkan Kamera AR */
         #loading {
-            background: radial-gradient(circle, #5C94FC 0%, #00246B 100%);
+            background: radial-gradient(circle, #10164A 0%, #040514 100%);
             z-index: 1000; color: white; text-align: center;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             pointer-events: auto; padding: 24px;
         }
         .spinner {
             width: 64px; height: 64px;
-            border: 8px solid #FFF; border-top-color: var(--mario-red);
-            border-bottom-color: var(--coin-yellow);
-            border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px;
+            border: 8px solid var(--pac-yellow); border-right-color: transparent;
+            border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 230, 0, 0.5);
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -100,60 +107,68 @@
             display: flex; gap: 8px; align-items: center; pointer-events: auto; flex-wrap: wrap;
         }
         .badge-arcade {
-            background: var(--dark); color: var(--coin-yellow);
-            border: 3px solid #FFF; border-radius: 14px;
+            background: rgba(7, 8, 24, 0.94); color: var(--pac-yellow);
+            border: 3px solid var(--maze-neon); border-radius: 14px;
             padding: 8px 13px; font-family: 'Press Start 2P', monospace;
             font-size: 0.58rem; display: flex; align-items: center; gap: 7px;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.65);
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.35), 0 4px 0 #000;
             cursor: pointer; pointer-events: auto;
-            transition: transform 0.12s ease, background 0.12s;
+            transition: transform 0.12s ease, background 0.12s, box-shadow 0.12s;
         }
         .badge-arcade.hovered, .badge-arcade:hover {
             transform: translateY(-2px) scale(1.04);
-            background: var(--coin-yellow); color: var(--dark);
+            background: var(--pac-yellow); color: var(--dark);
+            border-color: #FFF;
+            box-shadow: 0 0 18px rgba(255, 230, 0, 0.75), 0 4px 0 #000;
         }
         .status-dot {
             width: 10px; height: 10px; border-radius: 50%;
             background: #50FA7B; display: inline-block;
+            box-shadow: 0 0 8px #50FA7B;
         }
 
-        /* Kursor Bebola Api AR (60FPS Transform) */
+        /* Kursor Pac-Man AR (60FPS Transform) */
         .ar-cursor {
             position: fixed; top: 0; left: 0; width: 48px; height: 48px;
-            background: radial-gradient(circle, #FFF 20%, var(--coin-yellow) 60%, var(--mario-red) 100%);
+            background: radial-gradient(circle, #FFF 15%, var(--pac-yellow) 65%, #FF9100 100%);
             border: 3px solid #FFF; border-radius: 50%;
+            box-shadow: 0 0 18px rgba(255, 230, 0, 0.85);
             z-index: 100; pointer-events: none; display: none;
             margin-left: -24px; margin-top: -24px;
             will-change: transform;
         }
         .ar-cursor::before {
-            content: '🔥'; position: absolute; top: -14px; right: -10px; font-size: 20px;
+            content: '🍒'; position: absolute; top: -14px; right: -10px; font-size: 20px;
         }
         .ar-cursor.shooting {
-            background: #FFF; border-color: var(--coin-yellow);
+            background: radial-gradient(circle, #FFF 30%, var(--maze-neon) 100%);
+            border-color: var(--pac-yellow);
+            box-shadow: 0 0 24px #00FFFF;
         }
 
         /* Banner Tajuk Menu Utama */
         .header-banner {
             position: absolute; top: 56px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(180deg, #FFE047 0%, #FBD000 55%, #E0A800 100%);
-            border: 5px solid var(--dark); border-radius: 18px; padding: 12px 32px;
-            text-align: center; box-shadow: 0 7px 0px var(--dark);
+            background: linear-gradient(180deg, #0D1138 0%, #070920 100%);
+            border: 4px solid var(--maze-neon); border-radius: 18px; padding: 12px 32px;
+            text-align: center;
+            box-shadow: 0 0 24px rgba(0, 229, 255, 0.45), inset 0 0 18px rgba(33, 33, 222, 0.55), 0 7px 0px #000;
             pointer-events: auto; z-index: 22; min-width: 320px; max-width: 90vw;
         }
         .header-banner h1 {
             font-family: 'Press Start 2P', monospace; font-size: clamp(0.9rem, 2vw, 1.35rem);
-            color: var(--mario-red); margin: 0 0 6px;
-            text-shadow: 2px 2px 0px var(--dark), -1px -1px 0 #FFF;
+            color: var(--pac-yellow); margin: 0 0 8px;
+            text-shadow: 0 0 12px rgba(255, 230, 0, 0.65), 3px 3px 0px #000;
+            letter-spacing: 1px;
         }
         .header-banner p {
             margin: 0; font-size: clamp(0.78rem, 1.3vw, 0.95rem);
-            font-weight: 700; color: var(--dark);
-            background: rgba(255,255,255,0.88); padding: 4px 12px;
-            border-radius: 10px; border: 2px solid var(--dark); display: inline-block;
+            font-weight: 700; color: #FFF;
+            background: rgba(33, 33, 222, 0.65); padding: 4px 14px;
+            border-radius: 10px; border: 2px solid var(--maze-neon); display: inline-block;
         }
 
-        /* Grid 3 Dunia (Mario, Luigi, Toad) */
+        /* Grid 3 Zon Maze (Pac-Man, Inky, Pinky) */
         .worlds-grid {
             position: absolute; top: 53%; left: 50%;
             transform: translate(-50%, -50%);
@@ -166,50 +181,54 @@
         }
         .btn-floating-character {
             position: relative;
-            background: linear-gradient(180deg, #FFFFFF 0%, #FFF6D6 100%);
-            border: 5px solid var(--dark); border-radius: 22px; padding: 14px 12px;
+            background: linear-gradient(180deg, #101540 0%, #080B24 100%);
+            border: 4px solid var(--maze-neon); border-radius: 22px; padding: 14px 12px;
             display: flex; flex-direction: column; align-items: center; justify-content: space-between;
             cursor: none; pointer-events: auto;
-            box-shadow: 0 9px 0px var(--dark);
-            transition: transform 0.16s ease, background 0.16s;
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.28), 0 9px 0px #000;
+            transition: transform 0.16s ease, background 0.16s, box-shadow 0.16s;
             will-change: transform;
         }
-        .btn-floating-character:nth-child(1) { border-top: 9px solid var(--mario-red); }
-        .btn-floating-character:nth-child(2) { border-top: 9px solid var(--luigi-green); }
-        .btn-floating-character:nth-child(3) { border-top: 9px solid var(--toad-pink); }
-        .btn-floating-character:nth-child(4) { border-top: 9px solid var(--bowser-lava); }
+        .btn-floating-character:nth-child(1) { border-top: 9px solid var(--pac-yellow); }
+        .btn-floating-character:nth-child(2) { border-top: 9px solid var(--inky-cyan); }
+        .btn-floating-character:nth-child(3) { border-top: 9px solid var(--pinky-pink); }
+        .btn-floating-character:nth-child(4) { border-top: 9px solid var(--clyde-orange); }
 
         .btn-floating-character.hovered, .btn-floating-character:hover {
             transform: translateY(-10px) scale(1.04);
-            background: linear-gradient(180deg, #FFFDF0 0%, #FFE875 100%);
+            background: linear-gradient(180deg, #192266 0%, #0E1338 100%);
+            border-color: var(--pac-yellow);
+            box-shadow: 0 0 28px rgba(255, 230, 0, 0.65), 0 9px 0px #000;
         }
         .world-tag-pill {
             font-family: 'Press Start 2P', monospace; font-size: 0.58rem;
             padding: 5px 10px; border-radius: 10px; color: #FFF;
-            border: 2px solid var(--dark); margin-bottom: 6px;
+            border: 2px solid #FFF; margin-bottom: 6px;
+            text-shadow: 1px 1px 0 #000;
         }
         .char-emblem-wrap {
             width: 104px; height: 104px; border-radius: 50%;
-            background: radial-gradient(circle, #FFF 35%, #FFEAA0 100%);
-            border: 4px solid var(--dark);
+            background: radial-gradient(circle, #1E2978 20%, #070A20 100%);
+            border: 4px solid var(--pac-yellow);
+            box-shadow: inset 0 0 16px rgba(0, 229, 255, 0.45), 0 0 12px rgba(255, 230, 0, 0.35);
             display: flex; align-items: center; justify-content: center;
             margin: 4px 0 10px; position: relative; overflow: hidden;
         }
         .character-png { width: 86%; height: 86%; object-fit: contain; display: none; }
         .world-border-label {
-            width: 100%; text-align: center; background: #FFF;
-            border: 3px solid var(--dark); border-radius: 12px; padding: 7px 8px;
+            width: 100%; text-align: center; background: rgba(7, 9, 28, 0.92);
+            border: 3px solid var(--maze-neon); border-radius: 12px; padding: 7px 8px;
         }
         .world-border-label strong {
             font-family: 'Press Start 2P', monospace; font-size: 0.65rem;
-            color: var(--dark); display: block; margin-bottom: 3px;
+            color: #FFF; display: block; margin-bottom: 3px;
         }
         .world-border-label small {
             font-family: 'Fredoka', sans-serif; font-size: 0.88rem; font-weight: 700; display: block;
         }
 
         /* =========================================================
-           4 STRUKTUR REKA BENTUK UNIK & BERBEZA (DUNIA 1, 2, 3, 4)
+           3 STRUKTUR REKA BENTUK UNIK PAC-MAN ARCADE (ZON 1, 2, 3)
            ========================================================= */
         .world-scene {
             position: absolute; top: 44%; left: 50%;
@@ -221,7 +240,7 @@
         .world-scene.active-scene { display: flex; }
 
         /* ---------------------------------------------------------
-           REKA BENTUK 1 (MARIO): 4 BLOK SOALAN EMAS [?] 3D DI UDARA
+           REKA BENTUK 1 (PAC-MAN & BLINKY): 4 KOTAK POWER PELLET [●] 3D
            --------------------------------------------------------- */
         .mario-blocks-row {
             display: flex; justify-content: center; gap: 18px;
@@ -229,36 +248,39 @@
         }
         .q-block-3d {
             width: 115px; height: 86px;
-            background: linear-gradient(180deg, #FFE866 0%, #FBD000 55%, #C88A00 100%);
-            border: 5px solid var(--dark); border-radius: 14px;
+            background: linear-gradient(180deg, #161E5C 0%, #0A0E30 100%);
+            border: 4px solid var(--maze-neon); border-radius: 16px;
             position: relative; cursor: none; pointer-events: auto;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 9px 0 var(--brick-dark), inset 0 4px 0 rgba(255,255,255,0.7);
-            transition: transform 0.16s ease, background 0.16s;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.35), 0 8px 0 #000;
+            transition: transform 0.16s ease, background 0.16s, border-color 0.16s;
         }
         .q-block-3d::before {
             content: '• •'; position: absolute; top: 3px; left: 8px; right: 8px;
-            display: flex; justify-content: space-between; color: var(--brick-dark);
+            display: flex; justify-content: space-between; color: var(--pac-yellow);
             font-size: 14px; font-weight: 900; line-height: 1;
         }
         .q-block-3d .q-mark {
-            font-family: 'Press Start 2P', monospace; font-size: 1.55rem;
-            color: var(--brick-dark); text-shadow: 2px 2px 0 #FFF;
+            font-family: 'Press Start 2P', monospace; font-size: 1.45rem;
+            color: var(--pac-yellow); text-shadow: 0 0 10px rgba(255, 230, 0, 0.8), 2px 2px 0 #000;
         }
         .q-block-3d .q-sub {
             font-family: 'Press Start 2P', monospace; font-size: 0.5rem;
-            color: var(--dark); margin-top: 5px;
+            color: #FFF; margin-top: 5px;
         }
         .q-block-3d.hovered, .q-block-3d:hover {
             transform: translateY(-10px) scale(1.06);
-            background: linear-gradient(180deg, #FFF59D 0%, #FFD600 100%);
+            background: linear-gradient(180deg, #253294 0%, #12184D 100%);
+            border-color: var(--pac-yellow);
         }
         .q-block-3d.active-block {
-            background: linear-gradient(180deg, #FF524F 0%, var(--mario-red) 100%);
+            background: linear-gradient(180deg, #FFE600 0%, #FF9100 100%);
+            border-color: #FFF;
+            box-shadow: 0 0 22px rgba(255, 230, 0, 0.75), 0 8px 0 #000;
             transform: translateY(-8px);
         }
         .q-block-3d.active-block .q-mark, .q-block-3d.active-block .q-sub {
-            color: #FFF; text-shadow: 2px 2px 0 var(--dark);
+            color: var(--dark); text-shadow: 1px 1px 0 #FFF;
         }
         .q-block-3d.punched-anim {
             animation: blockPunch 0.35s ease;
@@ -271,10 +293,10 @@
 
         .mario-powerup-stage {
             flex: 1; margin-top: 14px;
-            background: linear-gradient(180deg, #FFFDF5 0%, #FFEFA6 100%);
-            border: 6px solid var(--dark); border-radius: 24px;
-            box-shadow: 0 10px 0 var(--brick-dark);
-            padding: 20px 26px; position: relative;
+            background: linear-gradient(180deg, #0D133A 0%, #070A22 100%);
+            border: 5px solid var(--pac-yellow); border-radius: 24px;
+            box-shadow: 0 0 25px rgba(255, 230, 0, 0.3), inset 0 0 22px rgba(0, 229, 255, 0.2), 0 10px 0 #000;
+            padding: 20px 26px; position: relative; color: #FFF;
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; align-items: center;
         }
         .mario-pop-anim {
@@ -286,7 +308,7 @@
         }
 
         /* ---------------------------------------------------------
-           REKA BENTUK 2 (LUIGI): PROJEKTOR HOLOGRAM PAIP HIJAU
+           REKA BENTUK 2 (INKY): PROJEKTOR HOLOGRAM TEROWONG MAZE CYAN
            --------------------------------------------------------- */
         .luigi-pipe-arena {
             flex: 1; display: flex; flex-direction: column;
@@ -296,11 +318,11 @@
         .luigi-hologram-screen {
             width: 92%; flex: 1;
             background:
-                repeating-linear-gradient(0deg, rgba(105, 255, 112, 0.1) 0px, rgba(105, 255, 112, 0.1) 3px, rgba(10, 42, 20, 0.86) 3px, rgba(10, 42, 20, 0.86) 9px);
-            border: 4px solid var(--pipe-neon);
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.1) 0px, rgba(0, 255, 255, 0.1) 3px, rgba(6, 18, 38, 0.92) 3px, rgba(6, 18, 38, 0.92) 9px);
+            border: 4px solid var(--inky-cyan);
             border-radius: 28px 28px 40px 40px;
             padding: 18px 26px; color: #FFF;
-            box-shadow: 0 0 25px rgba(105, 255, 112, 0.45), inset 0 0 20px rgba(105, 255, 112, 0.25);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.45), inset 0 0 20px rgba(0, 255, 255, 0.25);
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; align-items: center;
             transform-origin: bottom center;
             transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
@@ -312,7 +334,7 @@
         }
         .luigi-pipe-beam {
             width: min(640px, 88vw); height: 26px;
-            background: linear-gradient(180deg, rgba(105,255,112,0.58) 0%, rgba(67,176,71,0.18) 100%);
+            background: linear-gradient(180deg, rgba(0, 255, 255, 0.58) 0%, rgba(33, 33, 222, 0.18) 100%);
             clip-path: polygon(0 0, 100% 0, 86% 100%, 14% 100%);
             z-index: 4;
         }
@@ -321,23 +343,23 @@
         }
         .pipe-rim {
             width: min(760px, 94vw); min-height: 70px;
-            background: linear-gradient(90deg, #144D18 0%, #80E040 28%, #43B047 65%, #0F3B12 100%);
-            border: 5px solid var(--dark); border-radius: 16px;
+            background: linear-gradient(90deg, #09133A 0%, #2121DE 28%, #0088CC 65%, #07102E 100%);
+            border: 5px solid var(--inky-cyan); border-radius: 16px;
             display: flex; align-items: center; justify-content: space-between;
             padding: 8px 16px; gap: 14px;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.55);
+            box-shadow: 0 0 18px rgba(0, 255, 255, 0.35), 0 8px 0 rgba(0,0,0,0.65);
         }
         .pipe-neck {
             width: min(650px, 84vw); height: 42px;
-            background: linear-gradient(90deg, #144D18 0%, #72D636 28%, #389E3C 65%, #0F3B12 100%);
-            border-left: 5px solid var(--dark); border-right: 5px solid var(--dark);
-            border-bottom: 5px solid var(--dark); border-radius: 0 0 12px 12px;
+            background: linear-gradient(90deg, #070F2B 0%, #1919A6 50%, #070F2B 100%);
+            border-left: 5px solid var(--inky-cyan); border-right: 5px solid var(--inky-cyan);
+            border-bottom: 5px solid var(--inky-cyan); border-radius: 0 0 12px 12px;
             display: flex; align-items: center; justify-content: center; gap: 14px;
         }
         .btn-pipe-valve {
             flex: 1; min-height: 48px;
-            background: var(--dark); color: var(--pipe-neon);
-            border: 3px solid var(--pipe-neon); border-radius: 12px;
+            background: var(--dark); color: var(--inky-cyan);
+            border: 3px solid var(--inky-cyan); border-radius: 12px;
             padding: 12px 14px; font-family: 'Press Start 2P', monospace;
             font-size: clamp(0.64rem, 1.05vw, 0.8rem);
             display: inline-flex; align-items: center; justify-content: center;
@@ -346,43 +368,44 @@
             transition: transform 0.14s ease, background 0.14s, border-color 0.14s;
         }
         .btn-pipe-valve.active-valve, .btn-pipe-valve.hovered, .btn-pipe-valve:hover {
-            background: var(--pipe-neon); color: var(--dark);
+            background: var(--inky-cyan); color: var(--dark);
             border-color: #FFFFFF;
             transform: translateY(-4px) scale(1.04);
         }
 
         /* ---------------------------------------------------------
-           REKA BENTUK 3 (TOAD): RUMAH CENDAWAN & PETI HARTA + KAD BINTANG
+           REKA BENTUK 3 (PINKY): BILIK HANTU NEON & KAPSUL BONUS ARCADE
            --------------------------------------------------------- */
         .toad-house-wrapper {
             flex: 1; display: flex; flex-direction: column; justify-content: space-between;
         }
         .toad-mushroom-dome {
             height: 64px;
-            background: var(--mario-red);
-            border: 5px solid var(--dark);
+            background: linear-gradient(90deg, #2A0B3B 0%, #FF2E93 50%, #2A0B3B 100%);
+            border: 4px solid var(--pinky-pink);
             border-radius: 120px 120px 18px 18px;
             position: relative; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 0 var(--dark);
+            box-shadow: 0 0 20px rgba(255, 102, 204, 0.45), 0 6px 0 #000;
         }
         .toad-dome-spot {
-            width: 44px; height: 44px; border-radius: 50%;
-            background: #FFFFFF; border: 3px solid var(--dark);
-            position: absolute; top: 8px;
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--pac-yellow); border: 3px solid #FFF;
+            box-shadow: 0 0 12px var(--pac-yellow);
+            position: absolute; top: 12px;
         }
         .toad-dome-title {
-            background: var(--coin-yellow); color: var(--dark);
-            border: 3px solid var(--dark); border-radius: 14px;
+            background: var(--dark); color: var(--pac-yellow);
+            border: 3px solid var(--pac-yellow); border-radius: 14px;
             padding: 6px 18px; font-family: 'Press Start 2P', monospace;
-            font-size: 0.65rem; z-index: 2; box-shadow: 0 3px 0 var(--dark);
+            font-size: 0.65rem; z-index: 2; box-shadow: 0 3px 0 #000;
         }
         .toad-star-card {
             flex: 1; margin: 10px 0;
-            background: linear-gradient(135deg, #22162B 0%, #3B1E4A 50%, #1B1024 100%);
-            border: 5px solid var(--coin-yellow); border-radius: 22px;
+            background: linear-gradient(135deg, #160A26 0%, #26103D 50%, #0C0618 100%);
+            border: 5px solid var(--pinky-pink); border-radius: 22px;
             padding: 16px 24px; color: #FFF;
-            box-shadow: 0 8px 0 var(--dark), inset 0 0 25px rgba(251, 208, 0, 0.25);
+            box-shadow: 0 0 22px rgba(255, 102, 204, 0.35), inset 0 0 25px rgba(255, 230, 0, 0.18), 0 8px 0 #000;
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; align-items: center;
             transition: transform 0.32s ease;
         }
@@ -398,24 +421,25 @@
         }
         .btn-toad-chest {
             flex: 1; max-width: 190px;
-            background: linear-gradient(180deg, #CD7F32 0%, #8B4513 100%);
-            border: 4px solid var(--dark); border-radius: 14px 14px 8px 8px;
+            background: linear-gradient(180deg, #211545 0%, #0F0924 100%);
+            border: 3px solid var(--pinky-pink); border-radius: 14px 14px 8px 8px;
             padding: 8px 10px; color: #FFF;
             font-family: 'Press Start 2P', monospace; font-size: 0.56rem;
             cursor: none; pointer-events: auto;
-            box-shadow: 0 6px 0 var(--dark), inset 0 4px 0 var(--coin-yellow);
+            box-shadow: 0 6px 0 #000, inset 0 3px 0 rgba(255, 255, 255, 0.25);
             display: flex; align-items: center; justify-content: center; gap: 6px;
             transition: transform 0.15s ease;
         }
         .btn-toad-chest.hovered, .btn-toad-chest:hover {
             transform: translateY(-6px) scale(1.05);
             background: linear-gradient(180deg, #FFE047 0%, #D99B00 100%);
-            color: var(--dark);
+            color: var(--dark); border-color: #FFF;
         }
         .btn-toad-chest.chest-open {
-            background: linear-gradient(180deg, #FFF066 0%, var(--coin-yellow) 100%);
+            background: linear-gradient(180deg, #FFF066 0%, var(--pac-yellow) 100%);
             color: var(--dark); transform: translateY(-5px);
             border-color: #FFF;
+            box-shadow: 0 0 16px rgba(255, 230, 0, 0.7), 0 6px 0 #000;
         }
 
         /* ---------------------------------------------------------
@@ -502,21 +526,21 @@
         .note-body-copy li { margin-bottom: 6px; }
 
         .visual-demo-card {
-            background: rgba(255, 255, 255, 0.94);
-            border: 4px solid var(--dark); border-radius: 18px;
-            padding: 14px; text-align: center; color: var(--dark);
+            background: rgba(10, 14, 42, 0.94);
+            border: 4px solid var(--maze-neon); border-radius: 18px;
+            padding: 14px; text-align: center; color: #FFF;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 170px; box-shadow: 0 6px 0 rgba(0,0,0,0.25);
+            min-height: 170px; box-shadow: inset 0 0 16px rgba(0, 229, 255, 0.22), 0 6px 0 rgba(0,0,0,0.45);
         }
         .art-diagram-box {
             margin-top: 8px; padding: 10px 14px;
-            background: #FFF; border: 3px solid var(--dark); border-radius: 12px;
+            background: #06091E; border: 3px solid var(--pac-yellow); border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            gap: 10px; color: var(--dark); font-weight: 800;
+            gap: 10px; color: #FFF; font-weight: 800;
         }
         .color-dot {
             width: 34px; height: 34px; border-radius: 50%;
-            border: 3px solid var(--dark); display: inline-flex;
+            border: 3px solid #FFF; display: inline-flex;
             align-items: center; justify-content: center;
             font-weight: 800; color: #FFF; font-size: 0.78rem;
         }
@@ -533,39 +557,40 @@
             gap: 12px; margin-top: 10px; z-index: 25; flex-wrap: wrap;
         }
         .drag-guide-inline {
-            background: rgba(26, 26, 26, 0.94); color: #FFF; padding: 7px 14px;
-            border-radius: 26px; border: 3px dashed var(--coin-yellow);
+            background: rgba(7, 9, 28, 0.94); color: #FFF; padding: 7px 14px;
+            border-radius: 26px; border: 3px dashed var(--pac-yellow);
             font-weight: 700; font-size: 0.86rem;
             display: flex; gap: 10px; align-items: center;
         }
         .btn-page-nav {
-            background: var(--mario-red); color: #FFF; border: 2px solid #FFF;
+            background: var(--maze-blue); color: var(--pac-yellow); border: 2px solid var(--maze-neon);
             border-radius: 12px; padding: 6px 11px; font-family: 'Press Start 2P', monospace;
             font-size: 0.54rem; cursor: none;
         }
         .btn-page-nav.hovered, .btn-page-nav:hover {
-            background: var(--coin-yellow); color: var(--dark);
+            background: var(--pac-yellow); color: var(--dark);
         }
 
         .btn-mario {
             display: inline-flex; align-items: center; gap: 8px;
-            background: linear-gradient(180deg, #FF4B47 0%, var(--mario-red) 100%);
-            border: 4px solid var(--dark); padding: 11px 22px; border-radius: 16px;
+            background: linear-gradient(180deg, #FF3355 0%, var(--blinky-red) 100%);
+            border: 3px solid #FFF; padding: 11px 22px; border-radius: 16px;
             font-family: 'Press Start 2P', monospace;
             font-size: clamp(0.64rem, 1.1vw, 0.78rem); color: white; cursor: none; pointer-events: auto;
-            box-shadow: 0 6px 0px var(--dark); text-transform: uppercase;
-            transition: transform 0.14s ease, background 0.14s;
+            box-shadow: 0 0 14px rgba(255, 23, 68, 0.45), 0 6px 0px #000; text-transform: uppercase;
+            transition: transform 0.14s ease, background 0.14s, box-shadow 0.14s;
         }
         .btn-mario.hovered, .btn-mario:hover {
             transform: translateY(-3px) scale(1.03);
-            background: linear-gradient(180deg, #FFF066 0%, var(--coin-yellow) 100%);
+            background: linear-gradient(180deg, #FFF066 0%, var(--pac-yellow) 100%);
             color: var(--dark);
+            box-shadow: 0 0 22px rgba(255, 230, 0, 0.85), 0 6px 0px #000;
         }
-        .btn-green { background: linear-gradient(180deg, #68D86B 0%, var(--luigi-green) 100%); }
-        .btn-blue { background: linear-gradient(180deg, #3A82FF 0%, var(--mario-blue) 100%); }
+        .btn-green { background: linear-gradient(180deg, #00E676 0%, #00B248 100%); box-shadow: 0 0 16px rgba(0, 230, 118, 0.45), 0 6px 0px #000; }
+        .btn-blue { background: linear-gradient(180deg, #2962FF 0%, var(--maze-blue) 100%); box-shadow: 0 0 16px rgba(33, 33, 222, 0.55), 0 6px 0px #000; }
 
         /* =========================================================
-           HUD PERMAINAN REALISTIK & BERFUNGSI PENUH (NYAWA, COMBO, MARKAH)
+           HUD PERMAINAN PAC-MAN ARCADE REALISTIK & BERFUNGSI PENUH
            ========================================================= */
         #game-hud {
             position: fixed; top: 52px; left: 16px; right: 16px; display: none;
@@ -574,16 +599,18 @@
             gap: 10px; flex-wrap: wrap;
         }
         .hud-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(255,248,220,0.97) 100%);
-            padding: 8px 14px; border-radius: 16px; border: 4px solid var(--dark);
+            background: linear-gradient(180deg, rgba(12, 16, 48, 0.96) 0%, rgba(6, 8, 26, 0.96) 100%);
+            color: #FFF;
+            padding: 8px 14px; border-radius: 16px; border: 3px solid var(--maze-neon);
             font-size: clamp(0.62rem, 1.05vw, 0.8rem);
-            box-shadow: 0 5px 0px var(--dark);
+            box-shadow: 0 0 16px rgba(0, 229, 255, 0.32), 0 5px 0px #000;
             display: flex; align-items: center; gap: 10px; pointer-events: auto;
             transition: transform 0.15s ease;
         }
         .hud-card.hud-shake {
             animation: hudDamageShake 0.42s ease;
-            background: #FFE5E5;
+            background: #4A0B1D;
+            border-color: var(--blinky-red);
         }
         @keyframes hudDamageShake {
             0%, 100% { transform: translateX(0); }
@@ -600,7 +627,7 @@
             display: inline-block;
         }
         .heart-slot.heart-alive {
-            filter: drop-shadow(0 2px 0 rgba(0,0,0,0.35));
+            filter: drop-shadow(0 0 6px rgba(255, 23, 68, 0.7));
             transform: scale(1);
         }
         .heart-slot.heart-lost {
@@ -610,71 +637,74 @@
         }
         .score-value-box {
             display: inline-flex; align-items: baseline; gap: 4px;
-            background: #1A1A1A; color: var(--coin-yellow);
+            background: #03040E; color: var(--pac-yellow);
             padding: 5px 11px; border-radius: 10px;
-            border: 2px solid #B88200;
+            border: 2px solid var(--pac-yellow);
             font-size: clamp(0.72rem, 1.15vw, 0.9rem);
             min-width: 92px; justify-content: flex-end;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.8), 0 0 8px rgba(255, 230, 0, 0.35);
             transition: transform 0.15s ease, color 0.15s ease;
         }
         .score-value-box.score-pop {
             transform: scale(1.14);
-            color: #69FF70;
+            color: #00FFFF;
         }
         .score-unit {
-            font-size: 0.48rem; color: #CFD8DC;
+            font-size: 0.48rem; color: #90CAF9;
         }
         .mission-step-pill {
-            background: #E3F2FD; color: var(--mario-blue);
+            background: #141B52; color: var(--inky-cyan);
             padding: 4px 9px; border-radius: 10px;
-            border: 2px solid var(--dark); font-size: 0.54rem;
-            box-shadow: 0 2px 0 var(--dark);
+            border: 2px solid var(--inky-cyan); font-size: 0.54rem;
+            box-shadow: 0 2px 0 #000;
             white-space: nowrap;
         }
         .combo-pill {
-            background: linear-gradient(180deg, #FF9800 0%, #E52521 100%);
+            background: linear-gradient(180deg, #FF9100 0%, #FF1744 100%);
             color: #FFF; padding: 4px 9px; border-radius: 10px;
-            border: 2px solid var(--dark); font-size: 0.55rem;
-            box-shadow: 0 2px 0 var(--dark);
+            border: 2px solid #FFF; font-size: 0.55rem;
+            box-shadow: 0 2px 0 #000;
             transition: transform 0.15s ease;
         }
         .combo-pill.combo-hot {
-            background: linear-gradient(180deg, #FFF066 0%, #FF5500 100%);
+            background: linear-gradient(180deg, #FFF066 0%, #FF9100 100%);
             color: var(--dark); transform: scale(1.08);
+            box-shadow: 0 0 12px var(--pac-yellow);
         }
         .progress-track {
-            width: 118px; height: 14px; background: #262626;
-            border: 3px solid var(--dark); border-radius: 10px; overflow: hidden;
+            width: 118px; height: 14px; background: #050716;
+            border: 2px solid var(--maze-neon); border-radius: 10px; overflow: hidden;
             position: relative;
         }
         .progress-fill {
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--luigi-green), var(--coin-yellow), #FF6D00);
+            background: linear-gradient(90deg, var(--inky-cyan), var(--pac-yellow), #FF1744);
             transition: width 0.25s ease;
         }
 
-        /* Kotak Dialog Maskot */
+        /* Kotak Dialog Maskot Pac-Man */
         #mascot-box {
             position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
             z-index: 30; display: flex; align-items: center;
-            background: rgba(255, 255, 255, 0.96); padding: 8px 20px;
-            border-radius: 40px; border: 4px solid var(--dark);
-            box-shadow: 0 6px 0px var(--dark);
+            background: rgba(8, 11, 34, 0.96); padding: 8px 20px;
+            border-radius: 40px; border: 3px solid var(--pac-yellow);
+            box-shadow: 0 0 18px rgba(255, 230, 0, 0.4), 0 6px 0px #000;
             max-width: 92vw; pointer-events: none;
         }
         #mascot-avatar { font-size: 1.9rem; margin-right: 10px; }
         #mascot-speech {
             font-size: clamp(0.8rem, 1.2vw, 0.95rem);
-            color: var(--dark); font-weight: 700;
+            color: #FFFFFF; font-weight: 700;
         }
 
         /* Modal Skrin Keputusan (Menang / Kalah Nyawa Habis) */
         .result-card {
             position: absolute; top: 46%; left: 50%; transform: translate(-50%, -50%);
-            background: linear-gradient(180deg, #FFF 0%, #FFF9E2 100%);
-            padding: 28px 34px; border-radius: 26px; border: 6px solid var(--dark);
-            text-align: center; box-shadow: 0 12px 0 var(--dark);
+            background: linear-gradient(180deg, #101645 0%, #070A22 100%);
+            color: #FFF;
+            padding: 28px 34px; border-radius: 26px; border: 5px solid var(--pac-yellow);
+            text-align: center;
+            box-shadow: 0 0 32px rgba(255, 230, 0, 0.45), inset 0 0 24px rgba(0, 229, 255, 0.25), 0 12px 0 #000;
             width: min(540px, 92vw); pointer-events: auto;
         }
         .star-row { font-size: 2.5rem; margin: 10px 0; letter-spacing: 8px; }
@@ -683,14 +713,14 @@
             margin: 14px 0 18px;
         }
         .stat-box {
-            background: #FFF; border: 3px solid var(--dark); border-radius: 14px;
-            padding: 8px 6px; box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+            background: rgba(7, 9, 28, 0.92); border: 3px solid var(--maze-neon); border-radius: 14px;
+            padding: 8px 6px; box-shadow: 0 4px 0 rgba(0,0,0,0.45);
         }
         .stat-box small {
-            display: block; font-size: 0.72rem; font-weight: 700; color: #555;
+            display: block; font-size: 0.72rem; font-weight: 700; color: #90CAF9;
         }
         .stat-box strong {
-            font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: var(--dark);
+            font-family: 'Press Start 2P', monospace; font-size: 0.75rem; color: #FFF;
             display: block; margin-top: 4px;
         }
 
@@ -824,8 +854,8 @@
     <!-- SKRIN MEMUATKAN ENJIN KAMERA AR -->
     <div id="loading" class="ui-layer">
         <div class="spinner"></div>
-        <h1 style="font-family: 'Press Start 2P'; font-size: clamp(1rem, 2.2vw, 1.5rem); color: var(--coin-yellow); text-shadow: 3px 3px 0 #000; margin-bottom: 12px;">
-            ArtVenture: Eksplorasi Unsur Seni melalui AR
+        <h1 style="font-family: 'Press Start 2P'; font-size: clamp(1rem, 2.2vw, 1.5rem); color: var(--pac-yellow); text-shadow: 0 0 14px rgba(255,230,0,0.6), 3px 3px 0 #000; margin-bottom: 12px;">
+            PAC-MAN AR: Eksplorasi Unsur Seni melalui AR
         </h1>
         <p id="loading-msg" style="font-size: 1.12rem; font-weight: 700; max-width: 540px; line-height: 1.5; margin-bottom: 20px;">
             Sila benarkan akses kamera untuk mengaktifkan <b>Skeleton Tangan AR</b>
@@ -838,26 +868,56 @@
     <!-- 1. VIDEO WEBCAM PENUH SKRIN (UNTUK AR) -->
     <video id="webcam" autoplay playsinline muted></video>
 
-    <!-- 2. LATAR BELAKANG MENU (DISEMBUNYIKAN 100% SEMASA GAME SUPAYA FULL SCREEN AR TANPA BACKGROUND) -->
+    <!-- 2. LATAR BELAKANG MENU (ARENA MAZE NEON PAC-MAN — DISEMBUNYIKAN 100% SEMASA GAME SUPAYA FULL SCREEN AR) -->
     <div id="home-bg-wrap">
-        <img id="home-bg" alt="Mushroom Kingdom Background">
+        <img id="home-bg" alt="Pac-Man Arcade Maze Background">
         <svg class="mario-scenery-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-            <g fill="#FFFFFF" stroke="#1A1A1A" stroke-width="4" opacity="0.92">
-                <path d="M160 170 Q180 130 220 145 Q250 115 290 140 Q330 140 330 175 Q330 200 295 200 L165 200 Q135 200 160 170 Z"/>
-                <path d="M680 120 Q700 80 740 95 Q770 65 810 90 Q850 90 850 125 Q850 150 815 150 L685 150 Q655 150 680 120 Z"/>
-                <path d="M1120 185 Q1140 145 1180 160 Q1210 130 1250 155 Q1290 155 1290 190 Q1290 215 1255 215 L1125 215 Q1095 215 1120 185 Z"/>
+            <!-- Dinding Luar & Koridor Neon Maze Pac-Man -->
+            <g fill="none" stroke="#2121DE" stroke-width="10" opacity="0.88">
+                <rect x="24" y="24" width="1392" height="852" rx="34"/>
+                <rect x="38" y="38" width="1364" height="824" rx="26" stroke="#00E5FF" stroke-width="3" opacity="0.65"/>
+                <!-- Blok-Blok Halangan Maze Kiri & Kanan -->
+                <rect x="100" y="110" width="220" height="80" rx="22" fill="rgba(16,24,96,0.45)"/>
+                <rect x="1120" y="110" width="220" height="80" rx="22" fill="rgba(16,24,96,0.45)"/>
+                <rect x="100" y="260" width="140" height="240" rx="22" fill="rgba(16,24,96,0.45)"/>
+                <rect x="1200" y="260" width="140" height="240" rx="22" fill="rgba(16,24,96,0.45)"/>
+                <rect x="100" y="690" width="320" height="72" rx="22" fill="rgba(16,24,96,0.45)"/>
+                <rect x="1020" y="690" width="320" height="72" rx="22" fill="rgba(16,24,96,0.45)"/>
+                <rect x="520" y="720" width="400" height="64" rx="22" fill="rgba(16,24,96,0.45)"/>
             </g>
-            <path d="M-80 820 Q180 470 460 820 Z" fill="#43B047" stroke="#1A1A1A" stroke-width="6"/>
-            <path d="M320 820 Q640 530 960 820 Z" fill="#68D86B" stroke="#1A1A1A" stroke-width="6"/>
-            <path d="M840 820 Q1160 460 1520 820 Z" fill="#43B047" stroke="#1A1A1A" stroke-width="6"/>
-            <g stroke="#1A1A1A" stroke-width="5">
-                <rect x="95" y="650" width="90" height="170" fill="#43B047"/>
-                <rect x="82" y="610" width="116" height="44" rx="6" fill="#68D86B"/>
-                <rect x="1255" y="630" width="90" height="190" fill="#43B047"/>
-                <rect x="1242" y="590" width="116" height="44" rx="6" fill="#68D86B"/>
+            <!-- Deretan Pac-Dots & Power Pellets Berkilau -->
+            <g fill="#FFB8AE">
+                <circle cx="72" cy="72" r="14" fill="#FFE600"/>
+                <circle cx="1368" cy="72" r="14" fill="#FFE600"/>
+                <circle cx="72" cy="820" r="14" fill="#FFE600"/>
+                <circle cx="1368" cy="820" r="14" fill="#FFE600"/>
+                <circle cx="160" cy="225" r="5"/><circle cx="220" cy="225" r="5"/><circle cx="280" cy="225" r="5"/><circle cx="340" cy="225" r="5"/>
+                <circle cx="1100" cy="225" r="5"/><circle cx="1160" cy="225" r="5"/><circle cx="1220" cy="225" r="5"/><circle cx="1280" cy="225" r="5"/>
+                <circle cx="140" cy="818" r="5"/><circle cx="210" cy="818" r="5"/><circle cx="280" cy="818" r="5"/><circle cx="350" cy="818" r="5"/><circle cx="420" cy="818" r="5"/>
+                <circle cx="1020" cy="818" r="5"/><circle cx="1090" cy="818" r="5"/><circle cx="1160" cy="818" r="5"/><circle cx="1230" cy="818" r="5"/><circle cx="1300" cy="818" r="5"/>
             </g>
-            <rect x="0" y="800" width="1440" height="24" fill="#43B047" stroke="#1A1A1A" stroke-width="5"/>
-            <rect x="0" y="824" width="1440" height="80" fill="#C84C0C" stroke="#1A1A1A" stroke-width="5"/>
+            <!-- Hiasan Pac-Man & Hantu Arcade di Laluan Bawah Maze -->
+            <g transform="translate(520, 816)">
+                <path d="M0 0 L24 -16 A28 28 0 1 0 24 16 Z" fill="#FFE600" stroke="#000" stroke-width="3"/>
+                <circle cx="-4" cy="-12" r="3.5" fill="#000"/>
+            </g>
+            <g transform="translate(620, 816)">
+                <circle cx="0" cy="0" r="6" fill="#FFB8AE"/>
+                <circle cx="55" cy="0" r="6" fill="#FFB8AE"/>
+                <circle cx="110" cy="0" r="6" fill="#FFB8AE"/>
+                <circle cx="165" cy="0" r="12" fill="#FFE600"/>
+            </g>
+            <!-- Hantu Blinky (Merah) & Inky (Cyan) di Koridor Bawah -->
+            <g transform="translate(860, 792)">
+                <path d="M0 24 C0 4, 36 4, 36 24 L36 44 L30 38 L24 44 L18 38 L12 44 L6 38 L0 44 Z" fill="#FF1744" stroke="#000" stroke-width="2.5"/>
+                <circle cx="11" cy="22" r="4.5" fill="#FFF"/><circle cx="9" cy="22" r="2.2" fill="#2121DE"/>
+                <circle cx="25" cy="22" r="4.5" fill="#FFF"/><circle cx="23" cy="22" r="2.2" fill="#2121DE"/>
+            </g>
+            <g transform="translate(920, 792)">
+                <path d="M0 24 C0 4, 36 4, 36 24 L36 44 L30 38 L24 44 L18 38 L12 44 L6 38 L0 44 Z" fill="#00FFFF" stroke="#000" stroke-width="2.5"/>
+                <circle cx="11" cy="22" r="4.5" fill="#FFF"/><circle cx="9" cy="22" r="2.2" fill="#2121DE"/>
+                <circle cx="25" cy="22" r="4.5" fill="#FFF"/><circle cx="23" cy="22" r="2.2" fill="#2121DE"/>
+            </g>
         </svg>
     </div>
 
@@ -874,24 +934,24 @@
         </div>
         <div class="utility-group">
             <div id="hand-status" class="badge-arcade">🖐️ TANGAN: 0 / 2</div>
-            <button id="btn-bgm" class="badge-arcade" onclick="App.toggleBGM()">🎵 LAGU MARIO: ON</button>
+            <button id="btn-bgm" class="badge-arcade" onclick="App.toggleBGM()">🎵 LAGU PAC-MAN: ON</button>
             <button id="btn-sound" class="badge-arcade" onclick="App.toggleMute()">🔊 SFX: ON</button>
         </div>
     </div>
 
-    <!-- Kursor Bebola Api AR -->
+    <!-- Kursor Pac-Man AR -->
     <div id="cursor-left" class="ar-cursor"></div>
     <div id="cursor-right" class="ar-cursor"></div>
 
     <!-- Kotak Dialog Maskot -->
     <div id="mascot-box">
-        <div id="mascot-avatar">🍄</div>
-        <div id="mascot-speech">Tunjukkan tangan anda &amp; cubit (pinch) watak Mario, Luigi, Toad atau Bowser!</div>
+        <div id="mascot-avatar">🟡</div>
+        <div id="mascot-speech">Tunjukkan tangan anda &amp; cubit (pinch) watak Pac-Man, Inky atau Pinky untuk mula!</div>
     </div>
 
     <!-- HUD Permainan Arcade Realistik & Berfungsi Penuh -->
     <div id="game-hud">
-        <div id="hud-health-card" class="hud-card" style="color: var(--mario-red);">
+        <div id="hud-health-card" class="hud-card" style="color: var(--pac-yellow);">
             <span>NYAWA:</span>
             <span id="health" class="hearts-row">
                 <span class="heart-slot heart-alive">❤️</span>
@@ -901,12 +961,12 @@
         </div>
 
         <div id="hud-mission-center-card" class="hud-card" style="display: none; flex-direction: column; gap: 4px; text-align: center;">
-            <div style="font-size: 0.58rem; color: var(--brick-brown);" id="hud-module-title">DUNIA 1-1 • TAHAP 1</div>
-            <span id="target-mission" style="color: var(--mario-blue); font-size: 0.72rem;">PADANKAN WARNA PANAS &amp; SEJUK</span>
+            <div style="font-size: 0.58rem; color: var(--pac-yellow);" id="hud-module-title">ZON MAZE 1-1 • TAHAP 1</div>
+            <span id="target-mission" style="color: var(--inky-cyan); font-size: 0.72rem;">PADANKAN WARNA PANAS &amp; SEJUK</span>
         </div>
 
-        <div id="hud-score-card" class="hud-card" style="color: #B88200;">
-            <span>🪙 MARKAH:</span>
+        <div id="hud-score-card" class="hud-card" style="color: var(--pac-yellow);">
+            <span>🍒 MARKAH:</span>
             <span id="score-box" class="score-value-box">
                 <span id="score">0</span>
                 <span class="score-unit">PTS</span>
@@ -918,82 +978,74 @@
             </div>
         </div>
 
-        <button id="btn-hud-home" class="badge-arcade" style="background: var(--mario-red); color: #FFF; padding: 10px 16px; font-size: 0.65rem; border-width: 3px; pointer-events: auto; cursor: pointer;" onclick="App.showMenu()">🏠 MENU UTAMA</button>
+        <button id="btn-hud-home" class="badge-arcade" style="background: var(--blinky-red); color: #FFF; padding: 10px 16px; font-size: 0.65rem; border-width: 3px; pointer-events: auto; cursor: pointer;" onclick="App.showMenu()">🏠 MENU UTAMA</button>
     </div>
 
-    <!-- UI Skrin Pilihan Modul (4 Dunia: Mario, Luigi, Toad, Bowser) -->
+    <!-- UI Skrin Pilihan Modul (3 Zon Maze: Pac-Man, Inky, Pinky) -->
     <div id="main-menu" class="ui-layer" style="display: none;">
         <div class="header-banner">
-            <h1>SUPER MARIO AR: SENI VISUAL</h1>
-            <p>Setiap Dunia Mempunyai Reka Bentuk Interaktif Mengikut Wataknya!</p>
+            <h1>PAC-MAN AR: SENI VISUAL</h1>
+            <p>Setiap Zon Maze Mempunyai Reka Bentuk Interaktif Mengikut Wataknya!</p>
         </div>
 
         <div class="worlds-grid">
-            <!-- Dunia 1: MARIO (mario.png) -->
+            <!-- Zon 1: PAC-MAN -->
             <button class="btn-floating-character" onclick="App.openModuleNote(1)">
-                <span class="world-tag-pill" style="background: var(--mario-red);">DUNIA 1 • MARIO</span>
+                <span class="world-tag-pill" style="background: #D99B00; color: #000;">ZON 1 • PAC-MAN</span>
                 <div class="char-emblem-wrap">
-                    <img id="char-img-1" class="character-png" alt="Mario">
+                    <img id="char-img-1" class="character-png" alt="Pac-Man">
                     <svg id="char-svg-1" viewBox="0 0 80 80" width="76" height="76">
-                        <circle cx="40" cy="42" r="26" fill="#FFD1A6" stroke="#1A1A1A" stroke-width="3.5"/>
-                        <path d="M12 34 C12 16, 68 16, 68 34 Z" fill="#E52521" stroke="#1A1A1A" stroke-width="3.5"/>
-                        <path d="M10 34 Q40 28 72 34 L72 39 Q40 34 10 39 Z" fill="#E52521" stroke="#1A1A1A" stroke-width="3"/>
-                        <circle cx="40" cy="24" r="7" fill="#FFF" stroke="#1A1A1A" stroke-width="2"/>
-                        <text x="40" y="27" text-anchor="middle" font-size="9" font-family="Press Start 2P" fill="#E52521">M</text>
-                        <ellipse cx="32" cy="43" rx="3.5" ry="5" fill="#1A1A1A"/>
-                        <ellipse cx="48" cy="43" rx="3.5" ry="5" fill="#1A1A1A"/>
-                        <ellipse cx="40" cy="49" rx="7" ry="5" fill="#FFAE70" stroke="#1A1A1A" stroke-width="2.5"/>
-                        <path d="M24 56 Q40 62 56 56 Q52 61 40 61 Q28 61 24 56 Z" fill="#4A2508" stroke="#1A1A1A" stroke-width="2.5"/>
+                        <!-- Watak Ikonik Pac-Man & Power Pellet -->
+                        <path d="M40 40 L67 22 A30 30 0 1 0 67 58 Z" fill="#FFE600" stroke="#000000" stroke-width="3.5" stroke-linejoin="round"/>
+                        <circle cx="42" cy="23" r="4.5" fill="#000000"/>
+                        <circle cx="40.5" cy="21.5" r="1.5" fill="#FFFFFF"/>
+                        <circle cx="70" cy="40" r="6" fill="#FFB8AE" stroke="#000000" stroke-width="2"/>
                     </svg>
                 </div>
                 <div class="world-border-label">
-                    <strong>DUNIA 1: MARIO</strong>
-                    <small style="color: var(--mario-red);">Blok Soalan Emas [?] 3D</small>
+                    <strong>ZON 1: PAC-MAN</strong>
+                    <small style="color: var(--pac-yellow);">Kotak Power Pellet [●] 3D</small>
                 </div>
             </button>
 
-            <!-- Dunia 2: LUIGI (hijau.png) -->
+            <!-- Zon 2: INKY (Hantu Cyan) -->
             <button class="btn-floating-character" onclick="App.openModuleNote(2)">
-                <span class="world-tag-pill" style="background: var(--luigi-green);">DUNIA 2 • LUIGI</span>
+                <span class="world-tag-pill" style="background: #0088A3;">ZON 2 • INKY</span>
                 <div class="char-emblem-wrap">
-                    <img id="char-img-2" class="character-png" alt="Luigi">
+                    <img id="char-img-2" class="character-png" alt="Inky">
                     <svg id="char-svg-2" viewBox="0 0 80 80" width="76" height="76">
-                        <circle cx="40" cy="44" r="24" fill="#FFD1A6" stroke="#1A1A1A" stroke-width="3.5"/>
-                        <path d="M14 34 C14 14, 66 14, 66 34 Z" fill="#43B047" stroke="#1A1A1A" stroke-width="3.5"/>
-                        <path d="M12 34 Q40 28 70 34 L70 39 Q40 34 12 39 Z" fill="#43B047" stroke="#1A1A1A" stroke-width="3"/>
-                        <circle cx="40" cy="24" r="7" fill="#FFF" stroke="#1A1A1A" stroke-width="2"/>
-                        <text x="40" y="27" text-anchor="middle" font-size="9" font-family="Press Start 2P" fill="#43B047">L</text>
-                        <ellipse cx="32" cy="44" rx="3.5" ry="5" fill="#1A1A1A"/>
-                        <ellipse cx="48" cy="44" rx="3.5" ry="5" fill="#1A1A1A"/>
-                        <ellipse cx="40" cy="50" rx="6.5" ry="5" fill="#FFAE70" stroke="#1A1A1A" stroke-width="2.5"/>
-                        <path d="M26 57 Q40 61 54 57" fill="none" stroke="#4A2508" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Hantu Inky (Cyan Arcade Ghost) -->
+                        <path d="M16 42 C16 14, 64 14, 64 42 L64 66 L55 58 L47 66 L40 58 L33 66 L25 58 L16 66 Z" fill="#00FFFF" stroke="#000000" stroke-width="3.5" stroke-linejoin="round"/>
+                        <ellipse cx="32" cy="37" rx="6.5" ry="8" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
+                        <ellipse cx="50" cy="37" rx="6.5" ry="8" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
+                        <circle cx="34" cy="37" r="3.5" fill="#2121DE"/>
+                        <circle cx="52" cy="37" r="3.5" fill="#2121DE"/>
                     </svg>
                 </div>
                 <div class="world-border-label">
-                    <strong>DUNIA 2: LUIGI</strong>
-                    <small style="color: var(--luigi-green);">Hologram Paip Hijau</small>
+                    <strong>ZON 2: INKY</strong>
+                    <small style="color: var(--inky-cyan);">Hologram Terowong Maze</small>
                 </div>
             </button>
 
-            <!-- Dunia 3: TOAD (cendawan.png) -->
+            <!-- Zon 3: PINKY (Hantu Merah Jambu) -->
             <button class="btn-floating-character" onclick="App.openModuleNote(3)">
-                <span class="world-tag-pill" style="background: var(--toad-pink);">DUNIA 3 • TOAD</span>
+                <span class="world-tag-pill" style="background: #D81B60;">ZON 3 • PINKY</span>
                 <div class="char-emblem-wrap">
-                    <img id="char-img-3" class="character-png" alt="Toad">
+                    <img id="char-img-3" class="character-png" alt="Pinky">
                     <svg id="char-svg-3" viewBox="0 0 80 80" width="76" height="76">
-                        <path d="M26 46 L26 62 C26 68, 54 68, 54 62 L54 46 Z" fill="#FFE4B5" stroke="#1A1A1A" stroke-width="3.5"/>
-                        <path d="M12 46 C10 16, 70 16, 68 46 Z" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="3.5"/>
-                        <circle cx="40" cy="29" r="9" fill="#E52521"/>
-                        <circle cx="21" cy="36" r="6.5" fill="#E52521"/>
-                        <circle cx="59" cy="36" r="6.5" fill="#E52521"/>
-                        <ellipse cx="35" cy="54" rx="2.5" ry="4.5" fill="#1A1A1A"/>
-                        <ellipse cx="45" cy="54" rx="2.5" ry="4.5" fill="#1A1A1A"/>
-                        <path d="M36 61 Q40 64 44 61" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Hantu Pinky (Pink Arcade Ghost) -->
+                        <path d="M16 42 C16 14, 64 14, 64 42 L64 66 L55 58 L47 66 L40 58 L33 66 L25 58 L16 66 Z" fill="#FF66CC" stroke="#000000" stroke-width="3.5" stroke-linejoin="round"/>
+                        <ellipse cx="31" cy="36" rx="6.5" ry="8" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
+                        <ellipse cx="49" cy="36" rx="6.5" ry="8" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
+                        <circle cx="29" cy="36" r="3.5" fill="#2121DE"/>
+                        <circle cx="47" cy="36" r="3.5" fill="#2121DE"/>
+                        <path d="M35 49 Q40 53 45 49" fill="none" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
                 </div>
                 <div class="world-border-label">
-                    <strong>DUNIA 3: TOAD</strong>
-                    <small style="color: var(--toad-pink);">Rumah Cendawan &amp; Peti Harta</small>
+                    <strong>ZON 3: PINKY</strong>
+                    <small style="color: var(--pinky-pink);">Bilik Hantu &amp; Kapsul Bonus</small>
                 </div>
             </button>
 
@@ -1002,38 +1054,38 @@
     </div>
 
     <!-- =========================================================
-         LAPISAN NOTA: 4 REKA BENTUK BERBEZA MENGIKUT WATAK
+         LAPISAN NOTA: 3 REKA BENTUK BERBEZA MENGIKUT WATAK PAC-MAN
          ========================================================= -->
     <div id="note-modal" class="ui-layer" style="display: none;">
 
-        <!-- 1. REKA BENTUK DUNIA 1 (MARIO): BLOK SOALAN EMAS [?] 3D -->
+        <!-- 1. REKA BENTUK ZON 1 (PAC-MAN): KOTAK POWER PELLET [●] 3D -->
         <div id="scene-dunia-1" class="world-scene">
             <div class="mario-blocks-row" id="mario-blocks-row">
                 <button class="q-block-3d active-block" onclick="App.selectNoteCard(0)">
-                    <span class="q-mark">?</span>
-                    <span class="q-sub">BLOK 1</span>
+                    <span class="q-mark">●</span>
+                    <span class="q-sub">PELET 1</span>
                 </button>
                 <button class="q-block-3d" onclick="App.selectNoteCard(1)">
-                    <span class="q-mark">?</span>
-                    <span class="q-sub">BLOK 2</span>
+                    <span class="q-mark">●</span>
+                    <span class="q-sub">PELET 2</span>
                 </button>
                 <button class="q-block-3d" onclick="App.selectNoteCard(2)">
-                    <span class="q-mark">?</span>
-                    <span class="q-sub">BLOK 3</span>
+                    <span class="q-mark">●</span>
+                    <span class="q-sub">PELET 3</span>
                 </button>
                 <button class="q-block-3d" onclick="App.selectNoteCard(3)">
-                    <span class="q-mark">?</span>
+                    <span class="q-mark">🍒</span>
                     <span class="q-sub">MISI 1</span>
                 </button>
             </div>
 
             <div class="mario-powerup-stage" id="mario-stage-box">
                 <div>
-                    <div style="display:inline-block; background:var(--mario-red); color:#FFF; font-family:'Press Start 2P'; font-size:0.55rem; padding:5px 10px; border-radius:8px; border:2px solid #000; margin-bottom:8px;">
-                        🍄 DUNIA 1 (MARIO): WARNA PANAS &amp; WARNA SEJUK
+                    <div style="display:inline-block; background:var(--pac-yellow); color:#000; font-family:'Press Start 2P'; font-size:0.55rem; padding:5px 10px; border-radius:8px; border:2px solid #FFF; margin-bottom:8px;">
+                        🟡 ZON 1 (PAC-MAN): WARNA PANAS &amp; WARNA SEJUK
                     </div>
-                    <h2 class="note-title-text" style="color:var(--mario-blue);" id="d1-title"></h2>
-                    <div class="note-body-copy" style="color:#1A1A1A;" id="d1-content"></div>
+                    <h2 class="note-title-text" style="color:var(--pac-yellow);" id="d1-title"></h2>
+                    <div class="note-body-copy" style="color:#FFFFFF;" id="d1-content"></div>
                 </div>
                 <div class="visual-demo-card" id="d1-visual"></div>
             </div>
@@ -1042,33 +1094,33 @@
                 <button class="btn-mario btn-blue" onclick="App.showMenu()">MENU UTAMA</button>
                 <div class="drag-guide-inline">
                     <button class="btn-page-nav" onclick="App.triggerPageFlip('prev')">◀</button>
-                    <span id="d1-indicator" style="color:var(--coin-yellow);">Cubit / Tumbuk Blok [?] Di Atas! (1/4)</span>
+                    <span id="d1-indicator" style="color:var(--pac-yellow);">Cubit Kotak Pelet [●] Di Atas! (1/4)</span>
                     <button class="btn-page-nav" onclick="App.triggerPageFlip('next')">▶</button>
                 </div>
                 <button class="btn-mario btn-green" onclick="App.startGame(1)"> Mula Misi AR!</button>
             </div>
         </div>
 
-        <!-- 2. REKA BENTUK DUNIA 2 (LUIGI): HOLOGRAM PAIP HIJAU (WARP PIPE) -->
+        <!-- 2. REKA BENTUK ZON 2 (INKY): HOLOGRAM TEROWONG WARP MAZE -->
         <div id="scene-dunia-2" class="world-scene">
             <div class="luigi-pipe-arena">
                 <div class="luigi-hologram-screen" id="luigi-holo-box">
                     <div>
-                        <div style="display:inline-block; background:var(--pipe-neon); color:#000; font-family:'Press Start 2P'; font-size:0.55rem; padding:5px 10px; border-radius:8px; border:2px solid #000; margin-bottom:8px;">
-                            🟢 DUNIA 2 (LUIGI): GARISAN, PERGERAKAN &amp; RUANG
+                        <div style="display:inline-block; background:var(--inky-cyan); color:#000; font-family:'Press Start 2P'; font-size:0.55rem; padding:5px 10px; border-radius:8px; border:2px solid #FFF; margin-bottom:8px;">
+                            👻 ZON 2 (INKY): GARISAN, PERGERAKAN &amp; RUANG
                         </div>
-                        <h2 class="note-title-text" style="color:var(--pipe-neon);" id="d2-title"></h2>
-                        <div class="note-body-copy" style="color:#E8FFE9;" id="d2-content"></div>
+                        <h2 class="note-title-text" style="color:var(--inky-cyan);" id="d2-title"></h2>
+                        <div class="note-body-copy" style="color:#E0F7FA;" id="d2-content"></div>
                     </div>
-                    <div class="visual-demo-card" style="background:rgba(8,32,14,0.9); color:#FFF; border-color:var(--pipe-neon);" id="d2-visual"></div>
+                    <div class="visual-demo-card" style="background:rgba(6,22,42,0.92); color:#FFF; border-color:var(--inky-cyan);" id="d2-visual"></div>
                 </div>
 
                 <div class="luigi-pipe-beam"></div>
                 <div class="luigi-warp-pipe-base">
                     <div class="pipe-rim" id="luigi-valves-row">
-                        <button class="btn-pipe-valve active-valve" onclick="App.selectNoteCard(0)">PAIP 1</button>
-                        <button class="btn-pipe-valve" onclick="App.selectNoteCard(1)">PAIP 2</button>
-                        <button class="btn-pipe-valve" onclick="App.selectNoteCard(2)">PAIP 3</button>
+                        <button class="btn-pipe-valve active-valve" onclick="App.selectNoteCard(0)">KORIDOR 1</button>
+                        <button class="btn-pipe-valve" onclick="App.selectNoteCard(1)">KORIDOR 2</button>
+                        <button class="btn-pipe-valve" onclick="App.selectNoteCard(2)">KORIDOR 3</button>
                         <button class="btn-pipe-valve" onclick="App.selectNoteCard(3)">MISI 2</button>
                     </div>
                     <div class="pipe-neck">
@@ -1081,14 +1133,14 @@
                 <button class="btn-mario btn-blue" onclick="App.showMenu()"> MENU UTAMA</button>
                 <div class="drag-guide-inline">
 
-                    <span id="d2-indicator" style="color:var(--pipe-neon);">Hologram Paip (1/4)</span>
+                    <span id="d2-indicator" style="color:var(--inky-cyan);">Hologram Terowong Maze (1/4)</span>
 
                 </div>
                 <button class="btn-mario btn-green" onclick="App.startGame(2)"> Mula Misi AR!</button>
             </div>
         </div>
 
-        <!-- 3. REKA BENTUK DUNIA 3 (TOAD): RUMAH CENDAWAN & PETI HARTA KARUN -->
+        <!-- 3. REKA BENTUK ZON 3 (PINKY): BILIK HANTU & KAPSUL BONUS -->
         <div id="scene-dunia-3" class="world-scene">
             <div class="toad-house-wrapper">
                 <div class="toad-mushroom-dome">
@@ -1096,23 +1148,23 @@
                     <div class="toad-dome-spot" style="left: 24%;"></div>
                     <div class="toad-dome-spot" style="right: 24%;"></div>
                     <div class="toad-dome-spot" style="right: 6%;"></div>
-                    <span class="toad-dome-title">🍄 RUMAH CENDAWAN TOAD: LUKIS &amp; KAWAL HOLOGRAM TANPA PANDUAN</span>
+                    <span class="toad-dome-title">👻 BILIK HANTU PINKY: LUKIS &amp; KAWAL HOLOGRAM TANPA PANDUAN</span>
                 </div>
 
                 <div class="toad-star-card" id="toad-star-box">
                     <div>
-                        <div style="display:inline-block; background:var(--coin-yellow); color:#000; font-family:'Press Start 2P'; font-size:0.55rem; padding:5px 10px; border-radius:8px; margin-bottom:8px;">
-                            ⭐ HOLOGRAM BEBAS TANGAN TOAD
+                        <div style="display:inline-block; background:var(--pinky-pink); color:#000; font-family:'Press Start 2P'; font-size:0.55rem; padding:5px 10px; border-radius:8px; margin-bottom:8px;">
+                            🍒 HOLOGRAM BEBAS TANGAN PINKY
                         </div>
-                        <h2 class="note-title-text" style="color:var(--coin-yellow);" id="d3-title"></h2>
+                        <h2 class="note-title-text" style="color:var(--pac-yellow);" id="d3-title"></h2>
                         <div class="note-body-copy" style="color:#FFF;" id="d3-content"></div>
                     </div>
                     <div class="visual-demo-card" id="d3-visual"></div>
                 </div>
 
                 <div class="toad-chests-row" id="toad-chests-row">
-                    <button class="btn-toad-chest chest-open" onclick="App.selectNoteCard(0)">PETI 1: RUPA 2D</button>
-                    <button class="btn-toad-chest" onclick="App.selectNoteCard(1)">PETI 2: BENTUK 3D</button>
+                    <button class="btn-toad-chest chest-open" onclick="App.selectNoteCard(0)">KAPSUL 1: RUPA 2D</button>
+                    <button class="btn-toad-chest" onclick="App.selectNoteCard(1)">KAPSUL 2: BENTUK 3D</button>
                     <button class="btn-toad-chest" onclick="App.selectNoteCard(2)">PANDUAN 1</button>
                     <button class="btn-toad-chest" onclick="App.selectNoteCard(3)">PANDUAN 2 : MISI 3</button>
                 </div>
@@ -1122,7 +1174,7 @@
                 <button class="btn-mario btn-blue" onclick="App.showMenu()">MENU UTAMA</button>
                 <div class="drag-guide-inline">
                     <button class="btn-page-nav" onclick="App.triggerPageFlip('prev')">◀</button>
-                    <span id="d3-indicator" style="color:var(--coin-yellow);">Cubit Peti Harta (1/4)</span>
+                    <span id="d3-indicator" style="color:var(--pac-yellow);">Cubit Kapsul Bonus (1/4)</span>
                     <button class="btn-page-nav" onclick="App.triggerPageFlip('next')">▶</button>
                 </div>
                 <button class="btn-mario btn-green" onclick="App.startGame(3)"> Mula Misi AR!</button>
@@ -1134,11 +1186,11 @@
     <!-- UI Skrin Keputusan (Menang atau Kalah Nyawa Habis) -->
     <div id="result-screen" class="ui-layer" style="display: none;">
         <div class="result-card">
-            <h1 id="result-heading" style="color: var(--luigi-green); font-family: 'Press Start 2P'; font-size: 1.3rem; margin: 0;">MISI SELESAI! 🎉</h1>
+            <h1 id="result-heading" style="color: var(--pac-yellow); font-family: 'Press Start 2P'; font-size: 1.3rem; margin: 0;">MISI SELESAI! 🎉</h1>
             <div id="result-stars" class="star-row">⭐⭐⭐</div>
             <h2 style="margin: 8px 0; font-family: 'Press Start 2P'; font-size: 1.02rem; line-height: 1.6;">
-                MARKAH AKHIR: <span id="final-score" style="color: var(--mario-red);">0 PTS</span>
-                <span id="final-grade-badge" style="display:inline-block; background:var(--coin-yellow); color:var(--dark); font-size:0.72rem; padding:4px 10px; border-radius:8px; border:2px solid var(--dark); margin-left:6px;">GRED A+</span>
+                MARKAH AKHIR: <span id="final-score" style="color: var(--pac-yellow);">0 PTS</span>
+                <span id="final-grade-badge" style="display:inline-block; background:var(--pac-yellow); color:var(--dark); font-size:0.72rem; padding:4px 10px; border-radius:8px; border:2px solid #FFF; margin-left:6px;">GRED A+</span>
             </h2>
 
             <div class="stats-summary-grid">
@@ -1148,16 +1200,16 @@
                 </div>
                 <div class="stat-box">
                     <small>Combo Tertinggi</small>
-                    <strong id="stat-combo" style="color:var(--mario-red);">x4</strong>
+                    <strong id="stat-combo" style="color:var(--pac-yellow);">x4</strong>
                 </div>
                 <div class="stat-box">
                     <small>Ketepatan</small>
-                    <strong id="stat-accuracy" style="color:var(--luigi-green);">100%</strong>
+                    <strong id="stat-accuracy" style="color:var(--inky-cyan);">100%</strong>
                 </div>
             </div>
 
-            <p id="result-eval" style="font-size: 1.02rem; font-weight: 700; color: #333; margin-bottom: 20px;">
-                Syabas! Anda telah berjaya mengelaskan Warna Panas (Mario) &amp; Warna Sejuk (Luigi) serta mewarnakan watak Super Mario sepenuhnya!
+            <p id="result-eval" style="font-size: 1.02rem; font-weight: 700; color: #E0F7FA; margin-bottom: 20px;">
+                Syabas! Anda telah berjaya mengelaskan Warna Panas (Pac-Man &amp; Blinky) serta Warna Sejuk (Inky) sepenuhnya!
             </p>
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                 <button class="btn-mario btn-green" onclick="App.startGame(App.activeModule)">🔄 Main Semula</button>
@@ -1171,7 +1223,7 @@
         import { HandLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
 
         // =========================================================
-        // 1. SOUND & SUPER MARIO BGM ENGINE (8-BIT SYNTH)
+        // 1. SOUND & PAC-MAN ARCADE BGM ENGINE (8-BIT SYNTH)
         // =========================================================
         class SoundFX {
             static ctx = null;
@@ -1195,21 +1247,18 @@
 
             static startBGM() {
                 if (this.bgmTimer) clearInterval(this.bgmTimer);
+                // Melodi Ikonik Arcade Pac-Man (Intro Chiptune)
                 const melody = [
-                    659.25, 659.25, 0, 659.25, 0, 523.25, 659.25, 0,
-                    783.99, 0, 0, 0, 392.00, 0, 0, 0,
-                    523.25, 0, 0, 392.00, 0, 0, 329.63, 0,
-                    0, 440.00, 0, 493.88, 0, 466.16, 440.00, 0,
-                    392.00, 659.25, 783.99, 880.00, 0, 698.46, 783.99, 0,
-                    659.25, 0, 523.25, 587.33, 493.88, 0, 0, 0
+                    493.88, 987.77, 739.99, 622.25, 987.77, 739.99, 0, 622.25,
+                    523.25, 1046.50, 783.99, 659.25, 1046.50, 783.99, 0, 659.25,
+                    493.88, 987.77, 739.99, 622.25, 987.77, 739.99, 0, 622.25,
+                    622.25, 659.25, 698.46, 698.46, 739.99, 783.99, 880.00, 987.77
                 ];
                 const bass = [
-                    196.00, 196.00, 0, 196.00, 0, 196.00, 196.00, 0,
-                    392.00, 0, 0, 0, 196.00, 0, 0, 0,
-                    261.63, 0, 0, 196.00, 0, 0, 164.81, 0,
-                    0, 220.00, 0, 246.94, 0, 233.08, 220.00, 0,
-                    196.00, 329.63, 392.00, 440.00, 0, 349.23, 392.00, 0,
-                    329.63, 0, 261.63, 293.66, 246.94, 0, 0, 0
+                    123.47, 0, 246.94, 0, 185.00, 0, 246.94, 0,
+                    130.81, 0, 261.63, 0, 196.00, 0, 261.63, 0,
+                    123.47, 0, 246.94, 0, 185.00, 0, 246.94, 0,
+                    185.00, 196.00, 220.00, 0, 246.94, 0, 0, 0
                 ];
 
                 this.bgmTimer = setInterval(() => {
@@ -1244,25 +1293,27 @@
                         bOsc.stop(now + 0.12);
                     }
                     this.bgmStep++;
-                }, 145);
+                }, 140);
             }
 
             static playCoin() {
                 if (this.muted) return;
                 this.init();
                 if (!this.ctx) return;
+                // Bunyi Waka-Waka Pelet Pac-Man
                 const now = this.ctx.currentTime;
                 const osc = this.ctx.createOscillator();
                 const gain = this.ctx.createGain();
-                osc.type = 'square';
-                osc.frequency.setValueAtTime(987.77, now);
-                osc.frequency.setValueAtTime(1318.51, now + 0.075);
-                gain.gain.setValueAtTime(0.14, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.26);
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.linearRampToValueAtTime(880, now + 0.08);
+                osc.frequency.linearRampToValueAtTime(520, now + 0.16);
+                gain.gain.setValueAtTime(0.16, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
                 osc.connect(gain);
                 gain.connect(this.ctx.destination);
                 osc.start(now);
-                osc.stop(now + 0.26);
+                osc.stop(now + 0.18);
             }
 
             static playPowerUp() {
@@ -1428,30 +1479,30 @@
         ];
 
         // =========================================================
-        // 2. DATA NOTA 4 DUNIA MENGIKUT WATAK
+        // 2. DATA NOTA 3 ZON MAZE MENGIKUT WATAK PAC-MAN
         // =========================================================
         const worldNoteData = {
             1: {
-                mascotEmoji: "🍄",
-                mascotTip: "DUNIA 1 (MARIO): Cubit / Tumbuk Blok Soalan Emas [?] 3D di atas untuk belajar Warna Panas vs Warna Sejuk!",
-                mission: "PADANKAN WARNA PANAS (🔥 MARIO) & SEJUK (❄️ LUIGI)",
+                mascotEmoji: "🟡",
+                mascotTip: "ZON 1 (PAC-MAN): Cubit Kotak Power Pellet [●] 3D di atas untuk belajar Warna Panas vs Warna Sejuk!",
+                mission: "PADANKAN WARNA PANAS (🔥 PAC-MAN) & SEJUK (❄️ INKY)",
                 cards: [
                     {
                         title: "🔥 Warna Panas vs ❄️ Warna Sejuk",
                         content: `
-                            <p>Dalam dunia Super Mario, warna dibahagikan mengikut <b>Suhu Warna</b>:</p>
+                            <p>Dalam dunia Arcade Pac-Man, warna dibahagikan mengikut <b>Suhu Warna</b>:</p>
                             <ul>
-                                <li><b>🔥 Warna Panas :</b> Merah, Jingga &amp; Kuning — memberi kesan hangat, bertenaga &amp; garang.</li>
-                                <li><b>❄️ Warna Sejuk :</b> Hijau, Biru &amp; Ungu — memberi kesan sejuk, tenang &amp; damai.</li>
+                                <li><b>🔥 Warna Panas :</b> Merah (Blinky), Jingga (Clyde) &amp; Kuning (Pac-Man) — memberi kesan hangat, bertenaga &amp; aktif.</li>
+                                <li><b>❄️ Warna Sejuk :</b> Hijau, Biru (Inky) &amp; Ungu — memberi kesan sejuk, tenang &amp; harmoni.</li>
                             </ul>
                         `,
                         visual: `
-                            <div style="font-size:2.3rem; margin-bottom:4px;">🔴🔥 vs 🟢❄️</div>
-                            <strong>Merah = Panas | Hijau = Sejuk</strong>
+                            <div style="font-size:2.3rem; margin-bottom:4px;">🟡🔥 vs 👻❄️</div>
+                            <strong>Merah/Kuning = Panas | Biru/Hijau = Sejuk</strong>
                             <div class="art-diagram-box">
-                                <span class="color-dot" style="background:#E52521;">M</span>
+                                <span class="color-dot" style="background:#FF1744;">M</span>
                                 <b>🔥</b>
-                                <span class="color-dot" style="background:#43B047;">H</span>
+                                <span class="color-dot" style="background:#0088CC;">B</span>
                                 <b>❄️</b>
                             </div>
                         `
@@ -1460,16 +1511,16 @@
                         title: "🎨 Warna Primer & Sekunder",
                         content: `
                             <ul>
-                                <li><b>🔴 Warna Primer:</b> Merah, Biru &amp; Kuning.</li>
-                                <li><b>🟢 Warna Sekunder:</b> Campuran 2 warna primer (contoh: Biru + Kuning = Hijau ).</li>
+                                <li><b>🔴 Warna Primer:</b> Merah, Biru &amp; Kuning (warna asas yang tidak boleh dihasilkan melalui campuran warna lain).</li>
+                                <li><b>🟢 Warna Sekunder:</b> Campuran 2 warna primer (contoh: Biru + Kuning = Hijau).</li>
                             </ul>
                         `,
                         visual: `
                             <strong>Campuran Warna Sekunder</strong>
                             <div class="art-diagram-box">
-                                <span class="color-dot" style="background:#0043B8;">B</span><b>+</b>
-                                <span class="color-dot" style="background:#FBD000; color:#000;">K</span><b>=</b>
-                                <span class="color-dot" style="background:#43B047;">H</span>
+                                <span class="color-dot" style="background:#2121DE;">B</span><b>+</b>
+                                <span class="color-dot" style="background:#FFE600; color:#000;">K</span><b>=</b>
+                                <span class="color-dot" style="background:#00C853;">H</span>
                             </div>
                         `
                     },
@@ -1477,54 +1528,54 @@
                         title: "Warna Tertier:",
                         content: `
                             <ul>
-                                <li><b>Warna Tertier :</b> Hasil campuran satu warna primer dengan satu warna sekunder</li>
-                                <li><b>Contohnya :</b> Kuning + Jingga = Kuning-Jingga</li>
+                                <li><b>Warna Tertier :</b> Hasil campuran satu warna primer dengan satu warna sekunder.</li>
+                                <li><b>Contohnya :</b> Kuning (Pac-Man) + Jingga (Clyde) = Kuning-Jingga.</li>
                             </ul>
                         `,
                         visual: `
                             <strong>Warna Tertier (Primer + Sekunder)</strong>
                             <div class="art-diagram-box">
-                                <span class="color-dot" style="background:#FBD000; color:#000;">K</span><b>+</b>
+                                <span class="color-dot" style="background:#FFE600; color:#000;">K</span><b>+</b>
                                 <span class="color-dot" style="background:#FF6D00;">J</span><b>=</b>
-                                <span class="color-dot" style="background:#FF9E00; color:#000; width:42px; border-radius:12px;">K-J</span>
+                                <span class="color-dot" style="background:#FFAB00; color:#000; width:42px; border-radius:12px;">K-J</span>
                             </div>
                         `
                     },
                     {
-                        title: " Cara Main Misi Dunia 1!",
+                        title: "🍒 Cara Main Misi Zon 1!",
                         content: `
                             <p><b>Tugasan AR Anda:</b></p>
                             <ul>
-                                <li><b>Cubit &amp; Tarik (Pinch &amp; Drag)</b> Kad Warna ke <b>Zon Kiri (🔥 Warna Panas - Mario)</b> atau <b>Zon Kanan (❄️ Warna Sejuk - Luigi)</b>!</li>
-                                <li>Setiap padanan betul memberi <b>Markah + Combo</b> &amp; mewarnakan watak. Jika tersalah zon, <b>1 Nyawa ❤️ akan ditolak</b>!</li>
+                                <li><b>Cubit &amp; Tarik (Pinch &amp; Drag)</b> Kad Warna ke <b>Zon Kiri (🔥 Warna Panas - Pac-Man)</b> atau <b>Zon Kanan (❄️ Warna Sejuk - Inky)</b>!</li>
+                                <li>Setiap padanan betul memberi <b>Markah + Combo</b> &amp; memberi tenaga warna kepada watak. Jika tersalah zon, <b>1 Nyawa ❤️ akan ditolak</b>!</li>
                             </ul>
                         `,
                         visual: `
-                            <div style="font-size:2.8rem; margin-bottom:6px;">🔥🎨❄️</div>
-                            <strong>Warnakan Mario &amp; Luigi!</strong>
+                            <div style="font-size:2.8rem; margin-bottom:6px;">🔥🟡👻❄️</div>
+                            <strong>Tenagakan Pac-Man &amp; Inky!</strong>
                         `
                     }
                 ]
             },
             2: {
-                mascotEmoji: "🟢",
-                mascotTip: "DUNIA 2 (LUIGI): Swipe tangan AR untuk masukkan & keluarkan nota Hologram dari muncung Paip Hijau!",
-                mission: "SAMBUNG & LUKIS LALUAN GARISAN MARIO (LURUS, MELENGKUNG, BERALUN, ZIG-ZAG, BERPUSING)",
+                mascotEmoji: "👻",
+                mascotTip: "ZON 2 (INKY): Swipe tangan AR untuk menukar nota Hologram dari Terowong Maze Neon!",
+                mission: "SAMBUNG & LUKIS LALUAN MAZE PAC-MAN (LURUS, MELENGKUNG, BERALUN, ZIG-ZAG, BERPUSING)",
                 cards: [
                     {
-                        title: " 5 Jenis Garisan Utama",
+                        title: "📏 5 Jenis Garisan Utama",
                         content: `
                             <ul>
-                                <li><b>Garisan Lurus:</b> Jambatan lurus &amp; kukuh.</li>
-                                <li><b>Garisan Melengkung:</b> Lompatan pelangi Mario.</li>
-                                <li><b>Garisan Beralun:</b> Mencipta <b>kesan pergerakan</b> arus air &amp; gelombang hidup!</li>
+                                <li><b>Garisan Lurus:</b> Koridor lurus &amp; kukuh di dalam Maze.</li>
+                                <li><b>Garisan Melengkung:</b> Lompatan tenaga lengkung Pac-Man.</li>
+                                <li><b>Garisan Beralun:</b> Mencipta <b>kesan pergerakan</b> gelombang tenaga &amp; getaran hidup!</li>
                             </ul>
                         `,
                         visual: `
-                            <strong style="color:#69FF70;">Garisan Beralun = Kesan Pergerakan</strong>
-                            <div class="art-diagram-box" style="background:#0B2614; border-color:#69FF70;">
+                            <strong style="color:#00FFFF;">Garisan Beralun = Kesan Pergerakan</strong>
+                            <div class="art-diagram-box" style="background:#051428; border-color:#00FFFF;">
                                 <svg width="175" height="40" viewBox="0 0 175 40">
-                                    <path d="M5 20 Q 25 2, 45 20 T 85 20 T 125 20 T 165 20" fill="none" stroke="#69FF70" stroke-width="5" stroke-linecap="round"/>
+                                    <path d="M5 20 Q 25 2, 45 20 T 85 20 T 125 20 T 165 20" fill="none" stroke="#00FFFF" stroke-width="5" stroke-linecap="round"/>
                                 </svg>
                             </div>
                         `
@@ -1533,59 +1584,59 @@
                         title: "Garisan Zig-Zag & Berpusing",
                         content: `
                             <ul>
-                                <li><b>Garisan Zig-Zag:</b> Tajam seperti kilat atau petir</li>
-                                <li><b>Garisan Berpusing:</b> Berpusar seperti cengkerang siput</li>
+                                <li><b>Garisan Zig-Zag:</b> Bucu tajam seperti halangan elektrik neon di dalam maze.</li>
+                                <li><b>Garisan Berpusing:</b> Berpusar seperti pusaran portal Warp Tunnel.</li>
                             </ul>
                         `,
                         visual: `
-                            <strong style="color:#69FF70;">Zig-Zag &amp; Berpusing</strong>
-                            <div class="art-diagram-box" style="background:#0B2614; border-color:#69FF70; color:#FFF;">
+                            <strong style="color:#00FFFF;">Zig-Zag &amp; Berpusing</strong>
+                            <div class="art-diagram-box" style="background:#051428; border-color:#00FFFF; color:#FFF;">
                                 <span>⚡ Zig-Zag</span><span>|</span><span>🌀 Berpusing</span>
                             </div>
                         `
                     },
                     {
-                        title: " Garisan Beralun & Kesan Pergerakan",
+                        title: "🌊 Garisan Beralun & Kesan Pergerakan",
                         content: `
                             <ul>
-                                <li>Dalam bahan Super Mario, <b>Garisan Beralun</b> menghasilkan ilusi <b>pergerakan berirama</b> (ombak, angin &amp; tenaga).</li>
-                                <li>Menyambung titik garisan membantu Mario menyeberangi jurang!</li>
+                                <li>Dalam seni visual, <b>Garisan Beralun</b> menghasilkan ilusi <b>pergerakan berirama</b> (gelombang tenaga, ombak &amp; arus).</li>
+                                <li>Menyambung titik garisan membantu Pac-Man merentasi terowong maze!</li>
                             </ul>
                         `,
                         visual: `
                             <div style="font-size:2.4rem; margin-bottom:6px;">📏🌈🌊⚡🌀</div>
-                            <strong style="color:#69FF70;">5 Laluan Garisan Mario</strong>
+                            <strong style="color:#00FFFF;">5 Laluan Maze Pac-Man</strong>
                         `
                     },
                     {
-                        title: "Cara Main Misi Garisan Dunia 2!",
+                        title: "🍒 Cara Main Misi Garisan Zon 2!",
                         content: `
                             <p><b>2 Langkah Mudah dengan Tangan AR:</b></p>
                             <ul>
-                                <li><b>Langkah 1:</b> Cubit &amp; Tarik <b>Kad Jenis Garisan</b> yang betul ke jambatan Mario (salah kad = <b>-1 Nyawa ❤️</b>).</li>
-                                <li><b>Langkah 2:</b> Cubit &amp; <b>Lukis</b> mengikut titik laluan garisan dari Paip Kiri ke Paip Kanan!</li>
+                                <li><b>Langkah 1:</b> Cubit &amp; Tarik <b>Kad Jenis Garisan</b> yang betul ke koridor Maze (salah kad = <b>-1 Nyawa ❤️</b>).</li>
+                                <li><b>Langkah 2:</b> Cubit &amp; <b>Surih (Trace)</b> mengikut titik laluan garisan dari Portal Kiri ke Portal Kanan sambil mengelak Hantu Blinky 👻!</li>
                             </ul>
                         `,
                         visual: `
-                            <div style="font-size:2.8rem; margin-bottom:6px;">🟢✍️🍄</div>
-                            <strong style="color:#69FF70;">Sambung &amp; Lukis Laluan!</strong>
+                            <div style="font-size:2.8rem; margin-bottom:6px;">🟡✍️👻</div>
+                            <strong style="color:#00FFFF;">Sambung &amp; Surih Laluan Maze!</strong>
                         `
                     }
                 ]
             },
             3: {
-                mascotEmoji: "🍄",
-                mascotTip: "DUNIA 3 (TOAD): 1. Cubit (🤏) & Lukis di udara ➔ 2. Tunjuk Peace Sign (✌️) jika mahu Reset/Padam ➔ 3. Genggam Tangan (✊) untuk Hantar!",
+                mascotEmoji: "🍒",
+                mascotTip: "ZON 3 (PINKY): 1. Cubit (🤏) & Lukis di udara ➔ 2. Tunjuk Peace Sign (✌️) jika mahu Reset/Padam ➔ 3. Genggam Tangan (✊) untuk Hantar!",
                 mission: "1. 🤏 LUKIS • 2. ✌️ PEACE = RESET • 3. ✊ GENGGAM = HANTAR",
                 cards: [
                     {
-                        title: " Rupa 2D (Segi Empat, Bulatan & Segi Tiga)",
+                        title: "🟦 Rupa 2D (Segi Empat, Bulatan & Segi Tiga)",
                         content: `
-                            <p><b>Rupa 2D</b> ialah hasil pertemuan hujung garisan dengan permulaannya.</p>
+                            <p><b>Rupa 2D</b> ialah hasil pertemuan hujung garisan dengan permulaannya (mempunyai panjang &amp; lebar):</p>
                             <ul>
-                                <li><b>🟦 Segi Empat (2D):</b> Bingkai Peta &amp; Pintu Rumah Toad.</li>
-                                <li><b>⭕ Bulatan (2D):</b> Syiling Emas &amp; Bintik Topi Toad.</li>
-                                <li><b>🔺 Segi Tiga (2D):</b> Bendera Penamat &amp; Duri Istana.</li>
+                                <li><b>🟦 Segi Empat (2D):</b> Bilik Hantu (Ghost House) di tengah Maze Pac-Man.</li>
+                                <li><b>⭕ Bulatan (2D):</b> Tubuh Pac-Man &amp; Power Pellet Emas.</li>
+                                <li><b>🔺 Segi Tiga (2D):</b> Simbol Anak Panah Laju di Terowong Warp.</li>
                             </ul>
                         `,
                         visual: `
@@ -1597,13 +1648,13 @@
                         `
                     },
                     {
-                        title: " Bentuk 3D (Kubus, Sfera & Silinder)",
+                        title: "🧊 Bentuk 3D (Kubus, Sfera & Silinder)",
                         content: `
-                            <p><b>Bentuk 3D</b> mempunyai ketinggian, kelebaran, kedalaman &amp; jisim:</p>
+                            <p><b>Bentuk 3D</b> mempunyai ketinggian, kelebaran, kedalaman &amp; isi padu:</p>
                             <ul>
-                                <li><b>🧊 Kubus (3D):</b> Blok Soalan [?] &amp; Blok Bata Mario.</li>
-                                <li><b>🔮 Sfera (3D):</b> Bebola Api Mario &amp; Bom Bob-omb.</li>
-                                <li><b>🧪 Silinder (3D):</b> Paip Hijau (Warp Pipe) &amp; Tiub Meriam.</li>
+                                <li><b>🧊 Kubus (3D):</b> Kotak Bonus Dinding Maze 3D.</li>
+                                <li><b>🔮 Sfera (3D):</b> Bebola Tenaga Power Pellet 3D.</li>
+                                <li><b>🧪 Silinder (3D):</b> Tiub Terowong Warp Neon 3D.</li>
                             </ul>
                         `,
                         visual: `
@@ -1630,7 +1681,7 @@
                         `
                     },
                     {
-                        title: "🏆 Cara Main Hologram Bebas (Dunia 3)!",
+                        title: "🏆 Cara Main Hologram Bebas (Zon 3)!",
                         content: `
                             <p><b>Apabila Soalan Bentuk Muncul (Contoh: Segi Empat):</b></p>
                             <ul>
@@ -1779,23 +1830,14 @@
             }
 
             static tryLoadLocalAssets() {
+                // Gunakan grafik vektor SVG Pac-Man & Arena Maze Neon secara langsung
                 const bgImg = document.getElementById('home-bg');
-                bgImg.onload = () => { bgImg.style.display = 'block'; };
-                bgImg.onerror = () => { bgImg.style.display = 'none'; };
-                bgImg.src = ['asset', 'wallpaper.gif'].join('/');
-
-                const charFiles = [
-                    { id: 1, file: 'mario.png' },
-                    { id: 2, file: 'hijau.png' },
-                    { id: 3, file: 'cendawan.png' }
-                ];
-                charFiles.forEach(({ id, file }) => {
+                if (bgImg) bgImg.style.display = 'none';
+                [1, 2, 3].forEach((id) => {
                     const imgEl = document.getElementById(`char-img-${id}`);
                     const svgEl = document.getElementById(`char-svg-${id}`);
-                    if (!imgEl || !svgEl) return;
-                    imgEl.onload = () => { imgEl.style.display = 'block'; svgEl.style.display = 'none'; };
-                    imgEl.onerror = () => { imgEl.style.display = 'none'; svgEl.style.display = 'block'; };
-                    imgEl.src = ['asset', file].join('/');
+                    if (imgEl) imgEl.style.display = 'none';
+                    if (svgEl) svgEl.style.display = 'block';
                 });
             }
 
@@ -1984,7 +2026,7 @@
                 SoundFX.init();
                 SoundFX.bgmEnabled = !SoundFX.bgmEnabled;
                 const btn = document.getElementById('btn-bgm');
-                btn.innerText = SoundFX.bgmEnabled ? "🎵 LAGU MARIO: ON" : "🎵 LAGU MARIO: OFF";
+                btn.innerText = SoundFX.bgmEnabled ? "🎵 LAGU PAC-MAN: ON" : "🎵 LAGU PAC-MAN: OFF";
                 if (SoundFX.bgmEnabled) SoundFX.startBGM();
             }
 
@@ -2022,7 +2064,7 @@
                 document.getElementById('note-modal').style.display = 'none';
                 document.getElementById('game-hud').style.display = 'none';
                 document.getElementById('result-screen').style.display = 'none';
-                this.updateMascot("🍄", "Cubit (🤏) watak Mario (Dunia 1), Luigi (Dunia 2) atau Toad (Dunia 3) untuk mula!");
+                this.updateMascot("🟡", "Cubit (🤏) watak Pac-Man (Zon 1), Inky (Zon 2) atau Pinky (Zon 3) untuk mula!");
             }
 
             static openModuleNote(modId) {
@@ -2082,7 +2124,7 @@
                     document.getElementById('d1-title').innerHTML = card.title;
                     document.getElementById('d1-content').innerHTML = card.content;
                     document.getElementById('d1-visual').innerHTML = card.visual;
-                    document.getElementById('d1-indicator').innerText = `Cubit / Tumbuk Blok [?] Di Atas! (${idx + 1}/4)`;
+                    document.getElementById('d1-indicator').innerText = `Cubit Kotak Pelet [●] Di Atas! (${idx + 1}/4)`;
 
                 } else if (modId === 2) {
                     const valves = document.querySelectorAll('#luigi-valves-row .btn-pipe-valve');
@@ -2095,14 +2137,14 @@
                             document.getElementById('d2-title').innerHTML = card.title;
                             document.getElementById('d2-content').innerHTML = card.content;
                             document.getElementById('d2-visual').innerHTML = card.visual;
-                            document.getElementById('d2-indicator').innerText = `Hologram Paip (${idx + 1}/4)`;
+                            document.getElementById('d2-indicator').innerText = `Hologram Terowong Maze (${idx + 1}/4)`;
                             holo.classList.remove('pipe-suck-in');
                         }, 240);
                     } else {
                         document.getElementById('d2-title').innerHTML = card.title;
                         document.getElementById('d2-content').innerHTML = card.content;
                         document.getElementById('d2-visual').innerHTML = card.visual;
-                        document.getElementById('d2-indicator').innerText = `Hologram Paip (${idx + 1}/4)`;
+                        document.getElementById('d2-indicator').innerText = `Hologram Terowong Maze (${idx + 1}/4)`;
                     }
 
                 } else if (modId === 3) {
@@ -2118,7 +2160,7 @@
                     document.getElementById('d3-title').innerHTML = card.title;
                     document.getElementById('d3-content').innerHTML = card.content;
                     document.getElementById('d3-visual').innerHTML = card.visual;
-                    document.getElementById('d3-indicator').innerText = `Cubit Peti Harta  (${idx + 1}/4)`;
+                    document.getElementById('d3-indicator').innerText = `Cubit Kapsul Bonus (${idx + 1}/4)`;
                 }
             }
 
@@ -2162,16 +2204,16 @@
                 document.getElementById('game-hud').style.display = 'flex';
 
                 GameEngine.initModuleGame(this.activeModule);
-                document.getElementById('hud-module-title').innerText = `DUNIA ${this.activeModule}-1 • MISI AKTIF`;
+                document.getElementById('hud-module-title').innerText = `ZON MAZE ${this.activeModule}-1 • MISI AKTIF`;
                 document.getElementById('target-mission').innerText = worldNoteData[this.activeModule].mission;
                 this.updateHUD();
 
                 if (this.activeModule === 1) {
-                    this.updateMascot("🎨", "Cubit & Tarik Kad Warna ke Paip WARNA PANAS (🔥 Mario Kiri) atau WARNA SEJUK (❄️ Luigi Kanan)!");
+                    this.updateMascot("🟡", "Cubit & Tarik Kad Warna ke Zon WARNA PANAS (🔥 Pac-Man Kiri) atau WARNA SEJUK (❄️ Inky Kanan)!");
                 } else if (this.activeModule === 2) {
-                    this.updateMascot("🟢", "DUNIA 2: Pilih & Tarik Kad Jenis Garisan yang betul ke Jambatan, kemudian Surih (Trace) laluan Mario!");
+                    this.updateMascot("👻", "ZON 2: Pilih & Tarik Kad Jenis Garisan yang betul ke Koridor Maze, kemudian Surih (Trace) laluan Pac-Man!");
                 } else if (this.activeModule === 3) {
-                    this.updateMascot("🍄", "DUNIA 3: Cubit (🤏) & lukis bentuk hologram di ruang udara kosong, hologram kekal statik, & GENGGAM TANGAN (✊) untuk hantar!");
+                    this.updateMascot("🍒", "ZON 3: Cubit (🤏) & lukis bentuk hologram di ruang udara kosong, hologram kekal statik, & GENGGAM TANGAN (✊) untuk hantar!");
                 }
             }
 
@@ -2198,26 +2240,26 @@
 
                 if (isVictory) {
                     heading.innerText = "MISI BERJAYA! 🎉";
-                    heading.style.color = "var(--luigi-green)";
+                    heading.style.color = "var(--pac-yellow)";
                     const starCount = GameEngine.health >= 3 ? 3 : (GameEngine.health === 2 ? 2 : 1);
                     starsEl.innerText = "⭐".repeat(starCount) + "☆".repeat(3 - starCount);
                     if (this.activeModule === 1) {
-                        evalEl.innerText = "Syabas! Anda berjaya mengelaskan semua Kad Warna Panas (Mario) & Warna Sejuk (Luigi) dengan cemerlang!";
+                        evalEl.innerText = "Syabas! Anda berjaya mengelaskan semua Kad Warna Panas (Pac-Man) & Warna Sejuk (Inky) dengan cemerlang!";
                     } else if (this.activeModule === 2) {
-                        evalEl.innerText = "Syabas! Anda berjaya mengenal pasti & menyambung ke semua 5 Laluan Garisan Mario (Lurus, Melengkung, Beralun/Pergerakan, Zig-Zag & Berpusing)!";
+                        evalEl.innerText = "Syabas! Anda berjaya mengenal pasti & menyambung ke semua 5 Laluan Garisan Maze Pac-Man (Lurus, Melengkung, Beralun/Pergerakan, Zig-Zag & Berpusing)!";
                     } else {
                         evalEl.innerText = "Syabas! Anda berjaya melukis tanpa panduan, mengawal & menghantar ke semua 6 Bentuk Hologram 2D/3D (Segi Empat, Bulatan, Segi Tiga, Kubus, Sfera, Silinder) dengan genggaman tangan anda!";
                     }
                 } else {
                     heading.innerText = "KEHABISAN NYAWA! 💔";
-                    heading.style.color = "var(--mario-red)";
+                    heading.style.color = "var(--blinky-red)";
                     starsEl.innerText = "☆☆☆";
                     if (this.activeModule === 2) {
-                        evalEl.innerText = "Jangan putus asa! Perhatikan bentuk titik laluan (Lurus, Melengkung, Beralun = Pergerakan, Zig-Zag atau Berpusing) dan elakkan Spiny 🌵!";
+                        evalEl.innerText = "Jangan putus asa! Perhatikan bentuk titik laluan (Lurus, Melengkung, Beralun = Pergerakan, Zig-Zag atau Berpusing) dan elakkan Hantu Blinky 👻!";
                     } else if (this.activeModule === 3) {
                         evalEl.innerText = "Jangan putus asa! Lukis bentuk Hologram dengan jelas di udara (gunakan 🔄 Lukis Semula jika mahu ubah) sebelum genggam tangan (✊) untuk hantar!";
                     } else {
-                        evalEl.innerText = "Jangan putus asa! Ingat: Merah, Jingga & Kuning = Warna Panas (Mario 🔥), manakala Hijau, Biru & Ungu = Warna Sejuk (Luigi ❄️). Cuba lagi!";
+                        evalEl.innerText = "Jangan putus asa! Ingat: Merah, Jingga & Kuning = Warna Panas (Pac-Man 🔥), manakala Hijau, Biru & Ungu = Warna Sejuk (Inky ❄️). Cuba lagi!";
                     }
                 }
 
@@ -2700,45 +2742,45 @@
         }
 
         // =========================================================
-        // 4. ENJIN PERMAINAN AR PRO 60FPS:
-        //    - DUNIA 1: PENGELASAN WARNA PANAS VS SEJUK & MEWARNA WATAK
-        //    - DUNIA 2: PEMBINA LALUAN GARISAN MARIO & LUIGI (LURUS, MELENGKUNG, BERALUN/PERGERAKAN, ZIG-ZAG, BERPUSING)
-        //    - DUNIA 3: LUKIS BENTUK HOLOGRAM 2D/3D TANPA PANDUAN DI UDARA, KAWAL DENGAN TANGAN & GENGGAM TANGAN (✊) UNTUK HANTAR!
-        //    - DUNIA 4: SASARAN AR DINAMIK
+        // 4. ENJIN PERMAINAN AR PRO 60FPS (TEMA PAC-MAN ARCADE):
+        //    - ZON 1: PENGELASAN WARNA PANAS VS SEJUK & MEWARNA WATAK PAC-MAN & INKY
+        //    - ZON 2: PEMBINA LALUAN GARISAN PAC-MAN & INKY (LURUS, MELENGKUNG, BERALUN/PERGERAKAN, ZIG-ZAG, BERPUSING)
+        //    - ZON 3: LUKIS BENTUK HOLOGRAM 2D/3D TANPA PANDUAN DI UDARA, KAWAL DENGAN TANGAN & GENGGAM TANGAN (✊) UNTUK HANTAR!
+        //    - ZON 4: SASARAN AR DINAMIK
         // =========================================================
         const COLOR_DECK_D1 = [
-            { name: "MERAH", item: "Topi Mario", hex: "#E52521", lightHex: "#FF7961", category: "PANAS", icon: "🍄" },
-            { name: "HIJAU", item: "Topi Luigi", hex: "#43B047", lightHex: "#80E27E", category: "SEJUK", icon: "🟢" },
-            { name: "JINGGA", item: "Bunga Api", hex: "#FF6D00", lightHex: "#FF9E40", category: "PANAS", icon: "🔥" },
-            { name: "BIRU", item: "Bunga Ais", hex: "#0066FF", lightHex: "#69A1FF", category: "SEJUK", icon: "❄️" },
-            { name: "KUNING", item: "Super Star", hex: "#FBD000", lightHex: "#FFFF52", category: "PANAS", icon: "⭐" },
-            { name: "UNGU", item: "Bintang Ungu", hex: "#8E24AA", lightHex: "#C158DC", category: "SEJUK", icon: "🔮" },
-            { name: "MERAH API", item: "Bebola Api", hex: "#D50000", lightHex: "#FF5131", category: "PANAS", icon: "☄️" },
-            { name: "BIRU LAUT", item: "Cendawan Air", hex: "#0091EA", lightHex: "#64C1FF", category: "SEJUK", icon: "💧" }
+            { name: "MERAH", item: "Hantu Blinky", hex: "#E52521", lightHex: "#FF7961", category: "PANAS", icon: "👻" },
+            { name: "HIJAU", item: "Epal Bonus", hex: "#43B047", lightHex: "#80E27E", category: "SEJUK", icon: "🍏" },
+            { name: "JINGGA", item: "Hantu Clyde", hex: "#FF6D00", lightHex: "#FF9E40", category: "PANAS", icon: "🟠" },
+            { name: "BIRU", item: "Hantu Inky", hex: "#0066FF", lightHex: "#69A1FF", category: "SEJUK", icon: "💠" },
+            { name: "KUNING", item: "Pac-Man", hex: "#FBD000", lightHex: "#FFFF52", category: "PANAS", icon: "🟡" },
+            { name: "UNGU", item: "Hantu Scared", hex: "#8E24AA", lightHex: "#C158DC", category: "SEJUK", icon: "🔮" },
+            { name: "MERAH CERI", item: "Buah Ceri", hex: "#D50000", lightHex: "#FF5131", category: "PANAS", icon: "🍒" },
+            { name: "BIRU MAZE", item: "Dinding Maze", hex: "#0091EA", lightHex: "#64C1FF", category: "SEJUK", icon: "🌐" }
         ];
 
-        // 5 TAHAP LALUAN GARISAN DUNIA 2
+        // 5 TAHAP LALUAN GARISAN ZON 2
         const LINE_STAGES_D2 = [
             {
                 type: "LURUS",
                 name: "GARISAN LURUS",
-                sub: "Jambatan Tegak",
+                sub: "Koridor Maze Tegak",
                 icon: "📏",
                 hex: "#FBD000",
                 lightHex: "#FFF176",
-                prompt: "TAHAP 1/5: Sambung laluan Mario dengan GARISAN LURUS (Jambatan Bata Tegak)!",
-                traceTip: "SURIH (TRACE) GARISAN LURUS dari Titik MULA (Paip Kiri) ke TAMAT (Paip Kanan)!",
+                prompt: "TAHAP 1/5: Sambung laluan Pac-Man dengan GARISAN LURUS (Koridor Maze Tegak)!",
+                traceTip: "SURIH (TRACE) GARISAN LURUS dari Titik MULA (Portal Kiri) ke TAMAT (Portal Kanan)!",
                 motionEffect: false
             },
             {
                 type: "MELENGKUNG",
                 name: "GARISAN MELENGKUNG",
-                sub: "Lompatan Pelangi",
+                sub: "Lengkungan Tenaga",
                 icon: "🌈",
                 hex: "#FF6D00",
                 lightHex: "#FFB74D",
-                prompt: "TAHAP 2/5: Bantu Mario melompat tinggi menggunakan GARISAN MELENGKUNG!",
-                traceTip: "SURIH (TRACE) LENGKUNGAN PELANGI dari Paip Kiri ke Paip Kanan!",
+                prompt: "TAHAP 2/5: Bantu Pac-Man meluncur tinggi menggunakan GARISAN MELENGKUNG!",
+                traceTip: "SURIH (TRACE) LENGKUNGAN TENAGA dari Portal Kiri ke Portal Kanan!",
                 motionEffect: false
             },
             {
@@ -2748,7 +2790,7 @@
                 icon: "🌊",
                 hex: "#00E5FF",
                 lightHex: "#84FFFF",
-                prompt: "TAHAP 3/5: Hasilkan KESAN PERGERAKAN arus ombak menggunakan GARISAN BERALUN!",
+                prompt: "TAHAP 3/5: Hasilkan KESAN PERGERAKAN gelombang neon menggunakan GARISAN BERALUN!",
                 traceTip: "SURIH (TRACE) GARISAN BERALUN untuk mengaktifkan Kesan Pergerakan Gelombang Hidup!",
                 motionEffect: true
             },
@@ -2770,20 +2812,20 @@
                 icon: "🌀",
                 hex: "#B388FF",
                 lightHex: "#EDE7F6",
-                prompt: "TAHAP 5/5: Lancarkan Mario melalui gelung pusaran dengan GARISAN BERPUSING!",
-                traceTip: "SURIH (TRACE) GELUNG GARISAN BERPUSING sehingga ke Paip Kanan!",
+                prompt: "TAHAP 5/5: Lancarkan Pac-Man melalui gelung pusaran dengan GARISAN BERPUSING!",
+                traceTip: "SURIH (TRACE) GELUNG GARISAN BERPUSING sehingga ke Portal Kanan!",
                 motionEffect: true
             }
         ];
 
-        // 6 SOALAN BENTUK HOLOGRAM DUNIA 3 (LUKIS SENDIRI TANPA PANDUAN DI UDARA, KAWAL DENGAN TANGAN & GENGGAM TANGAN ✊ UNTUK HANTAR)
+        // 6 SOALAN BENTUK HOLOGRAM ZON 3 (LUKIS SENDIRI TANPA PANDUAN DI UDARA, KAWAL DENGAN TANGAN & GENGGAM TANGAN ✊ UNTUK HANTAR)
         const HOLOGRAM_STAGES_D3 = [
             {
                 shapeKey: "SEGI EMPAT",
                 dim: "RUPA 2D",
                 title: "SEGI EMPAT (RUPA 2D)",
-                marioObj: "Bingkai Peta Rumah Toad",
-                marioIcon: "🗺️",
+                marioObj: "Bilik Hantu Maze Pac-Man",
+                marioIcon: "🟦",
                 hex: "#69FF70",
                 lightHex: "#B9F6CA",
                 hintText: "Lukis 4 sisi / 4 penjuru seperti kotak",
@@ -2793,8 +2835,8 @@
                 shapeKey: "BULATAN",
                 dim: "RUPA 2D",
                 title: "BULATAN (RUPA 2D)",
-                marioObj: "Syiling Emas Super Mario",
-                marioIcon: "🪙",
+                marioObj: "Power Pellet Emas Pac-Man",
+                marioIcon: "🟡",
                 hex: "#00E5FF",
                 lightHex: "#84FFFF",
                 hintText: "Lukis garisan melengkung bulat tertutup",
@@ -2804,8 +2846,8 @@
                 shapeKey: "SEGI TIGA",
                 dim: "RUPA 2D",
                 title: "SEGI TIGA (RUPA 2D)",
-                marioObj: "Bendera Penamat Mario",
-                marioIcon: "🚩",
+                marioObj: "Portal Anak Panah Maze",
+                marioIcon: "🔺",
                 hex: "#FFD600",
                 lightHex: "#FFFF8D",
                 hintText: "Lukis 3 penjuru tajam (puncak atas & tapak)",
@@ -2815,8 +2857,8 @@
                 shapeKey: "KUBUS",
                 dim: "BENTUK 3D",
                 title: "KUBUS (BENTUK 3D)",
-                marioObj: "Blok Soalan Emas [?] 3D",
-                marioIcon: "❓",
+                marioObj: "Kotak Bonus Arcade [●] 3D",
+                marioIcon: "📦",
                 hex: "#FF9100",
                 lightHex: "#FFD180",
                 hintText: "Lukis kotak di udara — sistem akan menjana kedalaman 3D Kubus!",
@@ -2826,8 +2868,8 @@
                 shapeKey: "SFERA",
                 dim: "BENTUK 3D",
                 title: "SFERA (BENTUK 3D)",
-                marioObj: "Bebola Api Super Mario 3D",
-                marioIcon: "🔥",
+                marioObj: "Bebola Tenaga Pac-Man 3D",
+                marioIcon: "🔮",
                 hex: "#FF2E63",
                 lightHex: "#FF80AB",
                 hintText: "Lukis bulatan penuh di udara — sistem akan menjana gegelung 3D Sfera!",
@@ -2837,11 +2879,11 @@
                 shapeKey: "SILINDER",
                 dim: "BENTUK 3D",
                 title: "SILINDER (BENTUK 3D)",
-                marioObj: "Paip Hijau Warp Pipe 3D",
-                marioIcon: "🟢",
+                marioObj: "Terowong Warp Neon 3D",
+                marioIcon: "🌀",
                 hex: "#00E676",
                 lightHex: "#B9F6CA",
-                hintText: "Lukis bentuk tiang memanjang seperti Paip Hijau — sistem akan menjana 3D Silinder!",
+                hintText: "Lukis bentuk tiang memanjang seperti Terowong Warp — sistem akan menjana 3D Silinder!",
                 prompt: "SOALAN 6/6: Cubit (🤏) & lukis SILINDER 3D di udara, kawal dengan tangan & GENGGAM TANGAN (✊) untuk hantar!"
             }
         ];
@@ -2864,7 +2906,7 @@
             static spawner = null;
             static boxBounce = 0;
 
-            // Dunia 1 State
+            // Zon 1 State
             static colorCards = [];
             static selectedCard = null;
             static marioColoredParts = 0;
@@ -2882,7 +2924,7 @@
             static handFist = [false, false];
             static handPeace = [false, false];
 
-            // Dunia 2 State: Pembina & Penyurih Laluan Garisan Mario
+            // Zon 2 State: Pembina & Penyurih Laluan Garisan Pac-Man
             static d2StageIdx = 0;
             static d2Phase = 'SELECT_CARD';
             static d2Cards = [];
@@ -2895,7 +2937,7 @@
             static d2BrushTrail = [];
 
             // =========================================================
-            // DUNIA 3 STATE: LUKIS BENTUK HOLOGRAM TANPA PANDUAN DI UDARA
+            // ZON 3 STATE: LUKIS BENTUK HOLOGRAM TANPA PANDUAN DI UDARA
             // + SOKONGAN PINTAR DI SEBALIK TABIR (AUTO-STRAIGHTEN & AUTO-CURVE TANPA GUIDELINE)
             // + KAWAL DENGAN TANGAN (🖐️) & GENGGAM TANGAN (✊) UNTUK SUBMIT (TIADA BOM!)
             // =========================================================
@@ -2919,7 +2961,7 @@
             static d3SubmitCooldown = 0;
             static d3ResetBtn = { x: 112, y: 265, w: 176, h: 58 }; // Butang 🔄 LUKIS SEMULA
             static d3SimFistBtn = { x: 112, y: 338, w: 176, h: 58 }; // Butang ✊ GENGGAM (untuk rujukan / simulasi tetikus)
-            static d3Hazards = []; // Tiada bom di Dunia 3 mengikut permintaan pengguna!
+            static d3Hazards = []; // Tiada bom di Zon 3 mengikut permintaan pengguna!
             static d3OneUpOrb = null;
 
             static clearActiveGameObjects() {
@@ -2993,7 +3035,7 @@
             }
 
             // =========================================================
-            // LOGIK PENYEDIAAN DUNIA 3:
+            // LOGIK PENYEDIAAN ZON 3:
             // TIADA BOM & SOKONGAN MELURUSKAN/MELENGKUNGKAN GARISAN DI SEBALIK TABIR
             // =========================================================
             static setupDunia3Question(qIdx) {
@@ -3007,9 +3049,9 @@
                 this.resetDunia3HologramDrawing(false);
 
                 const st = HOLOGRAM_STAGES_D3[qIdx];
-                document.getElementById('hud-module-title').innerText = `DUNIA 3-${qIdx + 1} • ${st.dim}`;
+                document.getElementById('hud-module-title').innerText = `ZON 3-${qIdx + 1} • ${st.dim}`;
                 document.getElementById('target-mission').innerText = `SOALAN ${qIdx + 1}/6: ${st.title}`;
-                App.updateMascot("🍄", `${st.marioIcon} ${st.marioObj}: Cubit (🤏) & lukis ${st.shapeKey} di udara — sistem bantu kemaskan garisan secara automatik!`);
+                App.updateMascot("🩷", `${st.marioIcon} ${st.marioObj}: Cubit (🤏) & lukis ${st.shapeKey} di udara — sistem bantu kemaskan garisan secara automatik!`);
 
                 this.recomputeDunia3Controls();
                 this.spawnDunia3HoloHazards(qIdx);
@@ -3070,7 +3112,7 @@
             static spawnDunia3HoloHazards(qIdx) {
                 const w = window.innerWidth;
                 const h = window.innerHeight;
-                // TIADA BOM (💣) DI DUNIA 3! Dikosongkan sepenuhnya mengikut arahan pengguna.
+                // TIADA BOM (💣) DI ZON 3! Dikosongkan sepenuhnya mengikut arahan pengguna.
                 this.d3Hazards = [];
 
                 // Hanya munculkan Gelembung 1-UP Hijau Pemulihan Nyawa jika nyawa kurang daripada 3
@@ -3471,7 +3513,7 @@
                 if (!st) return;
 
                 if (this.d3RecognizedShapeKey === st.shapeKey) {
-                    // JAWAPAN BETUL! Hologram yang dilukis menjelma menjadi Objek Super Mario & mara ke Soalan Seterusnya
+                    // JAWAPAN BETUL! Hologram yang dilukis menjelma menjadi Objek Pac-Man & mara ke Soalan Seterusnya
                     this.d3HoloPhase = 'MATERIALIZE';
                     this.d3MaterializeTimer = 0;
                     this.d3FistSubmitProgress = 0;
@@ -3483,7 +3525,7 @@
                             y: this.d3HoloPos.y,
                             vx: (Math.random() - 0.5) * 15,
                             vy: (Math.random() - 0.5) * 15,
-                            icon: k % 2 === 0 ? st.marioIcon : "🪙",
+                            icon: k % 2 === 0 ? st.marioIcon : "🟡",
                             life: 1.15
                         });
                     }
@@ -3505,7 +3547,7 @@
             }
 
             // =========================================================
-            // LOGIK PENYEDIAAN TAHAP GARISAN DUNIA 2 (5 JENIS GARISAN)
+            // LOGIK PENYEDIAAN TAHAP GARISAN ZON 2 (5 JENIS GARISAN)
             // =========================================================
             static setupDunia2Stage(stageIdx) {
                 if (stageIdx >= LINE_STAGES_D2.length) {
@@ -3520,9 +3562,9 @@
                 this.d2BrushTrail = [];
 
                 const stage = LINE_STAGES_D2[stageIdx];
-                document.getElementById('hud-module-title').innerText = `DUNIA 2-${stageIdx + 1} • ${stage.name}`;
+                document.getElementById('hud-module-title').innerText = `ZON 2-${stageIdx + 1} • ${stage.name}`;
                 document.getElementById('target-mission').innerText = `LANGKAH 1: PILIH KAD ${stage.name} (${stage.icon})`;
-                App.updateMascot("🟢", stage.prompt);
+                App.updateMascot("👻", stage.prompt);
 
                 this.recomputeDunia2PathPoints();
                 this.spawnDunia2Cards(stageIdx);
@@ -3616,7 +3658,7 @@
                         type: LINE_STAGES_D2[stageIdx].type,
                         name: "1-UP GARISAN",
                         sub: "+1 Nyawa & Bantu",
-                        icon: "🍄💚",
+                        icon: "🍒💚",
                         hex: "#00E676",
                         lightHex: "#B9F6CA",
                         id: "d2-oneup",
@@ -3658,7 +3700,7 @@
                 }
             }
 
-            // Munculkan Kad Warna Dunia 1
+            // Munculkan Kad Warna Zon 1
             static spawnColorCardD1(slotHint = 0) {
                 const w = window.innerWidth;
                 const h = window.innerHeight;
@@ -3677,7 +3719,7 @@
                     }
                 }
                 const template = isOneUpBonus
-                    ? { name: "1-UP HIJAU", item: "+1 Nyawa & Sejuk", hex: "#00E676", lightHex: "#B9F6CA", category: "SEJUK", icon: "🍄💚", isOneUp: true }
+                    ? { name: "1-UP PAC-MAN", item: "+1 Nyawa & Sejuk", hex: "#00E676", lightHex: "#B9F6CA", category: "SEJUK", icon: "🍒💚", isOneUp: true }
                     : pickedDeckCard;
 
                 if (!isOneUpBonus) this.deckIndex++;
@@ -3712,8 +3754,8 @@
 
             static spawnTarget(modId) {
                 const isBomb = Math.random() < 0.2;
-                const colors = ["#E52521", "#0043B8", "#FBD000", "#43B047"];
-                const icons = ["❓", "🪙", "🍄", "⭐", "🌼"];
+                const colors = ["#FF1744", "#2121DE", "#FFE600", "#00E5FF"];
+                const icons = ["🟡", "🍒", "🍓", "🍊", "🍏"];
                 const baseX = Math.random() * (window.innerWidth - 180) + 90;
                 this.orbs.push({
                     x: baseX,
@@ -3721,7 +3763,7 @@
                     y: window.innerHeight + 60,
                     radius: 46,
                     color: isBomb ? "#262626" : colors[Math.floor(Math.random() * colors.length)],
-                    icon: isBomb ? "💣" : icons[Math.floor(Math.random() * icons.length)],
+                    icon: isBomb ? "👻" : icons[Math.floor(Math.random() * icons.length)],
                     isBomb: isBomb,
                     speed: Math.random() * 1.8 + 2.3,
                     wave: modId === 2 ? 2.4 : 0.9,
@@ -3801,7 +3843,7 @@
                     this.floatingTexts.push({
                         x: x,
                         y: y - 34,
-                        text: `🍄 1-UP! +1 NYAWA ❤️`,
+                        text: `🍒 1-UP! +1 NYAWA ❤️`,
                         color: "#69FF70",
                         life: 1.4
                     });
@@ -4001,7 +4043,7 @@
                         this.floatingTexts.push({
                             x,
                             y,
-                            text: "🍄 1-UP HOLOGRAM! +1 NYAWA ❤️",
+                            text: "🍒 1-UP HOLOGRAM! +1 NYAWA ❤️",
                             color: "#69FF70",
                             life: 1.35
                         });
@@ -4027,7 +4069,7 @@
             }
 
             // =========================================================
-            // INTERAKSI KHAS DUNIA 2: PILIH KAD GARISAN & SURIH (TRACE) LALUAN MARIO
+            // INTERAKSI KHAS ZON 2: PILIH KAD GARISAN & SURIH (TRACE) LALUAN PAC-MAN
             // =========================================================
             static handleDunia2PinchStart(handIdx, x, y) {
                 const h = window.innerHeight;
@@ -4121,7 +4163,7 @@
                     this.d2SelectedCard = null;
 
                     this.loseLife(`Itu ${card.name}! Kita perlukan ${stage.name}!`, window.innerWidth / 2, window.innerHeight * 0.28);
-                    App.updateMascot("⚠️", `Cuba perhatikan bentuk jambatan! Pilih kad ${stage.name} (${stage.icon}).`);
+                    App.updateMascot("⚠️", `Cuba perhatikan bentuk laluan maze! Pilih kad ${stage.name} (${stage.icon}).`);
                 }
             }
 
@@ -4136,7 +4178,7 @@
                     const hz = this.d2Hazards[i];
                     if (hz.cooldown <= 0 && Math.hypot(x - hz.x, y - hz.y) < hz.radius + 26) {
                         hz.cooldown = 75;
-                        this.loseLife("Terkena Spiny 🌵 Semasa Melukis Garisan!", hz.x, hz.y);
+                        this.loseLife("Terkena Hantu Blinky 👻 Semasa Melukis Garisan!", hz.x, hz.y);
                         return;
                     }
                 }
@@ -4158,7 +4200,7 @@
                             y: targetNode.y,
                             vx: (Math.random() - 0.5) * 9,
                             vy: (Math.random() - 0.5) * 9,
-                            icon: k % 2 === 0 ? "✨" : "🪙",
+                            icon: k % 2 === 0 ? "✨" : "🟡",
                             life: 0.85
                         });
                     }
@@ -4169,15 +4211,15 @@
                         this.awardPoints(120, `🌟 ${stage.name} LENGKAP!`, window.innerWidth / 2, window.innerHeight * 0.25, false, false);
 
                         if (stage.motionEffect) {
-                            App.updateMascot("🌊", `HEBAT! Lihat bagaimana ${stage.name} mencipta KESAN PERGERAKAN gelombang hidup semasa Mario menyeberang!`);
+                            App.updateMascot("🌊", `HEBAT! Lihat bagaimana ${stage.name} mencipta KESAN PERGERAKAN gelombang hidup semasa Pac-Man menyeberang!`);
                         } else {
-                            App.updateMascot("🏃‍♂️", `SYABAS! Mario sedang berlari di atas ${stage.name} yang anda hasilkan!`);
+                            App.updateMascot("🟡", `SYABAS! Pac-Man sedang meluncur di atas ${stage.name} yang anda hasilkan!`);
                         }
                     }
                 }
             }
 
-            // Semak Padanan Kategori Warna Panas (Mario) vs Warna Sejuk (Luigi) untuk Dunia 1
+            // Semak Padanan Kategori Warna Panas (Pac-Man) vs Warna Sejuk (Inky) untuk Zon 1
             static evaluateColorMatch(card, chosenCategory, targetCharX, targetCharY) {
                 const idx = this.colorCards.indexOf(card);
                 if (idx === -1) return;
@@ -4199,11 +4241,11 @@
                     if (chosenCategory === "PANAS") {
                         this.marioColoredParts = Math.min(3, this.marioColoredParts + 1);
                         this.leftZonePulse = 22;
-                        App.updateMascot("🔥", `TEPAT! ${card.name} = WARNA PANAS! Mario sedang diwarnakan & Combo meningkat!`);
+                        App.updateMascot("🔥", `TEPAT! ${card.name} = WARNA PANAS! Pac-Man sedang diwarnakan & Combo meningkat!`);
                     } else {
                         this.luigiColoredParts = Math.min(3, this.luigiColoredParts + 1);
                         this.rightZonePulse = 22;
-                        App.updateMascot("❄️", `TEPAT! ${card.name} = WARNA SEJUK! Luigi sedang diwarnakan & Combo meningkat!`);
+                        App.updateMascot("❄️", `TEPAT! ${card.name} = WARNA SEJUK! Inky sedang diwarnakan & Combo meningkat!`);
                     }
 
                     for (let k = 0; k < 14; k++) {
@@ -4212,7 +4254,7 @@
                             y: card.y,
                             vx: (Math.random() - 0.5) * 13,
                             vy: (Math.random() - 0.5) * 13,
-                            icon: k % 2 === 0 ? "🪙" : "✨",
+                            icon: k % 2 === 0 ? "🟡" : "✨",
                             life: 1.0
                         });
                     }
@@ -4233,7 +4275,7 @@
                     if (this.selectedCard === card) this.selectedCard = null;
 
                     this.loseLife(`${card.name} ialah WARNA ${card.category}!`, window.innerWidth / 2, window.innerHeight * 0.27);
-                    App.updateMascot("⚠️", `Salah Zon! ${card.name} ialah WARNA ${card.category}. Ingat: Merah/Jingga/Kuning = Panas (Mario 🔥), Hijau/Biru/Ungu = Sejuk (Luigi ❄️)!`);
+                    App.updateMascot("⚠️", `Salah Zon! ${card.name} ialah WARNA ${card.category}. Ingat: Merah/Jingga/Kuning = Panas (Pac-Man 🔥), Hijau/Biru/Ungu = Sejuk (Inky ❄️)!`);
                 }
             }
 
@@ -4557,7 +4599,7 @@
                 }
 
                 // ---------------------------------------------------------
-                // 6. GELEMBUNG 1-UP HIJAU PEMULIHAN NYAWA (TIADA BOM DI DUNIA 3!)
+                // 6. GELEMBUNG 1-UP CERI PEMULIHAN NYAWA (TIADA BOM DI ZON 3!)
                 // ---------------------------------------------------------
                 if (this.d3OneUpOrb) {
                     this.d3OneUpOrb.phase += 0.05 * dtNorm;
@@ -4574,7 +4616,7 @@
                     ctx.font = "24px Fredoka";
                     ctx.textAlign = "center";
                     ctx.textBaseline = "middle";
-                    ctx.fillText("🍄", 0, -2);
+                    ctx.fillText("🍒", 0, -2);
                     ctx.fillStyle = "#1A1A1A";
                     ctx.font = "bold 8px 'Press Start 2P'";
                     ctx.fillText("+1 NYAWA", 0, 20);
@@ -4699,7 +4741,7 @@
             }
 
             // =========================================================
-            // LUKISAN KHAS PERMAINAN AR DUNIA 2 (GARISAN & KESAN PERGERAKAN MARIO)
+            // LUKISAN KHAS PERMAINAN AR ZON 2 (GARISAN & KESAN PERGERAKAN PAC-MAN)
             // =========================================================
             static updateAndDrawDunia2(ctx, canvas, dtNorm, timestamp) {
                 const w = canvas.width;
@@ -4728,7 +4770,7 @@
                 ctx.translate(w / 2, isCompact ? 74 : 84);
                 const pillW = Math.min(520, w * 0.9);
                 const pillH = isCompact ? 34 : 38;
-                ctx.fillStyle = "rgba(16, 38, 22, 0.88)";
+                ctx.fillStyle = "rgba(8, 12, 38, 0.90)";
                 ctx.strokeStyle = stage.hex;
                 ctx.lineWidth = 3;
                 ctx.beginPath();
@@ -4748,9 +4790,9 @@
                 ctx.fillText(stepTitle, 0, 1);
                 ctx.restore();
 
-                // 2. PAIP WARP KIRI & KANAN
-                this.drawWarpPipePlatform(ctx, firstNode.x - 54, firstNode.y + 10, "#E52521", "MULA", "M");
-                this.drawWarpPipePlatform(ctx, lastNode.x + 54, lastNode.y + 10, "#43B047", "TAMAT", "L");
+                // 2. PORTAL TEROWONG WARP MAZE KIRI & KANAN
+                this.drawWarpPipePlatform(ctx, firstNode.x - 54, firstNode.y + 10, "#2121DE", "MULA", "P");
+                this.drawWarpPipePlatform(ctx, lastNode.x + 54, lastNode.y + 10, "#00E5FF", "TAMAT", "G");
 
                 // 3. LUKIS LALUAN GARISAN
                 if (this.d2PathNodes.length > 1) {
@@ -4810,10 +4852,10 @@
 
                         ctx.beginPath();
                         ctx.arc(0, 0, r, 0, Math.PI * 2);
-                        ctx.fillStyle = isDone ? "#50FA7B" : (isNext ? "#FBD000" : "rgba(26,26,26,0.85)");
+                        ctx.fillStyle = isDone ? "#50FA7B" : (isNext ? "#FFE600" : "rgba(10, 14, 42, 0.90)");
                         ctx.fill();
                         ctx.lineWidth = isNext ? 4.5 : 3;
-                        ctx.strokeStyle = "#FFFFFF";
+                        ctx.strokeStyle = isNext ? "#FFFFFF" : "#00E5FF";
                         ctx.stroke();
 
                         ctx.fillStyle = isDone || isNext ? "#1A1A1A" : "#FFFFFF";
@@ -4821,7 +4863,6 @@
                         ctx.textAlign = "center";
                         ctx.textBaseline = "middle";
                         ctx.fillText(isDone ? "★" : String(i + 1), 0, 1);
-
 
                         ctx.restore();
                     }
@@ -4844,7 +4885,7 @@
                     ctx.restore();
                 }
 
-                // 5. MUSUH SPINY 🌵 SEMASA FASA SURIH GARISAN
+                // 5. HANTU BLINKY 👻 SEMASA FASA SURIH GARISAN
                 if (this.d2Phase === 'TRACE_PATH') {
                     for (let i = 0; i < this.d2Hazards.length; i++) {
                         const hz = this.d2Hazards[i];
@@ -4856,7 +4897,7 @@
                         ctx.translate(hz.x, hz.y);
                         ctx.beginPath();
                         ctx.arc(0, 0, hz.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = "#E52521";
+                        ctx.fillStyle = "#FF1744";
                         ctx.fill();
                         ctx.lineWidth = 3.5;
                         ctx.strokeStyle = "#FFFFFF";
@@ -4864,12 +4905,12 @@
                         ctx.font = "22px Fredoka";
                         ctx.textAlign = "center";
                         ctx.textBaseline = "middle";
-                        ctx.fillText("🌵", 0, 1);
+                        ctx.fillText("👻", 0, 1);
                         ctx.restore();
                     }
                 }
 
-                // 6. ANIMASI WATAK MARIO MENYEBERANGI LALUAN GARISAN
+                // 6. ANIMASI WATAK PAC-MAN MENYEBERANGI LALUAN GARISAN
                 let marioX = firstNode.x - 54;
                 let marioY = firstNode.y - 38;
 
@@ -4894,7 +4935,7 @@
                             y: marioY + 15,
                             vx: (Math.random() - 0.5) * 4,
                             vy: Math.random() * 3,
-                            icon: stage.motionEffect ? "🌊" : "⭐",
+                            icon: stage.motionEffect ? "🌊" : "🟡",
                             life: 0.65
                         });
                     }
@@ -4905,28 +4946,37 @@
                     }
                 }
 
+                // Lukis Pac-Man Kuning dengan mulut mengunyah Waka-Waka secara masa nyata!
                 ctx.save();
                 ctx.translate(marioX, marioY + Math.sin(timestamp * 0.01) * 4);
+                const chompAngle = 0.08 + Math.abs(Math.sin(timestamp * 0.015)) * 0.52;
                 ctx.beginPath();
-                ctx.arc(0, 0, 24, 0, Math.PI * 2);
-                ctx.fillStyle = "#E52521";
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, 24, chompAngle, Math.PI * 2 - chompAngle);
+                ctx.closePath();
+                ctx.fillStyle = "#FFE600";
                 ctx.fill();
                 ctx.lineWidth = 3.5;
-                ctx.strokeStyle = "#FFFFFF";
+                ctx.strokeStyle = "#1A1A1A";
                 ctx.stroke();
+
+                // Mata Pac-Man
+                ctx.beginPath();
+                ctx.arc(4, -11, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = "#1A1A1A";
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(5, -12, 1.3, 0, Math.PI * 2);
                 ctx.fillStyle = "#FFFFFF";
-                ctx.font = "bold 14px 'Press Start 2P'";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText("M", 0, 1);
+                ctx.fill();
                 ctx.restore();
 
                 // 7. LUKIS 5 KAD PILIHAN JENIS GARISAN (FASA SELECT_CARD)
                 if (this.d2Phase === 'SELECT_CARD') {
                     ctx.save();
                     ctx.translate(w / 2, h * 0.44);
-                    ctx.fillStyle = "rgba(16, 38, 22, 0.78)";
-                    ctx.strokeStyle = "#69FF70";
+                    ctx.fillStyle = "rgba(8, 12, 38, 0.85)";
+                    ctx.strokeStyle = "#00E5FF";
                     ctx.setLineDash([6, 5]);
                     ctx.lineWidth = 2.5;
                     ctx.beginPath();
@@ -4934,7 +4984,7 @@
                     ctx.fill();
                     ctx.stroke();
                     ctx.setLineDash([]);
-                    ctx.fillStyle = "#69FF70";
+                    ctx.fillStyle = "#FFE600";
                     ctx.font = isCompact ? "bold 8px 'Press Start 2P'" : "bold 9px 'Press Start 2P'";
                     ctx.textAlign = "center";
                     ctx.textBaseline = "middle";
@@ -4976,14 +5026,14 @@
                         ctx.fill();
 
                         ctx.fillStyle = "#FFFFFF";
-                        ctx.strokeStyle = isSelected ? "#FBD000" : "#1A1A1A";
+                        ctx.strokeStyle = isSelected ? "#FFE600" : "#2121DE";
                         ctx.lineWidth = isSelected ? 6 : 4;
                         ctx.beginPath();
                         ctx.roundRect(-card.width / 2, -card.height / 2, card.width, card.height, 18);
                         ctx.fill();
                         ctx.stroke();
 
-                        ctx.fillStyle = "#102818";
+                        ctx.fillStyle = "#080B24";
                         ctx.beginPath();
                         ctx.roundRect(-card.width / 2 + 8, -card.height / 2 + 8, card.width - 16, 56, 12);
                         ctx.fill();
@@ -5010,14 +5060,26 @@
                 ctx.save();
                 ctx.translate(x, y);
 
-                ctx.fillStyle = color;
-                ctx.strokeStyle = "#1A1A1A";
+                // Portal Terowong Maze Pac-Man Neon
+                ctx.fillStyle = "#05071A";
+                ctx.strokeStyle = color;
                 ctx.lineWidth = 4;
                 ctx.beginPath();
-                ctx.roundRect(-34, 0, 68, 75, 6);
+                ctx.roundRect(-34, 0, 68, 75, 10);
                 ctx.fill();
                 ctx.stroke();
 
+                // Garisan Dalam Neon Berganda (Double-Lined Maze Wall)
+                ctx.strokeStyle = "#FFE600";
+                ctx.lineWidth = 1.8;
+                ctx.beginPath();
+                ctx.roundRect(-29, 5, 58, 65, 7);
+                ctx.stroke();
+
+                // Pintu Gerbang Atas Portal Maze
+                ctx.fillStyle = color;
+                ctx.strokeStyle = "#FFFFFF";
+                ctx.lineWidth = 3;
                 ctx.beginPath();
                 ctx.roundRect(-42, -16, 84, 24, 8);
                 ctx.fill();
@@ -5026,14 +5088,16 @@
                 ctx.fillStyle = "#FFFFFF";
                 ctx.font = "bold 9px 'Press Start 2P'";
                 ctx.textAlign = "center";
-                ctx.fillText(label, 0, 32);
+                ctx.fillText(label, 0, 30);
 
                 ctx.beginPath();
-                ctx.arc(0, 52, 12, 0, Math.PI * 2);
-                ctx.fillStyle = "#FFFFFF";
+                ctx.arc(0, 52, 13, 0, Math.PI * 2);
+                ctx.fillStyle = "#FFE600";
                 ctx.fill();
+                ctx.lineWidth = 2.5;
+                ctx.strokeStyle = "#1A1A1A";
                 ctx.stroke();
-                ctx.fillStyle = color;
+                ctx.fillStyle = "#1A1A1A";
                 ctx.fillText(badgeChar, 0, 56);
                 ctx.restore();
             }
@@ -5441,7 +5505,7 @@
                 }
             }
 
-            // Lukis Watak Mario / Luigi yang Diwarnakan Secara Berperingkat & Bernafas Licin
+            // Lukis Watak Pac-Man (Zon Kiri Panas) / Hantu Inky (Zon Kanan Sejuk) yang Diwarnakan Secara Berperingkat & Bernafas Licin
             static drawColorableCharacter(ctx, cx, cy, letter, visualProgress, hatColor, suitColor, starColor, timestamp) {
                 ctx.save();
                 const bobY = Math.sin(timestamp * 0.004 + (letter === "M" ? 0 : 2)) * 4;
@@ -5449,70 +5513,148 @@
 
                 const isFullPower = visualProgress >= 2.85;
 
+                // Bulatan Latar Belakang / Aura Kuasa Neon
                 ctx.beginPath();
                 ctx.arc(0, 0, isFullPower ? 72 : 66, 0, Math.PI * 2);
-                ctx.fillStyle = isFullPower ? "rgba(251, 208, 0, 0.55)" : "rgba(255, 255, 255, 0.88)";
+                ctx.fillStyle = isFullPower
+                    ? (letter === "M" ? "rgba(255, 230, 0, 0.35)" : "rgba(0, 229, 255, 0.35)")
+                    : "rgba(8, 12, 36, 0.90)";
                 ctx.fill();
                 ctx.lineWidth = isFullPower ? 5 : 4;
-                ctx.strokeStyle = isFullPower ? "#FBD000" : "#1A1A1A";
+                ctx.strokeStyle = isFullPower ? (letter === "M" ? "#FFE600" : "#00E5FF") : "#2121DE";
                 ctx.stroke();
 
-                ctx.beginPath();
-                ctx.roundRect(-36, 18, 72, 38, 14);
-                ctx.fillStyle = visualProgress >= 1.5 ? suitColor : "#D6D6D6";
-                ctx.fill();
-                ctx.lineWidth = 3.5;
-                ctx.strokeStyle = "#1A1A1A";
-                ctx.stroke();
+                if (letter === "M") {
+                    // =====================================================
+                    // WATAK ZON KIRI (🔥 WARNA PANAS): PAC-MAN ARCADE
+                    // Bahagian 1 (>=0.5): Badan Kuning (starColor)
+                    // Bahagian 2 (>=1.5): Sarung Tangan / Kasut Jingga (suitColor)
+                    // Bahagian 3 (>=2.5): Mahkota / Aura Merah Blinky (hatColor)
+                    // =====================================================
+                    // Kasut / Tapak Bawah Pac-Man (Bahagian 2)
+                    ctx.beginPath();
+                    ctx.ellipse(-16, 44, 14, 8, -0.15, 0, Math.PI * 2);
+                    ctx.ellipse(16, 44, 14, 8, 0.15, 0, Math.PI * 2);
+                    ctx.fillStyle = visualProgress >= 1.5 ? hatColor : "#757575";
+                    ctx.fill();
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = "#1A1A1A";
+                    ctx.stroke();
 
-                ctx.beginPath();
-                ctx.arc(0, -4, 30, 0, Math.PI * 2);
-                ctx.fillStyle = visualProgress >= 0.5 ? "#FFD1A6" : "#EAEAEA";
-                ctx.fill();
-                ctx.stroke();
+                    // Badan Bulat Pac-Man dengan Mulut Mengunyah (Bahagian 1)
+                    const chomp = 0.22 + Math.abs(Math.sin(timestamp * 0.008)) * 0.32;
+                    ctx.beginPath();
+                    ctx.moveTo(0, 2);
+                    ctx.arc(0, 2, 38, chomp, Math.PI * 2 - chomp);
+                    ctx.closePath();
+                    ctx.fillStyle = visualProgress >= 0.5 ? starColor : "#BDBDBD";
+                    ctx.fill();
+                    ctx.lineWidth = 3.5;
+                    ctx.strokeStyle = "#1A1A1A";
+                    ctx.stroke();
 
-                ctx.beginPath();
-                ctx.arc(0, -14, 31, Math.PI, 0);
-                ctx.closePath();
-                ctx.fillStyle = visualProgress >= 0.5 ? hatColor : "#BDBDBD";
-                ctx.fill();
-                ctx.stroke();
+                    // Jalur Tenaga Jingga / Pipi Hangat (Bahagian 2)
+                    ctx.beginPath();
+                    ctx.arc(-14, 14, 9, 0, Math.PI * 2);
+                    ctx.fillStyle = visualProgress >= 1.5 ? suitColor : "#9E9E9E";
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
 
-                ctx.beginPath();
-                ctx.arc(0, -25, 10, 0, Math.PI * 2);
-                ctx.fillStyle = "#FFFFFF";
-                ctx.fill();
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.fillStyle = visualProgress >= 0.5 ? hatColor : "#777777";
-                ctx.font = "bold 11px 'Press Start 2P'";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(letter, 0, -24);
+                    // Mata Pac-Man
+                    ctx.beginPath();
+                    ctx.arc(-4, -16, 5.5, 0, Math.PI * 2);
+                    ctx.fillStyle = "#1A1A1A";
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(-2.5, -18, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fill();
 
-                ctx.fillStyle = "#1A1A1A";
-                ctx.beginPath();
-                ctx.arc(-10, -4, 3.5, 0, Math.PI * 2);
-                ctx.arc(10, -4, 3.5, 0, Math.PI * 2);
-                ctx.fill();
+                    // Lencana / Topi Tenaga Panas di Atas Kepala Pac-Man (Bahagian 3)
+                    ctx.beginPath();
+                    ctx.arc(-8, -38, 12, 0, Math.PI * 2);
+                    ctx.fillStyle = visualProgress >= 2.5 ? hatColor : "#9E9E9E";
+                    ctx.fill();
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeStyle = "#FFFFFF";
+                    ctx.stroke();
 
-                ctx.beginPath();
-                ctx.roundRect(-18, 7, 36, 7, 4);
-                ctx.fillStyle = visualProgress >= 0.5 ? "#4A2508" : "#9E9E9E";
-                ctx.fill();
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.font = "bold 9px 'Press Start 2P'";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("P", -8, -37);
+                } else {
+                    // =====================================================
+                    // WATAK ZON KANAN (❄️ WARNA SEJUK): HANTU INKY ARCADE
+                    // Bahagian 1 (>=0.5): Kubah Kepala & Badan Biru/Cyan (suitColor)
+                    // Bahagian 2 (>=1.5): Gelombang Skirt Bawah Ungu (starColor)
+                    // Bahagian 3 (>=2.5): Aura Kristal / Lencana Hijau (hatColor)
+                    // =====================================================
+                    // Badan Hantu Arcade Klasik (Bahagian 1)
+                    ctx.beginPath();
+                    ctx.arc(0, -8, 34, Math.PI, 0, false);
+                    ctx.lineTo(34, 34);
+                    // Skirt beralun 3 lekuk
+                    ctx.lineTo(22, 24);
+                    ctx.lineTo(11, 34);
+                    ctx.lineTo(0, 24);
+                    ctx.lineTo(-11, 34);
+                    ctx.lineTo(-22, 24);
+                    ctx.lineTo(-34, 34);
+                    ctx.closePath();
+                    ctx.fillStyle = visualProgress >= 0.5 ? suitColor : "#BDBDBD";
+                    ctx.fill();
+                    ctx.lineWidth = 3.5;
+                    ctx.strokeStyle = "#1A1A1A";
+                    ctx.stroke();
 
-                ctx.beginPath();
-                ctx.arc(-15, 34, 8, 0, Math.PI * 2);
-                ctx.arc(15, 34, 8, 0, Math.PI * 2);
-                ctx.fillStyle = visualProgress >= 2.5 ? starColor : "#BDBDBD";
-                ctx.fill();
-                ctx.lineWidth = 2.5;
-                ctx.stroke();
+                    // Jalur Tenaga Sejuk Ungu pada Bahagian Bawah Hantu (Bahagian 2)
+                    ctx.beginPath();
+                    ctx.roundRect(-24, 8, 48, 12, 6);
+                    ctx.fillStyle = visualProgress >= 1.5 ? starColor : "#9E9E9E";
+                    ctx.fill();
+                    ctx.lineWidth = 2.2;
+                    ctx.stroke();
+
+                    // Mata Putih Hantu Inky
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.beginPath();
+                    ctx.ellipse(-11, -8, 8.5, 11, 0, 0, Math.PI * 2);
+                    ctx.ellipse(11, -8, 8.5, 11, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "#1A1A1A";
+                    ctx.stroke();
+
+                    // Anak Mata Biru / Gelap
+                    ctx.fillStyle = visualProgress >= 0.5 ? "#002266" : "#555555";
+                    ctx.beginPath();
+                    ctx.arc(-9, -7, 4.5, 0, Math.PI * 2);
+                    ctx.arc(13, -7, 4.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Lencana Permata Sejuk di Atas Kepala Inky (Bahagian 3)
+                    ctx.beginPath();
+                    ctx.arc(0, -42, 12, 0, Math.PI * 2);
+                    ctx.fillStyle = visualProgress >= 2.5 ? hatColor : "#9E9E9E";
+                    ctx.fill();
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeStyle = "#FFFFFF";
+                    ctx.stroke();
+
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.font = "bold 9px 'Press Start 2P'";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText("G", 0, -41);
+                }
 
                 ctx.restore();
             }
 
-            // Lukisan Permainan Sasaran untuk Dunia 4 (Dengan Sistem Nyawa & Bom)
+            // Lukisan Permainan Sasaran untuk Zon 4 (Dengan Sistem Nyawa & Hantu)
             static updateAndDrawArcade(ctx, canvas, dtNorm) {
                 const cx = canvas.width / 2;
                 const cy = canvas.height / 2;
@@ -5522,19 +5664,19 @@
 
                 ctx.save();
                 ctx.translate(cx, cy + bOffset);
-                ctx.fillStyle = "#FBD000";
-                ctx.strokeStyle = "#1A1A1A";
+                ctx.fillStyle = "#080B24";
+                ctx.strokeStyle = "#FFE600";
                 ctx.lineWidth = 6;
                 ctx.beginPath();
                 ctx.roundRect(-58, -58, 116, 116, 16);
                 ctx.fill();
                 ctx.stroke();
 
-                ctx.fillStyle = "#1A1A1A";
+                ctx.fillStyle = "#FFE600";
                 ctx.font = "bold 34px 'Press Start 2P'";
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillText("❓", 0, 4);
+                ctx.fillText("🟡", 0, 4);
                 ctx.restore();
 
                 for (let i = this.orbs.length - 1; i >= 0; i--) {
@@ -5597,7 +5739,7 @@
                     ctx.save();
                     ctx.globalAlpha = Math.max(0, ft.life);
                     ctx.font = "bold 14px 'Press Start 2P'";
-                    ctx.fillStyle = ft.color || "#FBD000";
+                    ctx.fillStyle = ft.color || "#FFE600";
                     ctx.strokeStyle = "#1A1A1A";
                     ctx.lineWidth = 4;
                     ctx.textAlign = "center";
@@ -5614,7 +5756,7 @@
                     if (dist < orb.radius + 38) {
                         this.orbs.splice(i, 1);
                         if (orb.isBomb) {
-                            this.loseLife("Terkena Bom Bowser 💣!", orb.x, orb.y);
+                            this.loseLife("Terkena Hantu Blinky 👻!", orb.x, orb.y);
                         } else {
                             this.boxBounce = 18;
                             for (let k = 0; k < 10; k++) {
@@ -5623,7 +5765,7 @@
                                     y: orb.y,
                                     vx: (Math.random() - 0.5) * 11,
                                     vy: (Math.random() - 0.5) * 11,
-                                    icon: k % 2 === 0 ? "🪙" : "⭐",
+                                    icon: k % 2 === 0 ? "🟡" : "🍒",
                                     life: 1.0
                                 });
                             }
